@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruitful | Juicing & Combinations</title>
+    <link rel="stylesheet" href="juicing.html">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="encyclopedia.html" >Encyclopedia</a></li>
+                    <li><a href="agriculture.html">Agriculture</a></li>
+                    <li><a href="health.html">Health</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="about.html" class="active">About Us</a></li>
+                    <li><a href="juicing.html">Juicing</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+    <main class="juicing-container">
+        <!-- HERO SECTION -->
+        <section class="juicing-hero">
+            <div class="hero-content">
+                <h1>Master the Art of <span>Fruit Juicing</span></h1>
+                <p>Discover perfect combinations, avoid pitfalls, and unlock maximum nutrition</p>
+                <div class="hero-cta">
+                    <a href="#recipe-generator" class="cta-btn">Try Recipe Generator</a>
+                    <a href="#juice-chart" class="cta-btn secondary">View Yield Chart</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="logo.png" alt="Juice and smoothie">
+            </div>
+        </section>
+
+        <!-- JUICE VS BLEND SECTION -->
+        <section class="comparison-section">
+            <div class="section-header">
+                <h2><i class="fas fa-balance-scale"></i> Juicing vs. Blending</h2>
+                <p>Choose the right method for your needs</p>
+            </div>
+            
+            <div class="comparison-cards">
+                <div class="method-card juicing">
+                    <div class="method-icon">
+                        <i class="fas fa-glass-whiskey"></i>
+                    </div>
+                    <h3>Juicing</h3>
+                    <ul class="method-features">
+                        <li><i class="fas fa-check"></i> Removes fiber</li>
+                        <li><i class="fas fa-check"></i> Quick nutrient absorption</li>
+                        <li><i class="fas fa-check"></i> Higher sugar concentration</li>
+                        <li><i class="fas fa-check"></i> Best for: Cleanses, quick energy</li>
+                    </ul>
+                    <div class="yield-meter">
+                        <span>Yield:</span>
+                        <div class="meter-bar high"></div>
+                        <span>High (80-95%)</span>
+                    </div>
+                </div>
+                
+                <div class="method-card blending">
+                    <div class="method-icon">
+                        <i class="fas fa-blender"></i>
+                    </div>
+                    <h3>Blending</h3>
+                    <ul class="method-features">
+                        <li><i class="fas fa-check"></i> Retains fiber</li>
+                        <li><i class="fas fa-check"></i> Slower digestion</li>
+                        <li><i class="fas fa-check"></i> More filling</li>
+                        <li><i class="fas fa-check"></i> Best for: Meal replacements</li>
+                    </ul>
+                    <div class="yield-meter">
+                        <span>Yield:</span>
+                        <div class="meter-bar medium"></div>
+                        <span>Medium (60-75%)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-guide">
+                <a href="#equipment" class="guide-link">
+                    <i class="fas fa-search"></i> Find the best juicer/blender for you
+                </a>
+            </div>
+        </section>
+
+        <!-- JUICE YIELD CHART -->
+        <section class="yield-chart-section" id="juice-chart">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Juice Yield Chart</h2>
+                <p>See which fruits give the most liquid</p>
+            </div>
+            
+            <div class="chart-filters">
+                <button class="filter-btn active" data-filter="all">All Fruits</button>
+                <button class="filter-btn" data-filter="high">High Yield</button>
+                <button class="filter-btn" data-filter="medium">Medium Yield</button>
+                <button class="filter-btn" data-filter="low">Low Yield</button>
+            </div>
+            
+            <div class="yield-chart">
+                <!-- Dynamically loaded by JavaScript -->
+                <!-- Example item: -->
+                <div class="yield-item high" data-fruit="watermelon">
+                    <div class="fruit-info">
+                        <img src="../images/fruits/watermelon.png" alt="Watermelon">
+                        <span>Watermelon</span>
+                    </div>
+                    <div class="yield-bar">
+                        <div class="yield-fill" style="width: 95%"></div>
+                        <span>95% yield</span>
+                    </div>
+                </div>
+                <!-- More fruits will be added by JS -->
+            </div>
+            
+            <div class="download-guide">
+                <a href="../resources/juicing-guide.pdf" download class="download-btn">
+                    <i class="fas fa-file-pdf"></i> Download Complete Yield Guide (PDF)
+                </a>
+            </div>
+        </section>
+
+        <!-- PERFECT COMBINATIONS -->
+        <section class="combinations-section">
+            <div class="section-header">
+                <h2><i class="fas fa-heart"></i> Perfect Fruit Combinations</h2>
+                <p>Flavor and health synergy at its best</p>
+            </div>
+            
+            <div class="combination-tabs">
+                <button class="tab-btn active" data-tab="energy">Energy Boost</button>
+                <button class="tab-btn" data-tab="detox">Detox</button>
+                <button class="tab-btn" data-tab="immunity">Immunity</button>
+                <button class="tab-btn" data-tab="weight">Weight Loss</button>
+            </div>
+            
+            <div class="combination-content">
+                <!-- Energy Tab (default visible) -->
+                <div class="tab-pane active" id="energy">
+                    <div class="combination-card">
+                        <div class="combo-header">
+                            <h3>Tropical Boost</h3>
+                            <span class="combo-benefit"><i class="fas fa-bolt"></i> Instant Energy</span>
+                        </div>
+                        <div class="combo-ingredients">
+                            <span>Pineapple</span>
+                            <span>Orange</span>
+                            <span>Ginger</span>
+                            <span>Coconut Water</span>
+                        </div>
+                        <p class="combo-desc">Pineapple's bromelain enhances protein digestion while ginger improves circulation for sustained energy.</p>
+                        <button class="save-recipe"><i class="far fa-bookmark"></i> Save</button>
+                    </div>
+                    <!-- More combos... -->
+                </div>
+                
+                <!-- Other tabs (hidden by default) -->
+                <div class="tab-pane" id="detox">
+                    <!-- Detox combos... -->
+                </div>
+            </div>
+        </section>
+
+        <!-- BAD COMBINATIONS -->
+        <section class="bad-combos-section">
+            <div class="section-header">
+                <h2><i class="fas fa-ban"></i> Avoid These Combinations</h2>
+                <p>Fruit pairings that cause digestive issues or taste awful</p>
+            </div>
+            
+            <div class="bad-combos-grid">
+                <div class="bad-combo-card digestive">
+                    <div class="combo-alert">
+                        <i class="fas fa-poop"></i>
+                        <span>Digestive Conflict</span>
+                    </div>
+                    <h3>Melons + Other Fruits</h3>
+                    <p>Melons digest in 20-30 minutes while other fruits take 1-2 hours, causing fermentation.</p>
+                    <div class="combo-fruits">
+                        <span>🍈</span>
+                        <i class="fas fa-plus"></i>
+                        <span>🍌</span>
+                    </div>
+                </div>
+                
+                <div class="bad-combo-card flavor">
+                    <div class="combo-alert">
+                        <i class="fas fa-face-vomit"></i>
+                        <span>Flavor Disaster</span>
+                    </div>
+                    <h3>Grapefruit + Sweet Fruits</h3>
+                    <p>Grapefruit's bitterness clashes with sweet fruits like mango or pear.</p>
+                    <div class="combo-fruits">
+                        <span>🍊</span>
+                        <i class="fas fa-plus"></i>
+                        <span>🥭</span>
+                    </div>
+                </div>
+                <!-- More bad combos... -->
+            </div>
+        </section>
+
+        <!-- RECIPE GENERATOR -->
+        <section class="recipe-generator" id="recipe-generator">
+            <div class="section-header">
+                <h2><i class="fas fa-magic"></i> Recipe Generator</h2>
+                <p>Get custom juice/smoothie recipes based on your needs</p>
+            </div>
+            
+            <div class="generator-container">
+                <div class="generator-form">
+                    <div class="form-group">
+                        <label for="goal"><i class="fas fa-bullseye"></i> Select Goal</label>
+                        <select id="goal">
+                            <option value="energy">Energy Boost</option>
+                            <option value="detox">Detox</option>
+                            <option value="immunity">Immunity</option>
+                            <option value="weight">Weight Loss</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fruits"><i class="fas fa-apple-alt"></i> Available Fruits</label>
+                        <div class="fruit-selector">
+                            <div class="fruit-option">
+                                <input type="checkbox" id="apple" value="apple">
+                                <label for="apple">Apple</label>
+                            </div>
+                            <!-- More fruit options... -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="method"><i class="fas fa-blender"></i> Method</label>
+                        <select id="method">
+                            <option value="juice">Juicing</option>
+                            <option value="blend">Blending</option>
+                        </select>
+                    </div>
+                    
+                    <button id="generate-btn" class="generate-btn">
+                        <i class="fas fa-random"></i> Generate Recipe
+                    </button>
+                </div>
+                
+                <div class="recipe-result">
+                    <div class="result-placeholder">
+                        <i class="fas fa-mortar-pestle"></i>
+                        <p>Your custom recipe will appear here</p>
+                    </div>
+                    <!-- Filled by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO TUTORIALS -->
+        <section class="video-section">
+            <div class="section-header">
+                <h2><i class="fas fa-video"></i> Juicing Tutorials</h2>
+                <p>Learn techniques from experts</p>
+            </div>
+            
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="../images/juicing/video1-thumb.jpg" alt="Cold press juicing">
+                        <div class="play-btn"><i class="fas fa-play"></i></div>
+                    </div>
+                    <h3>Cold Press Juicing 101</h3>
+                    <p>5-minute masterclass on maximizing nutrient retention</p>
+                </div>
+                <!-- More videos... -->
+            </div>
+        </section>
+
+        <!-- MYTH BUSTERS -->
+        <section class="myths-section">
+            <div class="section-header">
+                <h2><i class="fas fa-question-circle"></i> Myth Busters</h2>
+                <p>Separating fact from fiction</p>
+            </div>
+            
+            <div class="myths-accordion">
+                <div class="accordion-item">
+                    <button class="accordion-btn">
+                        <span>Does juicing remove all fiber?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Juicing removes insoluble fiber but retains soluble fiber. For example, a glass of orange juice still contains about 0.5g of soluble fiber per cup.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-btn">
+                        <span>Is fruit sugar bad for you?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Whole fruits contain natural sugars packaged with fiber, water, and nutrients. The problem arises when juicing removes fiber, concentrating sugars.</p>
+                    </div>
+                </div>
+                <!-- More FAQ items... -->
+            </div>
+        </section>
+
+        <!-- COMMUNITY RECIPES -->
+        <section class="community-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Community Recipes</h2>
+                <p>Top-rated creations from our users</p>
+            </div>
+            
+            <div class="recipe-filters">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Juices</button>
+                <button class="filter-btn">Smoothies</button>
+                <button class="filter-btn">Most Popular</button>
+            </div>
+            
+            <div class="community-recipes">
+                <!-- Recipe cards loaded from database -->
+            </div>
+            
+            <div class="submit-recipe">
+                <h3>Share Your Creation</h3>
+                <button class="submit-btn">
+                    <i class="fas fa-plus-circle"></i> Submit Your Recipe
+                </button>
+            </div>
+        </section>
+
+        <!-- 7-DAY CHALLENGE -->
+        <section class="challenge-section">
+            <div class="challenge-card">
+                <div class="challenge-content">
+                    <h2>7-Day Juice Cleanse Challenge</h2>
+                    <p>Daily recipes and nutrition plan to reset your system</p>
+                    <ul class="challenge-features">
+                        <li><i class="fas fa-check"></i> Shopping list</li>
+                        <li><i class="fas fa-check"></i> Prep schedule</li>
+                        <li><i class="fas fa-check"></i> Expert tips</li>
+                    </ul>
+                    <button class="challenge-btn">Download Plan</button>
+                </div>
+                <div class="challenge-image"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be added by you -->
+
+    <script src="juicing.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
