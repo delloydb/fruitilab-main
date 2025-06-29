@@ -1,0 +1,424 @@
+/* ===== MAIN GAME STYLES ===== */
+.fun-games-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* HERO SECTION */
+.games-hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content h1 span {
+    color: var(--accent-color);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.game-categories {
+    display: flex;
+    gap: 1rem;
+}
+
+.game-category-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.game-category-btn:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.hero-fruits {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.fruit-icon {
+    font-size: 3rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.fruit-icon:nth-child(1) { animation-delay: 0s; }
+.fruit-icon:nth-child(2) { animation-delay: 0.5s; }
+.fruit-icon:nth-child(3) { animation-delay: 1s; }
+.fruit-icon:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* GAME PANELS */
+.game-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.game-panel:hover {
+    transform: translateY(-5px);
+}
+
+.panel-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.panel-header h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.panel-header p {
+    color: var(--dark-color);
+    opacity: 0.8;
+}
+
+/* ===== QUIZ GAME ===== */
+.quiz-game {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.quiz-question-box {
+    background: var(--light-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-option {
+    background: white;
+    border: 2px solid var(--light-color);
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.quiz-option:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.02);
+}
+
+.quiz-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+#quiz-progress {
+    flex-grow: 1;
+    height: 10px;
+    border-radius: 5px;
+}
+
+#quiz-progress::-webkit-progress-bar {
+    background: var(--light-color);
+    border-radius: 5px;
+}
+
+#quiz-progress::-webkit-progress-value {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+/* ===== MEMORY GAME ===== */
+.memory-game {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.memory-timer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    background: var(--accent-color);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    transform-style: preserve-3d;
+}
+
+.memory-card.flipped {
+    background: white;
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    background: var(--secondary-color);
+    color: white;
+    cursor: default;
+}
+
+.restart-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.3s;
+}
+
+.restart-btn:hover {
+    background: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+/* ===== VIRTUAL FARM ===== */
+.farm-game {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.farm-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.farm-land {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.farm-plot {
+    aspect-ratio: 1;
+    background: #e8f5e9;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.farm-plot.empty {
+    background: #a5d6a7;
+}
+
+.farm-plot.growing::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #4caf50;
+    height: var(--growth);
+    transition: height 2s linear;
+}
+
+.farm-plot.ready {
+    background: #81c784;
+    cursor: pointer;
+}
+
+.farm-shop {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.farm-action-btn {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.farm-action-btn:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* ===== COLORING PAGES ===== */
+.coloring-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.coloring-item {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.coloring-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.coloring-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.coloring-info {
+    padding: 1rem;
+    text-align: center;
+}
+
+.download-btn {
+    background: var(--accent-color);
+    color: var(--dark-color);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.5rem;
+    transition: all 0.3s;
+}
+
+.download-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ===== REWARDS SECTION ===== */
+.rewards-section {
+    text-align: center;
+    padding: 2rem;
+    background: var(--light-color);
+    border-radius: 16px;
+    margin-top: 2rem;
+}
+
+.rewards-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.rewards-section h3 span {
+    color: var(--primary-color);
+}
+
+.rewards-badge {
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    display: inline-flex;
+    gap: 1.5rem;
+    margin: 1rem 0;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .games-hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .game-categories {
+        justify-content: center;
+    }
+    
+    .hero-fruits {
+        margin-top: 2rem;
+    }
+    
+    .quiz-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .memory-board {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .farm-land {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .panel-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .memory-board {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .farm-land {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

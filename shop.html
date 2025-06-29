@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutilabs - Fruit Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="#" class="active">Shop</a></li>
+                    <li><a href="#">Encyclopedia</a></li>
+                    <li><a href="#">Agriculture</a></li>
+                    <li><a href="#">Health</a></li>
+                    <li><a href="#">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Shop Content -->
+    <main class="shop-main">
+        <!-- Search & Filters -->
+        <section class="shop-filters">
+            <div class="container">
+                <div class="search-container">
+                    <input type="text" placeholder="Search fruits..." class="shop-search">
+                    <button class="search-button"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="country">Country/City</label>
+                        <select id="country">
+                            <option value="">All Locations</option>
+                            <option value="usa">United States (Washington)</option>
+                            <option value="uk">United Kingdom (London)</option>
+                            <option value="japan">Japan (Tokyo)</option>
+                            <option value="brazil">Brazil (Brasília)</option>
+                            <option value="australia">Australia (Canberra)</option>
+                            <option value="south-africa">South Africa (Pretoria)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="fruit-type">Fruit Type</label>
+                        <select id="fruit-type">
+                            <option value="">All Types</option>
+                            <option value="tropical">Tropical</option>
+                            <option value="citrus">Citrus</option>
+                            <option value="berries">Berries</option>
+                            <option value="stone">Stone Fruits</option>
+                            <option value="melons">Melons</option>
+                            <option value="exotic">Exotic</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="price-range">Price Range</label>
+                        <select id="price-range">
+                            <option value="">All Prices</option>
+                            <option value="0-5">$0 - $5</option>
+                            <option value="5-10">$5 - $10</option>
+                            <option value="10-20">$10 - $20</option>
+                            <option value="20+">$20+</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="organic">Organic</label>
+                        <select id="organic">
+                            <option value="">All</option>
+                            <option value="yes">Organic Only</option>
+                            <option value="no">Non-Organic</option>
+                        </select>
+                    </div>
+                    
+                    <button class="filter-reset">Reset Filters</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deals & Discounts -->
+        <section class="shop-deals">
+            <div class="container">
+                <div class="deal-banner">
+                    <div class="deal-content">
+                        <span class="deal-tag">Limited Time!</span>
+                        <h3>Summer Fruit Festival</h3>
+                        <p>Get 20% off on all tropical fruits this week</p>
+                        <button class="btn primary">Shop Now</button>
+                    </div>
+                    <div class="deal-image">
+                        <img src="../assets/images/deal-banner.jpg" alt="Summer Fruit Festival">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fruit Grid -->
+        <section class="fruit-grid">
+            <div class="container">
+                <div class="grid-header">
+                    <h2>Fresh Fruits</h2>
+                    <div class="sort-options">
+                        <label for="sort">Sort by:</label>
+                        <select id="sort">
+                            <option value="popular">Most Popular</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                            <option value="newest">Newest</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid-container">
+                    <!-- Fruit Card 1 -->
+                    <div class="fruit-item" data-type="tropical" data-price="8.99" data-organic="yes" data-rating="4.5">
+                        <div class="fruit-badge organic">Organic</div>
+                        <div class="fruit-image">
+                            <img src="../assets/images/mango.jpg" alt="Mango">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Mango</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.5</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Mexico</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$8.99</span>
+                                <span class="original-price">$12.99</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 2 -->
+                    <div class="fruit-item" data-type="berries" data-price="4.99" data-organic="no" data-rating="4.2">
+                        <div class="fruit-image">
+                            <img src="../assets/images/blueberries.jpg" alt="Blueberries">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Blueberries</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.2</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>USA</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$4.99</span>
+                                <span class="original-price">$6.99</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 3 -->
+                    <div class="fruit-item" data-type="tropical" data-price="12.99" data-organic="yes" data-rating="4.8">
+                        <div class="fruit-badge organic">Organic</div>
+                        <div class="fruit-image">
+                            <img src="../assets/images/dragonfruit.jpg" alt="Dragon Fruit">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Dragon Fruit</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Vietnam</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$12.99</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 4 -->
+                    <div class="fruit-item" data-type="citrus" data-price="3.99" data-organic="no" data-rating="4.0">
+                        <div class="fruit-image">
+                            <img src="../assets/images/oranges.jpg" alt="Oranges">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Oranges</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.0</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Spain</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$3.99</span>
+                                <span class="original-price">$5.49</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 5 -->
+                    <div class="fruit-item" data-type="berries" data-price="7.49" data-organic="yes" data-rating="4.7">
+                        <div class="fruit-badge organic">Organic</div>
+                        <div class="fruit-image">
+                            <img src="../assets/images/strawberries.jpg" alt="Strawberries">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Strawberries</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.7</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>California</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$7.49</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 6 -->
+                    <div class="fruit-item" data-type="exotic" data-price="15.99" data-organic="yes" data-rating="4.9">
+                        <div class="fruit-badge organic">Organic</div>
+                        <div class="fruit-badge new">New</div>
+                        <div class="fruit-image">
+                            <img src="../assets/images/passionfruit.jpg" alt="Passion Fruit">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Passion Fruit</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Brazil</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$15.99</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 7 -->
+                    <div class="fruit-item" data-type="stone" data-price="6.99" data-organic="no" data-rating="4.3">
+                        <div class="fruit-image">
+                            <img src="../assets/images/peaches.jpg" alt="Peaches">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Peaches</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.3</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Georgia</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$6.99</span>
+                                <span class="original-price">$8.99</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fruit Card 8 -->
+                    <div class="fruit-item" data-type="melons" data-price="9.99" data-organic="yes" data-rating="4.6">
+                        <div class="fruit-badge organic">Organic</div>
+                        <div class="fruit-image">
+                            <img src="../assets/images/watermelon.jpg" alt="Watermelon">
+                            <button class="quick-view">Quick View</button>
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Watermelon</h3>
+                            <div class="fruit-meta">
+                                <div class="fruit-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.6</span>
+                                </div>
+                                <div class="fruit-origin">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>Florida</span>
+                                </div>
+                            </div>
+                            <div class="fruit-price">
+                                <span class="current-price">$9.99</span>
+                            </div>
+                            <button class="btn outline add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn next">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Sidebar -->
+    <aside class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="cart-items">
+            <!-- Cart items will be added here dynamically -->
+            <div class="empty-cart">
+                <img src="../assets/icons/empty-cart.svg" alt="Empty Cart">
+                <p>Your cart is empty</p>
+                <button class="btn primary">Continue Shopping</button>
+            </div>
+        </div>
+        
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span class="subtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>Calculated at checkout</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span class="total-price">$0.00</span>
+            </div>
+            <button class="btn primary checkout-btn">Proceed to Checkout</button>
+        </div>
+    </aside>
+    <div class="cart-overlay"></div>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <!-- Content will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="shop.js"></script>
+</body>
+</html>

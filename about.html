@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruitful | Our Story</title>
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#" >Encyclopedia</a></li>
+                    <li><a href="#">Agriculture</a></li>
+                    <li><a href="#">Health</a></li>
+                    <li><a href="#">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+    <main class="about-container">
+        <!-- HERO SECTION -->
+        <section class="about-hero">
+            <div class="hero-content">
+                <h1>Growing <span>Healthy</span> Futures</h1>
+                <p>From a small market stall to a global fruit movement</p>
+                <div class="achievement-badges">
+                    <div class="badge">
+                        <span class="number">15+</span>
+                        <span class="label">Years</span>
+                    </div>
+                    <div class="badge">
+                        <span class="number">50+</span>
+                        <span class="label">Cities</span>
+                    </div>
+                    <div class="badge">
+                        <span class="number">1M+</span>
+                        <span class="label">Customers</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="fruit-overlay">
+                    <span>🍎</span>
+                    <span>🍊</span>
+                    <span>🍇</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR STORY -->
+        <section class="story-section">
+            <div class="section-header">
+                <h2><i class="fas fa-seedling"></i> Our Story</h2>
+                <p>How passion for fruits became a mission</p>
+            </div>
+            <div class="story-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2008</div>
+                    <div class="timeline-content">
+                        <h3>First Fruit Stand</h3>
+                        <p>Started with just a small stand at the local farmers market, selling hand-picked organic fruits.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2012</div>
+                    <div class="timeline-content">
+                        <h3>First Store</h3>
+                        <p>Opened our first physical store in downtown, introducing the "fruit subscription" concept.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>Global Expansion</h3>
+                        <p>Launched in 10 international cities with a focus on sustainable sourcing.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Today</div>
+                    <div class="timeline-content">
+                        <h3>Fruitful Ecosystem</h3>
+                        <p>Combining retail, education, and digital experiences to promote fruit nutrition worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GLOBAL PRESENCE -->
+        <section class="map-section">
+            <div class="section-header">
+                <h2><i class="fas fa-globe-americas"></i> Global Presence</h2>
+                <p>Find us in these capital cities</p>
+            </div>
+            <div class="map-container">
+                <div id="world-map"></div>
+                <div class="location-counter">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="location-count">50+</span> cities worldwide
+                </div>
+            </div>
+        </section>
+
+        <!-- TEAM SECTION -->
+        <section class="team-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Meet the Team</h2>
+                <p>The passionate people behind Fruitful</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('../images/team/ceo.jpg');">
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3>Alex Morgan</h3>
+                    <p class="position">Founder & CEO</p>
+                    <p class="bio">Former nutritionist who turned passion for fruits into a global brand.</p>
+                </div>
+                <!-- More team members... -->
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section class="contact-section">
+            <div class="section-header">
+                <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            <div class="contact-container">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+                <div class="contact-methods">
+                    <div class="contact-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>Live Chat</h3>
+                        <p>Available 24/7 for instant support</p>
+                        <button class="chat-btn">Start Chat</button>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <h3>Call Us</h3>
+                        <p>+1 (800) FRUIT-NOW</p>
+                    </div>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section class="newsletter-section">
+            <h2>Join Our Fruitful Community</h2>
+            <p>Subscribe for seasonal recipes, nutrition tips, and exclusive offers</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="../shop/">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="about.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

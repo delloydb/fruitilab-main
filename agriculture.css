@@ -1,0 +1,653 @@
+/* Agriculture Page Specific Styles */
+.agriculture-main {
+    padding-top: 80px;
+}
+
+/* Hero Section */
+.agriculture-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('../assets/images/agriculture-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 120px 0;
+    text-align: center;
+}
+
+.agriculture-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.agriculture-hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Global Trade Section */
+.trade-section {
+    padding: 80px 0;
+    background-color: var(--light-color);
+}
+
+.trade-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.trade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.trade-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+
+.trade-card.wide {
+    grid-column: span 2;
+}
+
+.trade-card h3 {
+    margin-bottom: 20px;
+    color: var(--dark-color);
+    font-size: 1.3rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 250px;
+    margin-bottom: 15px;
+}
+
+.chart-source {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-align: right;
+}
+
+.stat-card {
+    background-color: var(--light-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.fruit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fruit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--light-color);
+    border-radius: 8px;
+}
+
+.fruit-name {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.fruit-value {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Sustainable Farming Section */
+.sustainable-section {
+    padding: 80px 0;
+    background-color: white;
+}
+
+.sustainable-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.practice-card {
+    background-color: var(--light-color);
+    border-radius: 15px;
+    padding: 25px;
+    transition: var(--transition);
+}
+
+.practice-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.practice-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.practice-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.practice-card h3 {
+    margin-bottom: 15px;
+    color: var(--dark-color);
+    text-align: center;
+}
+
+.practice-card p {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.learn-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.learn-more:hover {
+    color: var(--secondary-color);
+    gap: 8px;
+}
+
+.video-documentary {
+    background-color: var(--light-color);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.video-container {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.video-placeholder {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.video-placeholder img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.play-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-info {
+    flex: 1;
+}
+
+.video-info h3 {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+}
+
+.video-info p {
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.video-meta {
+    display: flex;
+    gap: 20px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.video-meta i {
+    margin-right: 5px;
+}
+
+/* Farmer Stories Section */
+.farmers-section {
+    padding: 80px 0;
+    background-color: var(--light-color);
+}
+
+.farmers-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.farmers-carousel {
+    position: relative;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+.farmer-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.farmer-card.active {
+    opacity: 1;
+}
+
+.farmer-image {
+    flex: 1;
+    min-width: 300px;
+}
+
+.farmer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.farmer-info {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.farmer-info h3 {
+    font-size: 1.8rem;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.location, .crop {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-light);
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.farmer-quote {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: var(--light-color);
+    border-left: 4px solid var(--primary-color);
+    font-style: italic;
+    color: var(--text-color);
+    flex: 1;
+}
+
+.farmer-quote p {
+    margin: 0;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.carousel-indicators .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 125, 51, 0.3);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.carousel-indicators .indicator.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* Investment Section */
+.investment-section {
+    padding: 80px 0;
+    background-color: white;
+}
+
+.investment-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.investment-tabs {
+    margin-bottom: 30px;
+}
+
+.tab-header {
+    display: flex;
+    border-bottom: 2px solid var(--light-color);
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 15px 25px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+}
+
+.tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+}
+
+.tab-button.active::after {
+    transform: scaleX(1);
+}
+
+.tab-button:hover:not(.active) {
+    color: var(--dark-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.investment-card {
+    display: flex;
+    gap: 30px;
+    background-color: var(--light-color);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.investment-image {
+    flex: 1;
+    min-width: 300px;
+}
+
+.investment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.investment-info {
+    flex: 1;
+    padding: 30px;
+}
+
+.investment-info h3 {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+}
+
+.investment-info p {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.investment-details {
+    list-style: none;
+    margin-bottom: 25px;
+}
+
+.investment-details li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+}
+
+.investment-details i {
+    color: var(--primary-color);
+}
+
+.investment-disclaimer {
+    background-color: rgba(255, 193, 7, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 10px;
+}
+
+.investment-disclaimer i {
+    color: var(--tertiary-color);
+    font-size: 1.2rem;
+}
+
+/* Newsletter Section */
+.agriculture-newsletter {
+    padding: 60px 0;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+}
+
+.agriculture-newsletter h2 {
+    margin-bottom: 15px;
+    font-size: 2rem;
+}
+
+.agriculture-newsletter p {
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.newsletter-form {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.newsletter-form input {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    min-width: 250px;
+}
+
+.newsletter-form button {
+    padding: 15px 30px;
+    background-color: var(--dark-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.newsletter-form button:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .trade-card.wide {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 992px) {
+    .video-container {
+        flex-direction: column;
+    }
+    
+    .video-placeholder {
+        max-width: 100%;
+    }
+    
+    .farmer-card {
+        flex-direction: column;
+        height: auto;
+        position: relative;
+        opacity: 1;
+        margin-bottom: 30px;
+    }
+    
+    .farmer-image {
+        height: 300px;
+    }
+    
+    .farmers-carousel {
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .agriculture-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .investment-card {
+        flex-direction: column;
+    }
+    
+    .investment-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .agriculture-hero {
+        padding: 80px 0;
+    }
+    
+    .agriculture-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .trade-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .tab-header {
+        flex-direction: column;
+        border-bottom: none;
+    }
+    
+    .tab-button {
+        border-bottom: 2px solid var(--light-color);
+    }
+    
+    .tab-button::after {
+        display: none;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .newsletter-form input, 
+    .newsletter-form button {
+        width: 100%;
+    }
+}

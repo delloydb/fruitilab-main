@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutilabs - Fresh Fruits from Around the World</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="encyclopedia.html">Encyclopedia</a></li>
+                    <li><a href="agriculture.html">Agriculture</a></li>
+                    <li><a href="health.html">Health</a></li>
+                    <li><a href="games.html">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-slideshow">
+            <div class="slide active" style="background-image: url('assets/images/hero-1.jpg')">
+                <div class="slide-content">
+                    <h2>Discover Nature's Sweetest Treasures</h2>
+                    <p>Fresh fruits sourced directly from farmers worldwide</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn primary">Shop Now</a>
+                        <a href="#" class="btn secondary">Explore Fruits</a>
+                        <a href="#" class="btn tertiary">Play Fruit Games</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('assets/images/hero-2.jpg')">
+                <div class="slide-content">
+                    <h2>Seasonal Fruits at Your Fingertips</h2>
+                    <p>Enjoy the freshest picks delivered to your door</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn primary">Shop Now</a>
+                        <a href="#" class="btn secondary">Explore Fruits</a>
+                        <a href="#" class="btn tertiary">Play Fruit Games</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('assets/images/hero-3.jpg')">
+                <div class="slide-content">
+                    <h2>Learn About Fruits Like Never Before</h2>
+                    <p>Our encyclopedia has everything you need to know</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn primary">Shop Now</a>
+                        <a href="#" class="btn secondary">Explore Fruits</a>
+                        <a href="#" class="btn tertiary">Play Fruit Games</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search fruits or shops...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="slide-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+        </div>
+    </section>
+
+    <!-- Featured Fruits -->
+    <section class="featured-fruits">
+        <div class="container">
+            <h2 class="section-title">Featured Fruits</h2>
+            <div class="fruit-carousel">
+                <div class="fruit-card">
+                    <img src="assets/images/dragonfruit.jpg" alt="Dragon Fruit">
+                    <h3>Dragon Fruit</h3>
+                    <p>Exotic tropical fruit with vibrant pink skin and sweet white flesh</p>
+                    <a href="#" class="btn outline">Learn More</a>
+                </div>
+                <div class="fruit-card">
+                    <img src="assets/images/mango.jpg" alt="Mango">
+                    <h3>Mango</h3>
+                    <p>The king of fruits with rich, sweet flavor and smooth texture</p>
+                    <a href="#" class="btn outline">Learn More</a>
+                </div>
+                <div class="fruit-card">
+                    <img src="assets/images/blueberries.jpg" alt="Blueberries">
+                    <h3>Blueberries</h3>
+                    <p>Antioxidant-packed superfood bursting with flavor</p>
+                    <a href="#" class="btn outline">Learn More</a>
+                </div>
+                <div class="fruit-card">
+                    <img src="assets/images/pomegranate.jpg" alt="Pomegranate">
+                    <h3>Pomegranate</h3>
+                    <p>Juicy arils with a perfect balance of sweet and tart</p>
+                    <a href="#" class="btn outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose-us">
+        <div class="container">
+            <h2 class="section-title">Why Choose Frutilabs</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <img src="assets/icons/organic.svg" alt="Organic Icon">
+                    </div>
+                    <h3>Fresh & Organic</h3>
+                    <p>We source only the freshest, certified organic fruits from trusted growers</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <img src="assets/icons/global.svg" alt="Global Icon">
+                    </div>
+                    <h3>Global Sourcing</h3>
+                    <p>Direct partnerships with farmers across 6 continents for diverse selection</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <img src="assets/icons/health.svg" alt="Health Icon">
+                    </div>
+                    <h3>Health Benefits</h3>
+                    <p>Detailed nutritional info to help you make informed choices</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <img src="assets/icons/delivery.svg" alt="Delivery Icon">
+                    </div>
+                    <h3>Fast Delivery</h3>
+                    <p>Temperature-controlled shipping ensures freshness upon arrival</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+        <div class="container">
+            <h2 class="section-title">Explore Frutilabs</h2>
+            <div class="links-grid">
+                <a href="#" class="link-card">
+                    <div class="card-icon">
+                        <img src="assets/icons/shop.svg" alt="Shop Icon">
+                    </div>
+                    <h3>Shop Fruits</h3>
+                    <p>Browse our selection of fresh, exotic fruits</p>
+                </a>
+                <a href="#" class="link-card">
+                    <div class="card-icon">
+                        <img src="assets/icons/encyclopedia.svg" alt="Encyclopedia Icon">
+                    </div>
+                    <h3>Fruit Encyclopedia</h3>
+                    <p>Learn about fruits from around the world</p>
+                </a>
+                <a href="#" class="link-card">
+                    <div class="card-icon">
+                        <img src="assets/icons/economy.svg" alt="Economy Icon">
+                    </div>
+                    <h3>Fruit Economy & Agriculture</h3>
+                    <p>Discover the business side of fruits</p>
+                </a>
+                <a href="#" class="link-card">
+                    <div class="card-icon">
+                        <img src="assets/icons/nutrition.svg" alt="Nutrition Icon">
+                    </div>
+                    <h3>Health & Nutrition</h3>
+                    <p>Learn how fruits benefit your health</p>
+                </a>
+                <a href="#" class="link-card">
+                    <div class="card-icon">
+                        <img src="assets/icons/games.svg" alt="Games Icon">
+                    </div>
+                    <h3>Fun & Games</h3>
+                    <p>Play fruit-themed games and activities</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonial-carousel">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The mangoes I received were the sweetest I've ever tasted! Frutilabs is now my go-to for exotic fruits."</p>
+                    <div class="customer">
+                        <img src="assets/images/customer1.jpg" alt="Sarah J.">
+                        <h4>Sarah J.</h4>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"I love learning about new fruits through their encyclopedia. The delivery is always prompt and produce fresh."</p>
+                    <div class="customer">
+                        <img src="assets/images/customer2.jpg" alt="Michael T.">
+                        <h4>Michael T.</h4>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"My kids adore the fruit games section while I shop. A brilliant way to make healthy eating fun!"</p>
+                    <div class="customer">
+                        <img src="assets/images/customer3.jpg" alt="Lisa M.">
+                        <h4>Lisa M.</h4>
+                    </div>
+                </div>
+            </div>
+            <button class="btn primary">Write a Review</button>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated with Frutilabs</h2>
+                <p>Subscribe to our newsletter for seasonal fruit updates, recipes, and exclusive offers</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

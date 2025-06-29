@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutilabs - Fruit Encyclopedia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="encyclopedia.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#" class="active">Encyclopedia</a></li>
+                    <li><a href="#">Agriculture</a></li>
+                    <li><a href="#">Health</a></li>
+                    <li><a href="#">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Encyclopedia Main Content -->
+    <main class="encyclopedia-main">
+        <!-- Hero Section -->
+        <section class="encyclopedia-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Fruit Encyclopedia</h1>
+                    <p>Discover the fascinating world of fruits - their history, nutrition, and how they grow</p>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search fruits...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse by Category -->
+        <section class="category-section">
+            <div class="container">
+                <h2 class="section-title">Browse by Category</h2>
+                <div class="category-grid">
+                    <a href="#tropical" class="category-card">
+                        <div class="category-icon">
+                            <img src="../assets/icons/tropical.svg" alt="Tropical Fruits">
+                        </div>
+                        <h3>Tropical Fruits</h3>
+                        <p>Mangoes, pineapples, bananas and other sun-loving treats</p>
+                    </a>
+                    
+                    <a href="#citrus" class="category-card">
+                        <div class="category-icon">
+                            <img src="../assets/icons/citrus.svg" alt="Citrus Fruits">
+                        </div>
+                        <h3>Citrus Fruits</h3>
+                        <p>Oranges, lemons, grapefruits and their zesty relatives</p>
+                    </a>
+                    
+                    <a href="#berries" class="category-card">
+                        <div class="category-icon">
+                            <img src="../assets/icons/berries.svg" alt="Berries">
+                        </div>
+                        <h3>Berries</h3>
+                        <p>Small but packed with flavor and nutrients</p>
+                    </a>
+                    
+                    <a href="#stone" class="category-card">
+                        <div class="category-icon">
+                            <img src="../assets/icons/stone-fruit.svg" alt="Stone Fruits">
+                        </div>
+                        <h3>Stone Fruits</h3>
+                        <p>Peaches, plums, cherries and other single-seeded wonders</p>
+                    </a>
+                    
+                    <a href="#melons" class="category-card">
+                        <div class="category-icon">
+                            <img src="../assets/icons/melon.svg" alt="Melons">
+                        </div>
+                        <h3>Melons</h3>
+                        <p>Juicy, refreshing fruits perfect for hot days</p>
+                    </a>
+                    
+                    <a href="#exotic" class="category-card">
+                        <div class="category-icon">
+                            <img src="../assets/icons/exotic.svg" alt="Exotic Fruits">
+                        </div>
+                        <h3>Exotic Fruits</h3>
+                        <p>Unique fruits from around the world</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Fruits -->
+        <section class="featured-fruits">
+            <div class="container">
+                <h2 class="section-title">Featured Fruits</h2>
+                <div class="fruit-carousel">
+                    <div class="fruit-card">
+                        <div class="fruit-image">
+                            <img src="../assets/images/mango.jpg" alt="Mango">
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Mango</h3>
+                            <p class="scientific-name">Mangifera indica</p>
+                            <p class="origin">Native to South Asia</p>
+                            <a href="fruit/mango.html" class="btn outline">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="fruit-card">
+                        <div class="fruit-image">
+                            <img src="../assets/images/dragonfruit.jpg" alt="Dragon Fruit">
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Dragon Fruit</h3>
+                            <p class="scientific-name">Hylocereus undatus</p>
+                            <p class="origin">Native to Central America</p>
+                            <a href="fruit/dragonfruit.html" class="btn outline">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="fruit-card">
+                        <div class="fruit-image">
+                            <img src="../assets/images/blueberries.jpg" alt="Blueberries">
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Blueberries</h3>
+                            <p class="scientific-name">Vaccinium sect. Cyanococcus</p>
+                            <p class="origin">Native to North America</p>
+                            <a href="fruit/blueberries.html" class="btn outline">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="fruit-card">
+                        <div class="fruit-image">
+                            <img src="../assets/images/pomegranate.jpg" alt="Pomegranate">
+                        </div>
+                        <div class="fruit-info">
+                            <h3>Pomegranate</h3>
+                            <p class="scientific-name">Punica granatum</p>
+                            <p class="origin">Native to Iran</p>
+                            <a href="fruit/pomegranate.html" class="btn outline">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Geographical Distribution Map -->
+        <section class="map-section">
+            <div class="container">
+                <h2 class="section-title">Fruit Origins Around the World</h2>
+                <div class="map-controls">
+                    <div class="filter-group">
+                        <label for="map-fruit-type">Filter by Fruit Type:</label>
+                        <select id="map-fruit-type">
+                            <option value="all">All Fruits</option>
+                            <option value="tropical">Tropical</option>
+                            <option value="citrus">Citrus</option>
+                            <option value="berries">Berries</option>
+                            <option value="stone">Stone Fruits</option>
+                            <option value="melons">Melons</option>
+                            <option value="exotic">Exotic</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="fruit-map"></div>
+            </div>
+        </section>
+
+        <!-- Seasonal Availability Calendar -->
+        <section class="calendar-section">
+            <div class="container">
+                <h2 class="section-title">Seasonal Availability</h2>
+                <div class="calendar-controls">
+                    <div class="filter-group">
+                        <label for="calendar-region">Select Region:</label>
+                        <select id="calendar-region">
+                            <option value="north-america">North America</option>
+                            <option value="south-america">South America</option>
+                            <option value="europe">Europe</option>
+                            <option value="africa">Africa</option>
+                            <option value="asia">Asia</option>
+                            <option value="australia">Australia</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="prev-year"><i class="fas fa-chevron-left"></i></button>
+                        <h3 class="calendar-year">2023</h3>
+                        <button class="next-year"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="months-grid">
+                        <!-- Months will be generated by JavaScript -->
+                    </div>
+                    <div class="fruit-legend">
+                        <!-- Legend items will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fun Facts Section -->
+        <section class="fun-facts">
+            <div class="container">
+                <h2 class="section-title">Did You Know?</h2>
+                <div class="facts-carousel">
+                    <div class="fact-card active">
+                        <div class="fact-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <p>Bananas are technically berries, while strawberries are not!</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <p>Pineapples were so rare in 18th century Europe that you could rent one for a party!</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <p>Watermelons are 92% water, hence their name!</p>
+                    </div>
+                </div>
+                <div class="fact-indicators">
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="../shop/">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Individual Fruit Page Modal (Hidden by default) -->
+    <div class="fruit-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+    <script src="encyclopedia.js"></script>
+</body>
+</html>

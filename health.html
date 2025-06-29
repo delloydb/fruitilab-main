@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutilabs - Health & Nutrition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="health.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="encyclopedia.html">Encyclopedia</a></li>
+                    <li><a href="agriculture.html">Agriculture</a></li>
+                    <li><a href="#" class="active">Health</a></li>
+                    <li><a href="games.html">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="health-main">
+        <!-- Hero Section -->
+        <section class="health-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Fruit Health Benefits & Nutrition</h1>
+                    <p>Discover how fruits can boost your health, energy, and wellbeing</p>
+                    <div class="health-stats">
+                        <div class="stat">
+                            <div class="stat-value">5+</div>
+                            <div class="stat-label">daily servings recommended</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">40%</div>
+                            <div class="stat-label">lower chronic disease risk</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">natural goodness</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutritional Benefits -->
+        <section class="nutrition-section">
+            <div class="container">
+                <h2 class="section-title">Nutritional Benefits</h2>
+                <div class="nutrition-intro">
+                    <p>Fruits are packed with essential vitamins, minerals, and antioxidants. Compare the nutritional profiles of different fruits to find which ones best meet your dietary needs.</p>
+                </div>
+                
+                <div class="nutrition-tabs">
+                    <div class="tab-header">
+                        <button class="tab-button active" data-tab="vitamins">Vitamins</button>
+                        <button class="tab-button" data-tab="minerals">Minerals</button>
+                        <button class="tab-button" data-tab="antioxidants">Antioxidants</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="vitamins">
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fruit</th>
+                                        <th>Vitamin C (%DV)</th>
+                                        <th>Vitamin A (%DV)</th>
+                                        <th>Folate (%DV)</th>
+                                        <th>Vitamin K (%DV)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Guava</td>
+                                        <td>419%</td>
+                                        <td>12%</td>
+                                        <td>12%</td>
+                                        <td>4%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kiwi</td>
+                                        <td>154%</td>
+                                        <td>3%</td>
+                                        <td>7%</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Strawberries</td>
+                                        <td>108%</td>
+                                        <td>1%</td>
+                                        <td>6%</td>
+                                        <td>3%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Orange</td>
+                                        <td>106%</td>
+                                        <td>6%</td>
+                                        <td>8%</td>
+                                        <td>0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mango</td>
+                                        <td>76%</td>
+                                        <td>25%</td>
+                                        <td>18%</td>
+                                        <td>6%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="minerals">
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fruit</th>
+                                        <th>Potassium (mg)</th>
+                                        <th>Magnesium (%DV)</th>
+                                        <th>Iron (%DV)</th>
+                                        <th>Calcium (%DV)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Banana</td>
+                                        <td>422</td>
+                                        <td>8%</td>
+                                        <td>2%</td>
+                                        <td>1%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Avocado</td>
+                                        <td>485</td>
+                                        <td>7%</td>
+                                        <td>3%</td>
+                                        <td>1%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pomegranate</td>
+                                        <td>236</td>
+                                        <td>3%</td>
+                                        <td>2%</td>
+                                        <td>1%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Figs</td>
+                                        <td>232</td>
+                                        <td>5%</td>
+                                        <td>2%</td>
+                                        <td>4%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Blackberries</td>
+                                        <td>162</td>
+                                        <td>5%</td>
+                                        <td>3%</td>
+                                        <td>3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="antioxidants">
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fruit</th>
+                                        <th>ORAC Value*</th>
+                                        <th>Key Antioxidants</th>
+                                        <th>Benefits</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Blueberries</td>
+                                        <td>9,621</td>
+                                        <td>Anthocyanins</td>
+                                        <td>Brain health, anti-aging</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Blackberries</td>
+                                        <td>5,905</td>
+                                        <td>Ellagic acid</td>
+                                        <td>Cancer prevention</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Strawberries</td>
+                                        <td>4,302</td>
+                                        <td>Quercetin</td>
+                                        <td>Heart health</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Plums</td>
+                                        <td>6,100</td>
+                                        <td>Chlorogenic acid</td>
+                                        <td>Blood sugar control</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Red Grapes</td>
+                                        <td>3,277</td>
+                                        <td>Resveratrol</td>
+                                        <td>Longevity</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="table-note">*ORAC (Oxygen Radical Absorbance Capacity) measures antioxidant capacity</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nutrition-tip">
+                    <div class="tip-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <p>For maximum nutritional benefits, eat a variety of colorful fruits - each color represents different beneficial compounds!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diet Plans -->
+        <section class="diet-section">
+            <div class="container">
+                <h2 class="section-title">Fruit-Based Diet Plans</h2>
+                <div class="diet-intro">
+                    <p>Discover how to incorporate more fruits into your daily meals with these specialized diet plans.</p>
+                </div>
+                
+                <div class="diet-plans">
+                    <div class="diet-card">
+                        <div class="diet-image">
+                            <img src="../assets/images/weight-loss-plan.jpg" alt="Weight Loss Plan">
+                            <div class="diet-label">Weight Loss</div>
+                        </div>
+                        <div class="diet-info">
+                            <h3>7-Day Fruit-Enhanced Weight Loss</h3>
+                            <p>A balanced plan using low-calorie, high-fiber fruits to help control hunger and boost metabolism.</p>
+                            <ul class="diet-features">
+                                <li><i class="fas fa-check"></i> Focus on berries, apples, grapefruit</li>
+                                <li><i class="fas fa-check"></i> Includes 3 meals + 2 snacks daily</li>
+                                <li><i class="fas fa-check"></i> Shopping list included</li>
+                            </ul>
+                            <a href="#" class="btn outline">View Plan</a>
+                        </div>
+                    </div>
+                    
+                    <div class="diet-card">
+                        <div class="diet-image">
+                            <img src="../assets/images/detox-plan.jpg" alt="Detox Plan">
+                            <div class="diet-label">Detox</div>
+                        </div>
+                        <div class="diet-info">
+                            <h3>3-Day Fruit Detox Cleanse</h3>
+                            <p>Refresh your system with antioxidant-rich fruits that support liver function and elimination.</p>
+                            <ul class="diet-features">
+                                <li><i class="fas fa-check"></i> Features lemons, berries, watermelon</li>
+                                <li><i class="fas fa-check"></i> Includes detox smoothies & teas</li>
+                                <li><i class="fas fa-check"></i> Gentle on digestive system</li>
+                            </ul>
+                            <a href="#" class="btn outline">View Plan</a>
+                        </div>
+                    </div>
+                    
+                    <div class="diet-card">
+                        <div class="diet-image">
+                            <img src="../assets/images/energy-plan.jpg" alt="Energy Plan">
+                            <div class="diet-label">Energy Boost</div>
+                        </div>
+                        <div class="diet-info">
+                            <h3>14-Day Energy Boosting Plan</h3>
+                            <p>Natural sugars and nutrients from fruits to sustain energy levels throughout the day.</p>
+                            <ul class="diet-features">
+                                <li><i class="fas fa-check"></i> Features bananas, dates, oranges</li>
+                                <li><i class="fas fa-check"></i> Balanced with proteins & healthy fats</li>
+                                <li><i class="fas fa-check"></i> Includes exercise recommendations</li>
+                            </ul>
+                            <a href="#" class="btn outline">View Plan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Medical Research -->
+        <section class="research-section">
+            <div class="container">
+                <h2 class="section-title">Medical Research</h2>
+                <div class="research-intro">
+                    <p>Scientific studies continue to reveal the health benefits of regular fruit consumption.</p>
+                </div>
+                
+                <div class="research-cards">
+                    <div class="research-card">
+                        <div class="research-category heart">Heart Health</div>
+                        <h3>Berries Reduce Cardiovascular Risk</h3>
+                        <p class="research-meta">Harvard Study, 2021 | 93,000 participants</p>
+                        <p class="research-summary">Women who ate 3+ servings of blueberries and strawberries per week had a 34% lower risk of heart attack compared to those who ate less.</p>
+                        <a href="#" class="research-link">Read Study Summary <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="research-category brain">Brain Health</div>
+                        <h3>Citrus Fruits May Prevent Dementia</h3>
+                        <p class="research-meta">Tohoku University, 2022 | 13,000 participants</p>
+                        <p class="research-summary">People who consumed citrus fruits daily had a 23% lower risk of developing dementia compared to those who ate them less than twice a week.</p>
+                        <a href="#" class="research-link">Read Study Summary <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="research-category diabetes">Diabetes</div>
+                        <h3>Whole Fruits Reduce Type 2 Diabetes Risk</h3>
+                        <p class="research-meta">BMJ, 2020 | 500,000 participants</p>
+                        <p class="research-summary">Higher consumption of whole fruits, especially blueberries, grapes, and apples, was associated with a significantly lower risk of type 2 diabetes.</p>
+                        <a href="#" class="research-link">Read Study Summary <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="research-category cancer">Cancer</div>
+                        <h3>Apples Show Anti-Cancer Properties</h3>
+                        <p class="research-meta">Italian Meta-Analysis, 2021 | 40 studies</p>
+                        <p class="research-summary">Regular apple consumption was associated with reduced risk of lung cancer (23%), colorectal cancer (31%), and breast cancer (18%).</p>
+                        <a href="#" class="research-link">Read Study Summary <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="research-cta">
+                    <p>Want to dive deeper into fruit-related health research?</p>
+                    <a href="#" class="btn primary">Browse Our Research Library</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipes -->
+        <section class="recipes-section">
+            <div class="container">
+                <h2 class="section-title">Healthy Fruit Recipes</h2>
+                <div class="recipes-intro">
+                    <p>Delicious ways to incorporate more fruits into your diet with these easy-to-make recipes.</p>
+                </div>
+                
+                <div class="recipe-filters">
+                    <button class="filter-button active" data-category="all">All</button>
+                    <button class="filter-button" data-category="smoothies">Smoothies</button>
+                    <button class="filter-button" data-category="salads">Salads</button>
+                    <button class="filter-button" data-category="desserts">Desserts</button>
+                    <button class="filter-button" data-category="snacks">Snacks</button>
+                </div>
+                
+                <div class="recipes-grid">
+                    <!-- Smoothie Recipe 1 -->
+                    <div class="recipe-card" data-category="smoothies">
+                        <div class="recipe-image">
+                            <img src="../assets/images/berry-smoothie.jpg" alt="Berry Blast Smoothie">
+                            <button class="play-button"><i class="fas fa-play"></i></button>
+                        </div>
+                        <div class="recipe-info">
+                            <div class="recipe-category">Smoothie</div>
+                            <h3>Berry Blast Smoothie</h3>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> 5 min</span>
+                                <span><i class="fas fa-utensils"></i> 1 serving</span>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h4>Key Ingredients:</h4>
+                                <ul>
+                                    <li>Mixed berries</li>
+                                    <li>Banana</li>
+                                    <li>Spinach</li>
+                                    <li>Almond milk</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn outline">View Recipe</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Salad Recipe -->
+                    <div class="recipe-card" data-category="salads">
+                        <div class="recipe-image">
+                            <img src="../assets/images/tropical-salad.jpg" alt="Tropical Fruit Salad">
+                        </div>
+                        <div class="recipe-info">
+                            <div class="recipe-category">Salad</div>
+                            <h3>Tropical Fruit Salad</h3>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> 15 min</span>
+                                <span><i class="fas fa-utensils"></i> 4 servings</span>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h4>Key Ingredients:</h4>
+                                <ul>
+                                    <li>Mango</li>
+                                    <li>Pineapple</li>
+                                    <li>Papaya</li>
+                                    <li>Lime</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn outline">View Recipe</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Dessert Recipe -->
+                    <div class="recipe-card" data-category="desserts">
+                        <div class="recipe-image">
+                            <img src="../assets/images/banana-ice-cream.jpg" alt="Banana Nice Cream">
+                            <button class="play-button"><i class="fas fa-play"></i></button>
+                        </div>
+                        <div class="recipe-info">
+                            <div class="recipe-category">Dessert</div>
+                            <h3>Banana Nice Cream</h3>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> 10 min</span>
+                                <span><i class="fas fa-utensils"></i> 2 servings</span>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h4>Key Ingredients:</h4>
+                                <ul>
+                                    <li>Frozen bananas</li>
+                                    <li>Cocoa powder</li>
+                                    <li>Peanut butter</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn outline">View Recipe</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Snack Recipe -->
+                    <div class="recipe-card" data-category="snacks">
+                        <div class="recipe-image">
+                            <img src="../assets/images/apple-chips.jpg" alt="Baked Apple Chips">
+                        </div>
+                        <div class="recipe-info">
+                            <div class="recipe-category">Snack</div>
+                            <h3>Baked Apple Chips</h3>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> 2 hours</span>
+                                <span><i class="fas fa-utensils"></i> 4 servings</span>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h4>Key Ingredients:</h4>
+                                <ul>
+                                    <li>Apples</li>
+                                    <li>Cinnamon</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn outline">View Recipe</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Smoothie Recipe 2 -->
+                    <div class="recipe-card" data-category="smoothies">
+                        <div class="recipe-image">
+                            <img src="../assets/images/green-smoothie.jpg" alt="Green Detox Smoothie">
+                        </div>
+                        <div class="recipe-info">
+                            <div class="recipe-category">Smoothie</div>
+                            <h3>Green Detox Smoothie</h3>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> 5 min</span>
+                                <span><i class="fas fa-utensils"></i> 1 serving</span>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h4>Key Ingredients:</h4>
+                                <ul>
+                                    <li>Green apple</li>
+                                    <li>Kale</li>
+                                    <li>Lemon</li>
+                                    <li>Ginger</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn outline">View Recipe</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Salad Recipe 2 -->
+                    <div class="recipe-card" data-category="salads">
+                        <div class="recipe-image">
+                            <img src="../assets/images/berry-salad.jpg" alt="Berry Spinach Salad">
+                            <button class="play-button"><i class="fas fa-play"></i></button>
+                        </div>
+                        <div class="recipe-info">
+                            <div class="recipe-category">Salad</div>
+                            <h3>Berry Spinach Salad</h3>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> 10 min</span>
+                                <span><i class="fas fa-utensils"></i> 2 servings</span>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h4>Key Ingredients:</h4>
+                                <ul>
+                                    <li>Mixed berries</li>
+                                    <li>Baby spinach</li>
+                                    <li>Walnuts</li>
+                                    <li>Goat cheese</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn outline">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recipes-cta">
+                    <p>Want more delicious fruit recipes?</p>
+                    <a href="#" class="btn primary">Browse All Recipes</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="health-newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Get Weekly Health Tips</h2>
+                    <p>Subscribe to our newsletter for fruit-based nutrition advice and healthy living tips</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../shop/">Shop</a></li>
+                        <li><a href="../encyclopedia/">Encyclopedia</a></li>
+                        <li><a href="../agriculture/">Agriculture</a></li>
+                        <li><a href="#">Health</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Recipe Modal -->
+    <div class="recipe-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="recipes.js"></script>
+    <script src="health.js"></script>
+</body>
+</html>

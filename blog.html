@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruitful | Blog & News</title>
+    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#" >Encyclopedia</a></li>
+                    <li><a href="#">Agriculture</a></li>
+                    <li><a href="#">Health</a></li>
+                    <li><a href="#">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>    
+    <!-- ACCESSIBILITY TOOLBAR -->
+    <div class="accessibility-bar">
+        <div class="container">
+            <button id="font-increase" aria-label="Increase text size">A+</button>
+            <button id="font-decrease" aria-label="Decrease text size">A-</button>
+            <button id="high-contrast" aria-label="High contrast mode">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <div class="language-selector">
+                <select id="language-select" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+            <button id="dark-mode-toggle" aria-label="Dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </div>
+
+    <main class="blog-container">
+        <!-- HERO SECTION -->
+        <section class="blog-hero">
+            <div class="hero-content">
+                <h1>Fresh <span>Fruit</span> Knowledge</h1>
+                <p>Discover the latest news, trends, and stories from the world of fruits</p>
+
+            </div>
+            <div class="hero-categories">
+                <a href="#trending" class="category-tag trending">Trending</a>
+                <a href="#discoveries" class="category-tag discoveries">Discoveries</a>
+                <a href="#farming" class="category-tag farming">Farming</a>
+                <a href="#recipes" class="category-tag recipes">Recipes</a>
+            </div>
+        </section>
+
+        <!-- FEATURED ARTICLE -->
+        <section class="featured-article">
+            <div class="featured-image" style="background-image: url('../images/blog/featured.jpg');">
+                <div class="featured-badge">Editor's Pick</div>
+            </div>
+            <div class="featured-content">
+                <span class="article-category">New Discovery</span>
+                <h2>Purple Honey: The Rare Antioxidant-Rich Superfood</h2>
+                <p class="article-excerpt">Researchers in North Carolina have identified a new type of honey produced by bees feeding exclusively on elderberries. This vibrant purple honey contains 3x more antioxidants than blueberries...</p>
+                <div class="article-meta">
+                    <div class="author">
+                        <img src="../images/blog/authors/dr-jones.jpg" alt="Dr. Samantha Jones">
+                        <span>Dr. Samantha Jones</span>
+                    </div>
+                    <span class="date">June 15, 2023</span>
+                    <span class="read-time">5 min read</span>
+                </div>
+                <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- ARTICLES GRID -->
+        <section class="articles-section">
+            <div class="section-header">
+                <h2>Latest Articles</h2>
+                <div class="view-all">
+                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="articles-grid">
+                <!-- Article 1 -->
+                <article class="article-card">
+                    <div class="article-image" style="background-image: url('../images/blog/article1.jpg');"></div>
+                    <div class="article-content">
+                        <span class="article-category">Fruit Festival</span>
+                        <h3>Japan's Annual Strawberry Grand Prix</h3>
+                        <p class="article-excerpt">Every February, farmers compete to grow the sweetest, largest strawberries in this unique competition that draws foodies worldwide...</p>
+                        <div class="article-meta">
+                            <span class="date">June 10, 2023</span>
+                            <span class="read-time">4 min read</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <div class="article-image" style="background-image: url('../images/blog/article2.jpg');"></div>
+                    <div class="article-content">
+                        <span class="article-category">Farming Tech</span>
+                        <h3>AI-Powered Orchards Yield 30% More Fruit</h3>
+                        <p class="article-excerpt">How machine learning algorithms are optimizing water usage and harvest times in California's citrus groves...</p>
+                        <div class="article-meta">
+                            <span class="date">June 5, 2023</span>
+                            <span class="read-time">6 min read</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <div class="article-image" style="background-image: url('../images/blog/article3.jpg');"></div>
+                    <div class="article-content">
+                        <span class="article-category">Nutrition</span>
+                        <h3>Why Dragon Fruit is the New Superfood</h3>
+                        <p class="article-excerpt">Nutritionists explain the gut health benefits and how to incorporate this tropical fruit into your diet...</p>
+                        <div class="article-meta">
+                            <span class="date">May 28, 2023</span>
+                            <span class="read-time">3 min read</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- USER CONTRIBUTIONS -->
+        <section class="contributions-section">
+            <div class="section-header">
+                <h2>Community Contributions</h2>
+
+            </div>
+            
+            <div class="contributors-grid">
+                <!-- Contributor 1 -->
+                <div class="contributor-card">
+                    <div class="contributor-header">
+                        <img src="../images/blog/contributors/chef-maria.jpg" alt="Chef Maria Gonzalez">
+                        <div class="contributor-info">
+                            <h3>Chef Maria Gonzalez</h3>
+                            <span class="contributor-title">Michelin-Starred Chef</span>
+                        </div>
+                    </div>
+                    <div class="contributor-content">
+                        <h4>Fruit-Forward Desserts: Balancing Sweetness</h4>
+                        <p>"The key to perfect fruit desserts lies in complementing natural sugars with herbal notes. Try pairing strawberries with basil or mango with lemongrass..."</p>
+                        <a href="#" class="read-contribution">Read Full Post</a>
+                    </div>
+                </div>
+                
+                <!-- Contributor 2 -->
+                <div class="contributor-card">
+                    <div class="contributor-header">
+                        <img src="../images/blog/contributors/farmer-john.jpg" alt="Farmer John Peterson">
+                        <div class="contributor-info">
+                            <h3>Farmer John Peterson</h3>
+                            <span class="contributor-title">Organic Apple Grower</span>
+                        </div>
+                    </div>
+                    <div class="contributor-content">
+                        <h4>Regenerative Farming for Better Fruit</h4>
+                        <p>"By planting cover crops between our apple trees, we've increased biodiversity and improved soil health, resulting in more flavorful fruit..."</p>
+                        <a href="#" class="read-contribution">Read Full Post</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contribute-cta">
+                <p>Want to share your expertise?</p>
+                <button class="contribute-btn">Become a Contributor</button>
+            </div>
+        </section>
+
+        <!-- COMMENTS SECTION -->
+        <section class="comments-section">
+            <div class="section-header">
+                <h2>Join the Conversation</h2>
+                <p>Share your thoughts on our latest articles</p>
+            </div>
+            
+            <div class="comments-container">
+                <!-- Comment Form -->
+                <form class="comment-form">
+                    <img src="../images/blog/user-avatar.jpg" alt="Your avatar" class="user-avatar">
+                    <div class="form-group">
+                        <textarea placeholder="Write your comment..." rows="3"></textarea>
+                        <div class="form-actions">
+                            <button type="submit" class="submit-comment">Post Comment</button>
+                            <div class="emoji-picker">
+                                <i class="far fa-smile"></i>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- Comments List -->
+                <div class="comments-list">
+                    <!-- Comment 1 -->
+                    <div class="comment">
+                        <img src="../images/blog/comments/user1.jpg" alt="User avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <h4>Sarah Johnson</h4>
+                                <span class="comment-date">2 days ago</span>
+                            </div>
+                            <p>That purple honey article was fascinating! I wonder if the bees' health is affected by the elderberry diet. Has there been any research on that?</p>
+                            <div class="comment-actions">
+                                <button class="like-comment"><i class="far fa-thumbs-up"></i> 12</button>
+                                <button class="reply-comment">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment 2 -->
+                    <div class="comment">
+                        <img src="../images/blog/comments/user2.jpg" alt="User avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <h4>Mike Chen</h4>
+                                <span class="comment-date">1 day ago</span>
+                            </div>
+                            <p>As a beekeeper, I can confirm this is revolutionary. We've noticed different flower diets change honey color, but nothing this dramatic!</p>
+                            <div class="comment-actions">
+                                <button class="like-comment"><i class="far fa-thumbs-up"></i> 8</button>
+                                <button class="reply-comment">Reply</button>
+                            </div>
+                            
+                            <!-- Reply -->
+                            <div class="comment reply">
+                                <img src="../images/blog/authors/dr-jones.jpg" alt="Author avatar" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <h4>Dr. Samantha Jones</h4>
+                                        <span class="comment-date">10 hours ago</span>
+                                    </div>
+                                    <p>Great observation, Mike! Our preliminary studies show these bees have slightly longer lifespans, possibly due to elderberry's antiviral properties.</p>
+                                    <div class="comment-actions">
+                                        <button class="like-comment"><i class="far fa-thumbs-up"></i> 5</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER SECTION -->
+        <section class="blog-newsletter">
+            <div class="newsletter-content">
+                <h2>Never Miss a Fruit Update</h2>
+                <p>Subscribe to our weekly digest of the most fascinating fruit news</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address">
+                    <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+            <div class="newsletter-image"></div>
+        </section>
+    </main>
+
+    <!-- Live Chat Button (Fixed Position) -->
+    <button class="live-chat-btn">
+        <i class="fas fa-comment-dots"></i> Need help?
+    </button>
+
+    <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="../shop/">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="blog.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

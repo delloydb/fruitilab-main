@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutilabs - Agriculture & Economy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="agriculture.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+</head>
+<body>
+    <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../shop/">Shop</a></li>
+                    <li><a href="../encyclopedia/">Encyclopedia</a></li>
+                    <li><a href="#" class="active">Agriculture</a></li>
+                    <li><a href="../health/">Health</a></li>
+                    <li><a href="../games/">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="agriculture-main">
+        <!-- Hero Section -->
+        <section class="agriculture-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Fruit Agriculture & Global Economy</h1>
+                    <p>Exploring the cultivation, trade, and business of fruits worldwide</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Fruit Trade -->
+        <section class="trade-section">
+            <div class="container">
+                <h2 class="section-title">Global Fruit Trade</h2>
+                <div class="trade-intro">
+                    <p>The global fruit trade is a multi-billion dollar industry that connects farmers with consumers across continents. Explore the latest data on fruit production, exports, and economic impact.</p>
+                </div>
+                
+                <div class="trade-grid">
+                    <div class="trade-card">
+                        <h3>Top Exporting Countries</h3>
+                        <div class="chart-container">
+                            <canvas id="exportChart"></canvas>
+                        </div>
+                        <div class="chart-source">Source: FAO, 2022 data</div>
+                    </div>
+                    
+                    <div class="trade-card">
+                        <h3>Top Importing Countries</h3>
+                        <div class="chart-container">
+                            <canvas id="importChart"></canvas>
+                        </div>
+                        <div class="chart-source">Source: FAO, 2022 data</div>
+                    </div>
+                    
+                    <div class="trade-card wide">
+                        <h3>Fruit Trade Value Over Time (USD billions)</h3>
+                        <div class="chart-container">
+                            <canvas id="tradeValueChart"></canvas>
+                        </div>
+                        <div class="chart-source">Source: World Bank, 2010-2022</div>
+                    </div>
+                    
+                    <div class="trade-card">
+                        <h3>Employment in Fruit Agriculture</h3>
+                        <div class="stat-card">
+                            <div class="stat-value">27%</div>
+                            <div class="stat-label">of global agricultural workers are in fruit cultivation</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">48M+</div>
+                            <div class="stat-label">people employed worldwide in fruit farming</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trade-card">
+                        <h3>Most Traded Fruits</h3>
+                        <div class="fruit-list">
+                            <div class="fruit-item">
+                                <div class="fruit-name">Bananas</div>
+                                <div class="fruit-value">$10.4B</div>
+                            </div>
+                            <div class="fruit-item">
+                                <div class="fruit-name">Apples</div>
+                                <div class="fruit-value">$8.2B</div>
+                            </div>
+                            <div class="fruit-item">
+                                <div class="fruit-name">Oranges</div>
+                                <div class="fruit-value">$6.7B</div>
+                            </div>
+                            <div class="fruit-item">
+                                <div class="fruit-name">Grapes</div>
+                                <div class="fruit-value">$5.9B</div>
+                            </div>
+                            <div class="fruit-item">
+                                <div class="fruit-name">Avocados</div>
+                                <div class="fruit-value">$5.3B</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sustainable Farming -->
+        <section class="sustainable-section">
+            <div class="container">
+                <h2 class="section-title">Sustainable Farming Practices</h2>
+                <div class="sustainable-intro">
+                    <p>As global demand for fruits grows, sustainable farming practices are essential for protecting ecosystems while maintaining productivity.</p>
+                </div>
+                
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-icon">
+                            <img src="../assets/icons/organic-farming.svg" alt="Organic Farming">
+                        </div>
+                        <h3>Organic Farming</h3>
+                        <p>Eliminating synthetic pesticides and fertilizers to protect soil health and biodiversity.</p>
+                        <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="practice-card">
+                        <div class="practice-icon">
+                            <img src="../assets/icons/water-conservation.svg" alt="Water Conservation">
+                        </div>
+                        <h3>Water Conservation</h3>
+                        <p>Drip irrigation and rainwater harvesting to reduce water usage by up to 60%.</p>
+                        <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="practice-card">
+                        <div class="practice-icon">
+                            <img src="../assets/icons/pollination.svg" alt="Pollinator Protection">
+                        </div>
+                        <h3>Pollinator Protection</h3>
+                        <p>Creating habitats for bees and other pollinators essential for fruit production.</p>
+                        <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="practice-card">
+                        <div class="practice-icon">
+                            <img src="../assets/icons/agroforestry.svg" alt="Agroforestry">
+                        </div>
+                        <h3>Agroforestry</h3>
+                        <p>Integrating fruit trees with other crops to mimic natural ecosystems.</p>
+                        <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="video-documentary">
+                    <div class="video-container">
+                        <div class="video-placeholder">
+                            <img src="../assets/images/farming-video-thumbnail.jpg" alt="Sustainable Farming Documentary">
+                            <button class="play-button"><i class="fas fa-play"></i></button>
+                        </div>
+                        <div class="video-info">
+                            <h3>The Future of Fruit Farming</h3>
+                            <p>A 25-minute documentary exploring innovative sustainable practices from farms around the world.</p>
+                            <div class="video-meta">
+                                <span><i class="fas fa-clock"></i> 25 min</span>
+                                <span><i class="fas fa-globe"></i> Global</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Farmer Stories -->
+        <section class="farmers-section">
+            <div class="container">
+                <h2 class="section-title">Farmer Stories</h2>
+                <div class="farmers-intro">
+                    <p>Meet the people behind your favorite fruits - their challenges, innovations, and daily lives.</p>
+                </div>
+                
+                <div class="farmers-carousel">
+                    <div class="farmer-card active">
+                        <div class="farmer-image">
+                            <img src="../assets/images/farmer1.jpg" alt="Maria Rodriguez">
+                        </div>
+                        <div class="farmer-info">
+                            <h3>Maria Rodriguez</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Michoacán, Mexico</p>
+                            <p class="crop"><i class="fas fa-apple-alt"></i> Avocados</p>
+                            <div class="farmer-quote">
+                                <p>"We've farmed avocados for three generations. Now with climate change, we're learning new ways to conserve water while keeping our trees healthy."</p>
+                            </div>
+                            <a href="#" class="btn outline">Read Full Story</a>
+                        </div>
+                    </div>
+                    
+                    <div class="farmer-card">
+                        <div class="farmer-image">
+                            <img src="../assets/images/farmer2.jpg" alt="Raj Patel">
+                        </div>
+                        <div class="farmer-info">
+                            <h3>Raj Patel</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Maharashtra, India</p>
+                            <p class="crop"><i class="fas fa-apple-alt"></i> Mangoes</p>
+                            <div class="farmer-quote">
+                                <p>"Switching to organic methods was difficult at first, but now we get better prices and our soil is healthier than ever."</p>
+                            </div>
+                            <a href="#" class="btn outline">Read Full Story</a>
+                        </div>
+                    </div>
+                    
+                    <div class="farmer-card">
+                        <div class="farmer-image">
+                            <img src="../assets/images/farmer3.jpg" alt="Sophie Dubois">
+                        </div>
+                        <div class="farmer-info">
+                            <h3>Sophie Dubois</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Provence, France</p>
+                            <p class="crop"><i class="fas fa-apple-alt"></i> Grapes</p>
+                            <div class="farmer-quote">
+                                <p>"Our family vineyard has survived phylloxera, wars, and now climate change. Each challenge makes us more resilient."</p>
+                            </div>
+                            <a href="#" class="btn outline">Read Full Story</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-indicators">
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Opportunities -->
+        <section class="investment-section">
+            <div class="container">
+                <h2 class="section-title">Investment Opportunities</h2>
+                <div class="investment-intro">
+                    <p>Discover ways to invest in the growing fruit agriculture sector, from direct farm investments to sustainable agriculture funds.</p>
+                </div>
+                
+                <div class="investment-tabs">
+                    <div class="tab-header">
+                        <button class="tab-button active" data-tab="direct">Direct Farm Investments</button>
+                        <button class="tab-button" data-tab="funds">Agriculture Funds</button>
+                        <button class="tab-button" data-tab="tech">AgriTech Startups</button>
+                        <button class="tab-button" data-tab="reits">Farmland REITs</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="direct">
+                        <div class="investment-card">
+                            <div class="investment-image">
+                                <img src="../assets/images/farm-investment.jpg" alt="Farm Investment">
+                            </div>
+                            <div class="investment-info">
+                                <h3>Direct Farm Ownership</h3>
+                                <p>Invest directly in fruit-producing farmland with our partner network. We connect investors with vetted farming operations in stable agricultural regions.</p>
+                                <ul class="investment-details">
+                                    <li><i class="fas fa-check-circle"></i> Average ROI: 8-12% annually</li>
+                                    <li><i class="fas fa-check-circle"></i> Minimum investment: $50,000</li>
+                                    <li><i class="fas fa-check-circle"></i> Typical holding period: 5-10 years</li>
+                                </ul>
+                                <button class="btn primary">Request Information</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="funds">
+                        <div class="investment-card">
+                            <div class="investment-image">
+                                <img src="../assets/images/agriculture-fund.jpg" alt="Agriculture Fund">
+                            </div>
+                            <div class="investment-info">
+                                <h3>Sustainable Agriculture Funds</h3>
+                                <p>Diversified portfolios of fruit and nut farms managed by agricultural experts. Our partner funds focus on sustainable, climate-resilient practices.</p>
+                                <ul class="investment-details">
+                                    <li><i class="fas fa-check-circle"></i> Average ROI: 6-9% annually</li>
+                                    <li><i class="fas fa-check-circle"></i> Minimum investment: $10,000</li>
+                                    <li><i class="fas fa-check-circle"></i> Liquidity: Quarterly redemptions</li>
+                                </ul>
+                                <button class="btn primary">Explore Funds</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tech">
+                        <div class="investment-card">
+                            <div class="investment-image">
+                                <img src="../assets/images/agritech.jpg" alt="AgriTech">
+                            </div>
+                            <div class="investment-info">
+                                <h3>Agricultural Technology</h3>
+                                <p>Invest in startups revolutionizing fruit farming through precision agriculture, robotics, and biological solutions.</p>
+                                <ul class="investment-details">
+                                    <li><i class="fas fa-check-circle"></i> High growth potential</li>
+                                    <li><i class="fas fa-check-circle"></i> Minimum investment: $5,000</li>
+                                    <li><i class="fas fa-check-circle"></i> Venture capital opportunities</li>
+                                </ul>
+                                <button class="btn primary">View Startups</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="reits">
+                        <div class="investment-card">
+                            <div class="investment-image">
+                                <img src="../assets/images/farmland-reit.jpg" alt="Farmland REIT">
+                            </div>
+                            <div class="investment-info">
+                                <h3>Farmland REITs</h3>
+                                <p>Publicly traded Real Estate Investment Trusts that own and operate fruit-producing farmland. Provides liquidity and diversification.</p>
+                                <ul class="investment-details">
+                                    <li><i class="fas fa-check-circle"></i> Average dividend yield: 4-6%</li>
+                                    <li><i class="fas fa-check-circle"></i> No minimum investment</li>
+                                    <li><i class="fas fa-check-circle"></i> Daily liquidity</li>
+                                </ul>
+                                <button class="btn primary">Learn About REITs</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="investment-disclaimer">
+                    <p><i class="fas fa-exclamation-triangle"></i> Investments in agriculture involve risks, including weather, commodity prices, and operational challenges. Past performance is not indicative of future results. Consult with a financial advisor before investing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="agriculture-newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Stay Updated on Fruit Agriculture</h2>
+                    <p>Subscribe to our monthly Agriculture Report for market trends, innovations, and investment opportunities</p>
+                    <form class="newsletter-form">
+                        <input type="text" placeholder="Your Name">
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../shop/">Shop</a></li>
+                        <li><a href="../encyclopedia/">Encyclopedia</a></li>
+                        <li><a href="#">Agriculture</a></li>
+                        <li><a href="../health/">Health</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="charts.js"></script>
+    <script src="agriculture.js"></script>
+</body>
+</html>

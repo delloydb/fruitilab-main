@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruitful | Play & Learn!</title>
+    <link rel="stylesheet" href="games.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+        <!-- Header (Same as homepage) -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Frutilabs Logo">
+                <h1>Frutilabs</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#" >Encyclopedia</a></li>
+                    <li><a href="#">Agriculture</a></li>
+                    <li><a href="#">Health</a></li>
+                    <li><a href="#"class="active">Games</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+                <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+    <main class="fun-games-container">
+        <!-- HERO SECTION -->
+        <section class="games-hero">
+            <div class="hero-content">
+                <h1>Play & Learn with <span>Fruits!</span></h1>
+                <p>Boost your fruit knowledge with fun, interactive games!</p>
+                <div class="game-categories">
+                    <a href="#fruit-quiz" class="game-category-btn">Quiz</a>
+                    <a href="#memory-match" class="game-category-btn">Memory</a>
+                    <a href="#virtual-farm" class="game-category-btn">Farm</a>
+                    <a href="#coloring-pages" class="game-category-btn">Color</a>
+                </div>
+            </div>
+            <div class="hero-fruits">
+                <div class="fruit-icon">🍎</div>
+                <div class="fruit-icon">🍌</div>
+                <div class="fruit-icon">🍊</div>
+                <div class="fruit-icon">🍇</div>
+            </div>
+        </section>
+
+        <!-- FRUIT QUIZ (More Interactive) -->
+        <section class="game-panel" id="fruit-quiz">
+            <div class="panel-header">
+                <h2><i class="fas fa-question-circle"></i> Fruit Quiz Challenge</h2>
+                <p>Guess the fruit correctly to earn points!</p>
+            </div>
+            <div class="quiz-game">
+                <div class="quiz-question-box">
+                    <p id="quiz-question">Loading question...</p>
+                </div>
+                <div class="quiz-options">
+                    <!-- Dynamically loaded -->
+                </div>
+                <div class="quiz-progress">
+                    <span id="quiz-score">Score: 0</span>
+                    <progress id="quiz-progress" value="0" max="5"></progress>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEMORY MATCH (More Visual) -->
+        <section class="game-panel" id="memory-match">
+            <div class="panel-header">
+                <h2><i class="fas fa-brain"></i> Memory Match</h2>
+                <p>Find all matching pairs before time runs out!</p>
+            </div>
+            <div class="memory-game">
+                <div class="memory-timer">
+                    <span>⏱️ Time: <span id="time">60</span>s</span>
+                    <span>🔍 Matches: <span id="matches">0</span>/8</span>
+                </div>
+                <div class="memory-board" id="memory-board">
+                    <!-- Cards loaded via JS -->
+                </div>
+                <button id="memory-restart" class="restart-btn">Restart Game</button>
+            </div>
+        </section>
+
+        <!-- VIRTUAL FARM (More Game-like) -->
+        <section class="game-panel" id="virtual-farm">
+            <div class="panel-header">
+                <h2><i class="fas fa-seedling"></i> Virtual Fruit Farm</h2>
+                <p>Grow your fruits and harvest for points!</p>
+            </div>
+            <div class="farm-game">
+                <div class="farm-stats">
+                    <span>🌱 Seeds: <span id="seeds">5</span></span>
+                    <span>💰 Coins: <span id="coins">0</span></span>
+                </div>
+                <div class="farm-land" id="farm-land">
+                    <!-- Farm plots loaded via JS -->
+                </div>
+                <div class="farm-shop">
+                    <button class="farm-action-btn" id="plant-seed">Plant Seed (🌱1)</button>
+                    <button class="farm-action-btn" id="harvest-all">Harvest All (💰)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLORING PAGES (More Download-Friendly) -->
+        <section class="game-panel" id="coloring-pages">
+            <div class="panel-header">
+                <h2><i class="fas fa-palette"></i> Fruit Coloring Pages</h2>
+                <p>Download & color these fun fruit designs!</p>
+            </div>
+            <div class="coloring-gallery">
+                <!-- Dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- REWARDS SECTION (More Marketable) -->
+        <section class="rewards-section">
+            <h3>Earn <span>Fruitful Points</span> by playing games!</h3>
+            <div class="rewards-badge" id="rewards-badge">
+                <span>🏆 Your Rank: <span id="user-rank">Beginner</span></span>
+                <span>🍎 Points: <span id="user-points">0</span></span>
+            </div>
+            <p>Play more to unlock <strong>exclusive fruit facts</strong>!</p>
+        </section>
+    </main>
+
+    <!-- Footer  -->
+        <!-- Footer (Same as homepage) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="../assets/icons/logo.svg" alt="Frutilabs Logo">
+                        <h3>Frutilabs</h3>
+                    </div>
+                    <p>Bringing the world's freshest fruits to your table since 2015</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="../shop/">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Orchard Street, Fruitvale</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@frutilabs.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Frutilabs. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="games.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
