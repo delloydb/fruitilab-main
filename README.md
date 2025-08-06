@@ -89,7 +89,7 @@ And to the spirit of Vibe Coding — may your fruits always be fresh and your id
 
 # 📬 Contact
 Have questions or want to collaborate?
-📧 loydbrownjnr@gmail.com 
+📧 lloydbrownjnr@gmail.com 
 🌐 delloydb/portfolio-mined
 ## 📦 How to Run Locally
 
