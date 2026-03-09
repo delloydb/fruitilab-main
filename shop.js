@@ -1,355 +1,487 @@
-// Shop Page Specific JavaScript
+/**
+ * ========== SHOP PAGE FUNCTIONALITY ==========
+ */
+
+// Wait for DOM to be fully loaded (ensure this runs after the main init)
 document.addEventListener('DOMContentLoaded', function() {
-    // Shopping Cart Functionality
-    const cart = [];
-    const cartBtn = document.querySelector('.cart-btn');
-    const cartSidebar = document.querySelector('.cart-sidebar');
-    const cartOverlay = document.querySelector('.cart-overlay');
-    const closeCart = document.querySelector('.close-cart');
-    const cartItemsContainer = document.querySelector('.cart-items');
-    const cartCount = document.querySelector('.cart-count');
-    const subtotalElement = document.querySelector('.subtotal');
-    const totalElement = document.querySelector('.total-price');
-    
-    // Toggle Cart Sidebar
-    function toggleCart() {
-        cartSidebar.classList.toggle('open');
-        cartOverlay.classList.toggle('show');
-        document.body.classList.toggle('no-scroll');
+    // Only initialize shop features if we're on the shop page
+    if (document.querySelector('.shop-filters')) {
+        initShopFeatures();
     }
-    
-    cartBtn.addEventListener('click', toggleCart);
-    closeCart.addEventListener('click', toggleCart);
-    cartOverlay.addEventListener('click', toggleCart);
-    
-    // Add to Cart Functionality
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const fruitItem = this.closest('.fruit-item');
-            const fruitName = fruitItem.querySelector('h3').textContent;
-            const fruitPrice = parseFloat(fruitItem.querySelector('.current-price').textContent.replace('$', ''));
-            const fruitImage = fruitItem.querySelector('img').src;
-            
-            // Check if item already exists in cart
-            const existingItem = cart.find(item => item.name === fruitName);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
+});
+
+/**
+ * Initialize all shop-specific features
+ */
+function initShopFeatures() {
+    initSearch();
+    initFilters();
+    initSort();
+    initAddToCart();
+    initCartSidebar();
+    initQuickView();
+    initPagination();
+    updateCartCount(); // Load cart from localStorage
+}
+
+/**
+ * Search functionality
+ */
+function initSearch() {
+    const searchInput = document.querySelector('.shop-search');
+    const searchButton = document.querySelector('.shop-filters .search-button');
+
+    if (!searchInput) return;
+
+    function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        const fruitCards = document.querySelectorAll('.fruit-card');
+
+        fruitCards.forEach(card => {
+            const name = card.dataset.name?.toLowerCase() || '';
+            if (name.includes(query) || query === '') {
+                card.style.display = '';
             } else {
-                cart.push({
-                    name: fruitName,
-                    price: fruitPrice,
-                    image: fruitImage,
-                    quantity: 1
-                });
+                card.style.display = 'none';
             }
-            
-            updateCart();
-            showAddToCartFeedback(this);
         });
-    });
-    
-    // Update Cart UI
-    function updateCart() {
-        // Clear current cart items
-        cartItemsContainer.innerHTML = '';
-        
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = `
-                <div class="empty-cart">
-                    <img src="../assets/icons/empty-cart.svg" alt="Empty Cart">
-                    <p>Your cart is empty</p>
-                    <button class="btn primary">Continue Shopping</button>
-                </div>
-            `;
-        } else {
-            let subtotal = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                subtotal += itemTotal;
-                
-                const cartItemElement = document.createElement('div');
-                cartItemElement.classList.add('cart-item');
-                cartItemElement.innerHTML = `
-                    <div class="item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="item-details">
-                        <h4>${item.name}</h4>
-                        <div class="item-price">$${item.price.toFixed(2)}</div>
-                        <div class="item-quantity">
-                            <button class="quantity-btn minus">-</button>
-                            <span>${item.quantity}</span>
-                            <button class="quantity-btn plus">+</button>
-                        </div>
-                    </div>
-                    <button class="remove-item"><i class="fas fa-trash"></i></button>
-                `;
-                
-                cartItemsContainer.appendChild(cartItemElement);
-                
-                // Add event listeners to quantity buttons
-                const minusBtn = cartItemElement.querySelector('.minus');
-                const plusBtn = cartItemElement.querySelector('.plus');
-                const removeBtn = cartItemElement.querySelector('.remove-item');
-                
-                minusBtn.addEventListener('click', () => {
-                    if (item.quantity > 1) {
-                        item.quantity -= 1;
-                        updateCart();
-                    }
-                });
-                
-                plusBtn.addEventListener('click', () => {
-                    item.quantity += 1;
-                    updateCart();
-                });
-                
-                removeBtn.addEventListener('click', () => {
-                    const itemIndex = cart.findIndex(cartItem => cartItem.name === item.name);
-                    if (itemIndex !== -1) {
-                        cart.splice(itemIndex, 1);
-                        updateCart();
-                    }
-                });
-            });
-            
-            subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-            totalElement.textContent = `$${subtotal.toFixed(2)}`;
-        }
-        
-        // Update cart count
-        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-        cartCount.textContent = totalItems;
-        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
     }
-    
-    // Add to Cart Feedback Animation
-    function showAddToCartFeedback(button) {
-        button.textContent = 'Added!';
-        button.classList.add('added');
-        
-        setTimeout(() => {
-            button.textContent = 'Add to Cart';
-            button.classList.remove('added');
-        }, 2000);
+
+    searchInput.addEventListener('input', debounce(performSearch, 300));
+    if (searchButton) {
+        searchButton.addEventListener('click', performSearch);
     }
-    
-    // Quick View Modal
-    const quickViewButtons = document.querySelectorAll('.quick-view');
-    const quickViewModal = document.querySelector('.quick-view-modal');
-    const closeModal = document.querySelector('.close-modal');
-    const modalBody = document.querySelector('.modal-body');
-    
-    quickViewButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const fruitItem = this.closest('.fruit-item');
-            const fruitName = fruitItem.querySelector('h3').textContent;
-            const fruitPrice = fruitItem.querySelector('.current-price').textContent;
-            const originalPrice = fruitItem.querySelector('.original-price')?.textContent || '';
-            const fruitImage = fruitItem.querySelector('img').src;
-            const fruitRating = fruitItem.querySelector('.fruit-rating span').textContent;
-            const fruitOrigin = fruitItem.querySelector('.fruit-origin span').textContent;
-            const isOrganic = fruitItem.querySelector('.organic') !== null;
-            
-            modalBody.innerHTML = `
-                <div class="modal-image">
-                    <img src="${fruitImage}" alt="${fruitName}">
-                    ${isOrganic ? '<div class="organic-badge">Organic</div>' : ''}
-                </div>
-                <div class="modal-info">
-                    <h3>${fruitName}</h3>
-                    <div class="modal-rating">
-                        <div class="stars">
-                            ${generateStars(parseFloat(fruitRating))}
-                            <span>${fruitRating}</span>
-                        </div>
-                        <div class="origin">
-                            <i class="fas fa-globe-americas"></i>
-                            <span>${fruitOrigin}</span>
-                        </div>
-                    </div>
-                    <div class="modal-price">
-                        <span class="current">${fruitPrice}</span>
-                        ${originalPrice ? `<span class="original">${originalPrice}</span>` : ''}
-                    </div>
-                    <p class="modal-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                    <div class="modal-actions">
-                        <div class="quantity-selector">
-                            <button class="qty-btn minus">-</button>
-                            <span class="qty">1</span>
-                            <button class="qty-btn plus">+</button>
-                        </div>
-                        <button class="btn primary add-to-cart-modal">Add to Cart</button>
-                    </div>
-                    <div class="modal-shipping">
-                        <i class="fas fa-truck"></i>
-                        <span>Free shipping on orders over $50</span>
-                    </div>
-                </div>
-            `;
-            
-            quickViewModal.classList.add('open');
-            document.body.classList.add('no-scroll');
-            
-            // Add event listener to modal add to cart button
-            const modalAddToCart = document.querySelector('.add-to-cart-modal');
-            modalAddToCart.addEventListener('click', () => {
-                const quantity = parseInt(document.querySelector('.qty').textContent);
-                
-                const existingItem = cart.find(item => item.name === fruitName);
-                
-                if (existingItem) {
-                    existingItem.quantity += quantity;
-                } else {
-                    cart.push({
-                        name: fruitName,
-                        price: parseFloat(fruitPrice.replace('$', '')),
-                        image: fruitImage,
-                        quantity: quantity
-                    });
-                }
-                
-                updateCart();
-                quickViewModal.classList.remove('open');
-                document.body.classList.remove('no-scroll');
-                showAddToCartFeedback(modalAddToCart);
-            });
-            
-            // Quantity selector in modal
-            const minusBtn = document.querySelector('.qty-btn.minus');
-            const plusBtn = document.querySelector('.qty-btn.plus');
-            const qtyElement = document.querySelector('.qty');
-            
-            minusBtn.addEventListener('click', () => {
-                let qty = parseInt(qtyElement.textContent);
-                if (qty > 1) {
-                    qtyElement.textContent = qty - 1;
-                }
-            });
-            
-            plusBtn.addEventListener('click', () => {
-                let qty = parseInt(qtyElement.textContent);
-                qtyElement.textContent = qty + 1;
-            });
-        });
-    });
-    
-    // Generate star rating HTML
-    function generateStars(rating) {
-        let stars = '';
-        const fullStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 >= 0.5;
-        
-        for (let i = 1; i <= 5; i++) {
-            if (i <= fullStars) {
-                stars += '<i class="fas fa-star"></i>';
-            } else if (i === fullStars + 1 && hasHalfStar) {
-                stars += '<i class="fas fa-star-half-alt"></i>';
-            } else {
-                stars += '<i class="far fa-star"></i>';
+}
+
+/**
+ * Filter functionality (type, price, organic)
+ */
+function initFilters() {
+    const typeSelect = document.getElementById('fruit-type');
+    const priceSelect = document.getElementById('price-range');
+    const organicSelect = document.getElementById('organic');
+    const resetBtn = document.querySelector('.filter-reset');
+
+    function applyFilters() {
+        const type = typeSelect?.value || '';
+        const priceRange = priceSelect?.value || '';
+        const organic = organicSelect?.value || '';
+
+        const fruitCards = document.querySelectorAll('.fruit-card');
+
+        fruitCards.forEach(card => {
+            let show = true;
+
+            // Type filter
+            if (type && card.dataset.type !== type) {
+                show = false;
             }
-        }
-        
-        return stars;
-    }
-    
-    // Close Quick View Modal
-    closeModal.addEventListener('click', function() {
-        quickViewModal.classList.remove('open');
-        document.body.classList.remove('no-scroll');
-    });
-    
-    // Filter Functionality
-    const filterReset = document.querySelector('.filter-reset');
-    const filterSelects = document.querySelectorAll('.filter-group select');
-    
-    filterReset.addEventListener('click', function() {
-        filterSelects.forEach(select => {
-            select.value = '';
-        });
-        filterFruits();
-    });
-    
-    filterSelects.forEach(select => {
-        select.addEventListener('change', filterFruits);
-    });
-    
-    function filterFruits() {
-        const country = document.getElementById('country').value;
-        const fruitType = document.getElementById('fruit-type').value;
-        const priceRange = document.getElementById('price-range').value;
-        const organic = document.getElementById('organic').value;
-        
-        const fruitItems = document.querySelectorAll('.fruit-item');
-        
-        fruitItems.forEach(item => {
-            const itemType = item.dataset.type;
-            const itemPrice = parseFloat(item.dataset.price);
-            const itemOrganic = item.dataset.organic;
-            
-            let showItem = true;
-            
-            // Apply filters
-            if (fruitType && itemType !== fruitType) {
-                showItem = false;
+
+            // Organic filter
+            if (organic) {
+                const isOrganic = card.dataset.organic === 'yes';
+                if (organic === 'yes' && !isOrganic) show = false;
+                if (organic === 'no' && isOrganic) show = false;
             }
-            
+
+            // Price range filter
             if (priceRange) {
-                const [min, max] = priceRange.split('-').map(Number);
-                if (max) {
-                    if (itemPrice < min || itemPrice > max) showItem = false;
-                } else {
-                    // Handle "20+" case
-                    if (itemPrice < min) showItem = false;
-                }
+                const price = parseFloat(card.dataset.price);
+                if (priceRange === '0-5' && (price < 0 || price > 5)) show = false;
+                else if (priceRange === '5-10' && (price < 5 || price > 10)) show = false;
+                else if (priceRange === '10-20' && (price < 10 || price > 20)) show = false;
+                else if (priceRange === '20+' && price <= 20) show = false;
             }
+
+            card.style.display = show ? '' : 'none';
+        });
+    }
+
+    if (typeSelect) typeSelect.addEventListener('change', applyFilters);
+    if (priceSelect) priceSelect.addEventListener('change', applyFilters);
+    if (organicSelect) organicSelect.addEventListener('change', applyFilters);
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            if (typeSelect) typeSelect.value = '';
+            if (priceSelect) priceSelect.value = '';
+            if (organicSelect) organicSelect.value = '';
+            applyFilters();
             
-            if (organic && itemOrganic !== organic) {
-                showItem = false;
-            }
-            
-            // Country filter would require additional data attributes
-            
-            if (showItem) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
+            // Also clear search
+            const searchInput = document.querySelector('.shop-search');
+            if (searchInput) {
+                searchInput.value = '';
+                // Trigger search filter (which resets visibility)
+                const event = new Event('input');
+                searchInput.dispatchEvent(event);
             }
         });
     }
-    
-    // Sort Functionality
+}
+
+/**
+ * Sorting functionality
+ */
+function initSort() {
     const sortSelect = document.getElementById('sort');
+    const fruitGrid = document.getElementById('fruit-grid');
+
+    if (!sortSelect || !fruitGrid) return;
+
     sortSelect.addEventListener('change', function() {
-        const sortValue = this.value;
-        const gridContainer = document.querySelector('.grid-container');
-        const fruitItems = Array.from(document.querySelectorAll('.fruit-item'));
-        
-        fruitItems.sort((a, b) => {
-            switch(sortValue) {
+        const sortBy = this.value;
+        const fruitCards = Array.from(document.querySelectorAll('.fruit-card'));
+
+        // Filter out hidden cards (if any) before sorting
+        const visibleCards = fruitCards.filter(card => card.style.display !== 'none');
+
+        // Sort based on selected option
+        visibleCards.sort((a, b) => {
+            switch (sortBy) {
                 case 'price-low':
                     return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
                 case 'price-high':
                     return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
                 case 'rating':
                     return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
-                case 'newest':
-                    // Assuming newer items have a "new" badge
-                    const aIsNew = a.querySelector('.new') !== null;
-                    const bIsNew = b.querySelector('.new') !== null;
-                    return bIsNew - aIsNew;
-                default: // 'popular'
-                    return 0; // Default order
+                case 'popular':
+                default:
+                    // Keep original order (by data attribute maybe)
+                    return 0;
             }
         });
-        
-        // Re-append sorted items
-        fruitItems.forEach(item => {
-            gridContainer.appendChild(item);
+
+        // Reorder DOM
+        visibleCards.forEach(card => fruitGrid.appendChild(card));
+    });
+}
+
+/**
+ * Add to Cart functionality
+ */
+let cart = [];
+
+function initAddToCart() {
+    // Load cart from localStorage
+    const savedCart = localStorage.getItem('frutilabs-cart');
+    if (savedCart) {
+        try {
+            cart = JSON.parse(savedCart);
+        } catch (e) {
+            cart = [];
+        }
+    }
+
+    // Add event listeners to all "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const fruitCard = this.closest('.fruit-card');
+            if (!fruitCard) return;
+
+            const id = this.dataset.id || Date.now().toString(); // Use data-id if available
+            const name = fruitCard.querySelector('h3')?.textContent || 'Fruit';
+            const price = parseFloat(fruitCard.dataset.price) || 0;
+            const image = fruitCard.querySelector('.card-image img')?.src || '';
+
+            // Check if item already in cart
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+
+            saveCart();
+            updateCartCount();
+            showNotification(`${name} added to cart!`, 'success');
         });
     });
-});
+}
+
+function saveCart() {
+    localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
+}
+
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+    }
+}
+
+/**
+ * Cart Sidebar
+ */
+function initCartSidebar() {
+    const cartBtn = document.querySelector('.cart-btn');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartOverlay = document.querySelector('.cart-overlay');
+    const closeCart = document.querySelector('.close-cart');
+    const continueShopping = document.querySelector('.continue-shopping');
+
+    function openCart() {
+        if (cartSidebar) cartSidebar.classList.add('open');
+        if (cartOverlay) cartOverlay.classList.add('active');
+        renderCartItems();
+    }
+
+    function closeCartFunc() {
+        if (cartSidebar) cartSidebar.classList.remove('open');
+        if (cartOverlay) cartOverlay.classList.remove('active');
+    }
+
+    if (cartBtn) {
+        cartBtn.addEventListener('click', openCart);
+    }
+
+    if (closeCart) {
+        closeCart.addEventListener('click', closeCartFunc);
+    }
+
+    if (cartOverlay) {
+        cartOverlay.addEventListener('click', closeCartFunc);
+    }
+
+    if (continueShopping) {
+        continueShopping.addEventListener('click', closeCartFunc);
+    }
+
+    // Render cart items function
+    function renderCartItems() {
+        const cartItemsContainer = document.querySelector('.cart-items');
+        if (!cartItemsContainer) return;
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div class="empty-cart">
+                    <img src="../assets/icons/empty-cart.svg" alt="Empty Cart">
+                    <p>Your cart is empty</p>
+                    <button class="btn primary continue-shopping">Continue Shopping</button>
+                </div>
+            `;
+            // Re-attach event listener to new continue button
+            const newContinue = cartItemsContainer.querySelector('.continue-shopping');
+            if (newContinue) newContinue.addEventListener('click', closeCartFunc);
+        } else {
+            let html = '';
+            cart.forEach(item => {
+                html += `
+                    <div class="cart-item" data-id="${item.id}">
+                        <img src="${item.image}" alt="${item.name}" loading="lazy">
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                            <div class="cart-item-quantity">
+                                <button class="decrease-qty">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="increase-qty">+</button>
+                            </div>
+                        </div>
+                        <button class="cart-item-remove" aria-label="Remove item"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            });
+            cartItemsContainer.innerHTML = html;
+
+            // Attach event listeners for quantity changes and remove
+            cartItemsContainer.querySelectorAll('.decrease-qty').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const id = cartItem.dataset.id;
+                    const item = cart.find(i => i.id === id);
+                    if (item) {
+                        if (item.quantity > 1) {
+                            item.quantity -= 1;
+                        } else {
+                            cart = cart.filter(i => i.id !== id);
+                        }
+                        saveCart();
+                        updateCartCount();
+                        renderCartItems(); // re-render
+                    }
+                });
+            });
+
+            cartItemsContainer.querySelectorAll('.increase-qty').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const id = cartItem.dataset.id;
+                    const item = cart.find(i => i.id === id);
+                    if (item) {
+                        item.quantity += 1;
+                        saveCart();
+                        updateCartCount();
+                        renderCartItems();
+                    }
+                });
+            });
+
+            cartItemsContainer.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const id = cartItem.dataset.id;
+                    cart = cart.filter(i => i.id !== id);
+                    saveCart();
+                    updateCartCount();
+                    renderCartItems();
+                });
+            });
+        }
+
+        // Update summary
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const subtotalEl = document.querySelector('.subtotal');
+        const totalEl = document.querySelector('.total-price');
+        if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+        if (totalEl) totalEl.textContent = `$${subtotal.toFixed(2)}`; // Assuming free shipping for demo
+    }
+
+    // Initial render if cart opens
+    // Also expose renderCartItems to be called from other functions
+    window.renderCartItems = renderCartItems; // For quick view add
+}
+
+/**
+ * Quick View Modal
+ */
+function initQuickView() {
+    const quickViewBtns = document.querySelectorAll('.quick-view-btn');
+    const modal = document.getElementById('quick-view-modal');
+    const closeModal = document.querySelector('.close-modal');
+
+    if (!modal) return;
+
+    quickViewBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const fruitCard = this.closest('.fruit-card');
+            if (!fruitCard) return;
+
+            // Extract data
+            const name = fruitCard.querySelector('h3')?.textContent || 'Fruit';
+            const price = fruitCard.dataset.price || '0';
+            const rating = fruitCard.dataset.rating || '0';
+            const origin = fruitCard.dataset.origin || 'Unknown';
+            const organic = fruitCard.dataset.organic === 'yes' ? 'Organic' : 'Conventional';
+            const image = fruitCard.querySelector('.card-image img')?.src || '';
+            const description = `Fresh ${name} sourced directly from ${origin}. Perfect for healthy snacking and recipes.`; // Placeholder
+
+            const modalBody = modal.querySelector('.modal-body');
+            if (modalBody) {
+                modalBody.innerHTML = `
+                    <div class="quick-view-product">
+                        <img src="${image}" alt="${name}" loading="lazy">
+                        <div class="quick-view-details">
+                            <h3>${name}</h3>
+                            <div class="price">$${parseFloat(price).toFixed(2)}</div>
+                            <div class="rating">
+                                ${generateStarRating(rating)}
+                                <span>${rating}</span>
+                            </div>
+                            <div class="meta">
+                                <p><i class="fas fa-globe-americas"></i> Origin: ${origin}</p>
+                                <p><i class="fas fa-leaf"></i> ${organic}</p>
+                            </div>
+                            <p class="description">${description}</p>
+                            <button class="btn primary add-to-cart" data-id="${fruitCard.querySelector('.add-to-cart')?.dataset?.id || ''}">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+
+                // Re-attach add to cart event for the modal button
+                const modalAddBtn = modalBody.querySelector('.add-to-cart');
+                if (modalAddBtn) {
+                    modalAddBtn.addEventListener('click', function() {
+                        // Trigger same add to cart logic
+                        const originalBtn = fruitCard.querySelector('.add-to-cart');
+                        if (originalBtn) {
+                            originalBtn.click();
+                        }
+                        // Optionally close modal
+                        modal.classList.remove('active');
+                    });
+                }
+            }
+
+            modal.classList.add('active');
+        });
+    });
+
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+    }
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+}
+
+// Helper to generate star rating HTML
+function generateStarRating(rating) {
+    const num = parseFloat(rating);
+    const fullStars = Math.floor(num);
+    const halfStar = num % 1 >= 0.5;
+    let html = '';
+    for (let i = 0; i < fullStars; i++) {
+        html += '<i class="fas fa-star"></i>';
+    }
+    if (halfStar) {
+        html += '<i class="fas fa-star-half-alt"></i>';
+    }
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    for (let i = 0; i < emptyStars; i++) {
+        html += '<i class="far fa-star"></i>';
+    }
+    return html;
+}
+
+/**
+ * Pagination (demo: just console log)
+ */
+function initPagination() {
+    const pageBtns = document.querySelectorAll('.page-btn:not(.next)');
+    const nextBtn = document.querySelector('.page-btn.next');
+
+    pageBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            pageBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            // In a real site, you'd load new page content
+            showNotification(`Page ${this.textContent} clicked (demo)`, 'info');
+        });
+    });
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            showNotification('Next page (demo)', 'info');
+        });
+    }
+}
+
+/**
+ * Debounce helper
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
