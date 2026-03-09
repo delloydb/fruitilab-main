@@ -1,275 +1,270 @@
 /**
  * ========== SHOP PAGE FUNCTIONALITY ==========
+ * Run only on shop page
  */
-
-// Wait for DOM to be fully loaded (ensure this runs after the main init)
-document.addEventListener('DOMContentLoaded', function() {
-    // Only initialize shop features if we're on the shop page
-    if (document.querySelector('.shop-filters')) {
-        initShopFeatures();
-    }
-});
-
-/**
- * Initialize all shop-specific features
- */
-function initShopFeatures() {
-    initSearch();
-    initFilters();
-    initSort();
-    initAddToCart();
-    initCartSidebar();
-    initQuickView();
-    initPagination();
-    updateCartCount(); // Load cart from localStorage
+if (document.querySelector('.product-grid')) {
+    initShop();
 }
 
 /**
- * Search functionality
+ * Main shop initialization
  */
-function initSearch() {
-    const searchInput = document.querySelector('.shop-search');
-    const searchButton = document.querySelector('.shop-filters .search-button');
+function initShop() {
+    const products = document.querySelectorAll('.product-card');
+    const searchInput = document.getElementById('search-input');
+    const categoryFilter = document.getElementById('category-filter');
+    const priceFilter = document.getElementById('price-filter');
+    const organicCheckbox = document.getElementById('organic-filter');
+    const resetBtn = document.getElementById('reset-filters');
+    const sortSelect = document.getElementById('sort-select');
+    const resultsCount = document.getElementById('results-count');
 
-    if (!searchInput) return;
+    let currentProducts = Array.from(products);
 
-    function performSearch() {
-        const query = searchInput.value.trim().toLowerCase();
-        const fruitCards = document.querySelectorAll('.fruit-card');
+    // Event listeners
+    if (searchInput) searchInput.addEventListener('input', debounce(filterProducts, 300));
+    if (categoryFilter) categoryFilter.addEventListener('change', filterProducts);
+    if (priceFilter) priceFilter.addEventListener('change', filterProducts);
+    if (organicCheckbox) organicCheckbox.addEventListener('change', filterProducts);
+    if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+    if (sortSelect) sortSelect.addEventListener('change', sortProducts);
 
-        fruitCards.forEach(card => {
-            const name = card.dataset.name?.toLowerCase() || '';
-            if (name.includes(query) || query === '') {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
+    // Quick view
+    document.querySelectorAll('.quick-view').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            if (card) openQuickView(card);
         });
-    }
-
-    searchInput.addEventListener('input', debounce(performSearch, 300));
-    if (searchButton) {
-        searchButton.addEventListener('click', performSearch);
-    }
-}
-
-/**
- * Filter functionality (type, price, organic)
- */
-function initFilters() {
-    const typeSelect = document.getElementById('fruit-type');
-    const priceSelect = document.getElementById('price-range');
-    const organicSelect = document.getElementById('organic');
-    const resetBtn = document.querySelector('.filter-reset');
-
-    function applyFilters() {
-        const type = typeSelect?.value || '';
-        const priceRange = priceSelect?.value || '';
-        const organic = organicSelect?.value || '';
-
-        const fruitCards = document.querySelectorAll('.fruit-card');
-
-        fruitCards.forEach(card => {
-            let show = true;
-
-            // Type filter
-            if (type && card.dataset.type !== type) {
-                show = false;
-            }
-
-            // Organic filter
-            if (organic) {
-                const isOrganic = card.dataset.organic === 'yes';
-                if (organic === 'yes' && !isOrganic) show = false;
-                if (organic === 'no' && isOrganic) show = false;
-            }
-
-            // Price range filter
-            if (priceRange) {
-                const price = parseFloat(card.dataset.price);
-                if (priceRange === '0-5' && (price < 0 || price > 5)) show = false;
-                else if (priceRange === '5-10' && (price < 5 || price > 10)) show = false;
-                else if (priceRange === '10-20' && (price < 10 || price > 20)) show = false;
-                else if (priceRange === '20+' && price <= 20) show = false;
-            }
-
-            card.style.display = show ? '' : 'none';
-        });
-    }
-
-    if (typeSelect) typeSelect.addEventListener('change', applyFilters);
-    if (priceSelect) priceSelect.addEventListener('change', applyFilters);
-    if (organicSelect) organicSelect.addEventListener('change', applyFilters);
-
-    if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-            if (typeSelect) typeSelect.value = '';
-            if (priceSelect) priceSelect.value = '';
-            if (organicSelect) organicSelect.value = '';
-            applyFilters();
-            
-            // Also clear search
-            const searchInput = document.querySelector('.shop-search');
-            if (searchInput) {
-                searchInput.value = '';
-                // Trigger search filter (which resets visibility)
-                const event = new Event('input');
-                searchInput.dispatchEvent(event);
-            }
-        });
-    }
-}
-
-/**
- * Sorting functionality
- */
-function initSort() {
-    const sortSelect = document.getElementById('sort');
-    const fruitGrid = document.getElementById('fruit-grid');
-
-    if (!sortSelect || !fruitGrid) return;
-
-    sortSelect.addEventListener('change', function() {
-        const sortBy = this.value;
-        const fruitCards = Array.from(document.querySelectorAll('.fruit-card'));
-
-        // Filter out hidden cards (if any) before sorting
-        const visibleCards = fruitCards.filter(card => card.style.display !== 'none');
-
-        // Sort based on selected option
-        visibleCards.sort((a, b) => {
-            switch (sortBy) {
-                case 'price-low':
-                    return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
-                case 'price-high':
-                    return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
-                case 'rating':
-                    return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
-                case 'popular':
-                default:
-                    // Keep original order (by data attribute maybe)
-                    return 0;
-            }
-        });
-
-        // Reorder DOM
-        visibleCards.forEach(card => fruitGrid.appendChild(card));
     });
-}
 
-/**
- * Add to Cart functionality
- */
-let cart = [];
-
-function initAddToCart() {
-    // Load cart from localStorage
-    const savedCart = localStorage.getItem('frutilabs-cart');
-    if (savedCart) {
-        try {
-            cart = JSON.parse(savedCart);
-        } catch (e) {
-            cart = [];
-        }
-    }
-
-    // Add event listeners to all "Add to Cart" buttons
+    // Add to cart
     document.querySelectorAll('.add-to-cart').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', (e) => {
             e.preventDefault();
-            const fruitCard = this.closest('.fruit-card');
-            if (!fruitCard) return;
-
-            const id = this.dataset.id || Date.now().toString(); // Use data-id if available
-            const name = fruitCard.querySelector('h3')?.textContent || 'Fruit';
-            const price = parseFloat(fruitCard.dataset.price) || 0;
-            const image = fruitCard.querySelector('.card-image img')?.src || '';
-
-            // Check if item already in cart
-            const existingItem = cart.find(item => item.id === id);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: id,
-                    name: name,
-                    price: price,
-                    image: image,
-                    quantity: 1
-                });
-            }
-
-            saveCart();
-            updateCartCount();
-            showNotification(`${name} added to cart!`, 'success');
+            const card = e.target.closest('.product-card');
+            if (card) addToCart(card);
         });
     });
-}
 
-function saveCart() {
-    localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
-}
-
-function updateCartCount() {
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = totalItems;
-    }
-}
-
-/**
- * Cart Sidebar
- */
-function initCartSidebar() {
+    // Cart sidebar toggle
     const cartBtn = document.querySelector('.cart-btn');
     const cartSidebar = document.getElementById('cart-sidebar');
-    const cartOverlay = document.querySelector('.cart-overlay');
+    const cartOverlay = document.getElementById('cart-overlay');
     const closeCart = document.querySelector('.close-cart');
     const continueShopping = document.querySelector('.continue-shopping');
 
-    function openCart() {
-        if (cartSidebar) cartSidebar.classList.add('open');
-        if (cartOverlay) cartOverlay.classList.add('active');
+    if (cartBtn && cartSidebar) {
+        cartBtn.addEventListener('click', openCart);
+    }
+    if (closeCart) closeCart.addEventListener('click', closeCartFunc);
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCartFunc);
+    if (continueShopping) continueShopping.addEventListener('click', closeCartFunc);
+
+    // Load cart from storage
+    loadCart();
+
+    // Initial filter (to set count)
+    filterProducts();
+
+    /**
+     * Filter products based on search, category, price, organic
+     */
+    function filterProducts() {
+        const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        const category = categoryFilter ? categoryFilter.value : 'all';
+        const priceRange = priceFilter ? priceFilter.value : 'all';
+        const organicOnly = organicCheckbox ? organicCheckbox.checked : false;
+
+        let visibleCount = 0;
+
+        products.forEach(product => {
+            let visible = true;
+
+            // Search by name (or data-name)
+            const name = product.dataset.name ? product.dataset.name.toLowerCase() : '';
+            if (searchTerm && !name.includes(searchTerm)) {
+                visible = false;
+            }
+
+            // Category filter
+            if (visible && category !== 'all' && product.dataset.category !== category) {
+                visible = false;
+            }
+
+            // Price filter
+            if (visible && priceRange !== 'all') {
+                const price = parseFloat(product.dataset.price);
+                if (priceRange === '0-5' && (price < 0 || price > 5)) visible = false;
+                else if (priceRange === '5-10' && (price < 5 || price > 10)) visible = false;
+                else if (priceRange === '10-15' && (price < 10 || price > 15)) visible = false;
+                else if (priceRange === '15-20' && (price < 15 || price > 20)) visible = false;
+                else if (priceRange === '20+' && price <= 20) visible = false;
+            }
+
+            // Organic filter
+            if (visible && organicOnly) {
+                const isOrganic = product.dataset.organic === 'true';
+                if (!isOrganic) visible = false;
+            }
+
+            product.style.display = visible ? '' : 'none';
+            if (visible) visibleCount++;
+        });
+
+        if (resultsCount) {
+            resultsCount.textContent = `${visibleCount} product${visibleCount !== 1 ? 's' : ''}`;
+        }
+
+        // After filtering, re-sort if needed
+        if (sortSelect && sortSelect.value !== 'default') {
+            sortProducts();
+        }
+    }
+
+    /**
+     * Reset all filters to default
+     */
+    function resetFilters() {
+        if (searchInput) searchInput.value = '';
+        if (categoryFilter) categoryFilter.value = 'all';
+        if (priceFilter) priceFilter.value = 'all';
+        if (organicCheckbox) organicCheckbox.checked = false;
+        filterProducts();
+    }
+
+    /**
+     * Sort visible products
+     */
+    function sortProducts() {
+        const sortBy = sortSelect.value;
+        const grid = document.getElementById('product-grid');
+        const visibleProducts = Array.from(products).filter(p => p.style.display !== 'none');
+
+        if (sortBy === 'default') {
+            // Restore original order? For now, just reorder by data-id or keep as is
+            visibleProducts.sort((a, b) => parseInt(a.dataset.id) - parseInt(b.dataset.id));
+        } else if (sortBy === 'price-asc') {
+            visibleProducts.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+        } else if (sortBy === 'price-desc') {
+            visibleProducts.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+        } else if (sortBy === 'rating') {
+            visibleProducts.sort((a, b) => parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating));
+        }
+
+        // Reorder DOM
+        visibleProducts.forEach(product => grid.appendChild(product));
+    }
+
+    /**
+     * Open quick view modal
+     */
+    function openQuickView(card) {
+        const modal = document.getElementById('quickview-modal');
+        const modalBody = document.getElementById('quickview-body');
+
+        // Extract data
+        const id = card.dataset.id;
+        const name = card.dataset.name || card.querySelector('.product-title')?.textContent || 'Fruit';
+        const price = parseFloat(card.dataset.price) || 0;
+        const rating = parseFloat(card.dataset.rating) || 0;
+        const origin = card.dataset.origin || 'Unknown';
+        const organic = card.dataset.organic === 'true' ? 'Organic' : 'Conventional';
+        const image = card.querySelector('.card-image img')?.src || '';
+        const description = `Fresh ${name} sourced directly from ${origin}. Perfect for healthy snacking, smoothies, and desserts.`; // Placeholder
+
+        modalBody.innerHTML = `
+            <div class="quickview-product">
+                <img src="${image}" alt="${name}" loading="lazy">
+                <div class="quickview-details">
+                    <h3>${name}</h3>
+                    <div class="quickview-price">$${price.toFixed(2)}</div>
+                    <div class="quickview-meta">
+                        <p><i class="fas fa-map-marker-alt"></i> Origin: ${origin}</p>
+                        <p><i class="fas fa-leaf"></i> ${organic}</p>
+                        <p><i class="fas fa-star"></i> Rating: ${rating.toFixed(1)} / 5</p>
+                    </div>
+                    <p class="quickview-description">${description}</p>
+                    <button class="btn primary quickview-add" data-id="${id}">Add to Cart</button>
+                </div>
+            </div>
+        `;
+
+        // Attach add to cart event to the new button
+        modalBody.querySelector('.quickview-add').addEventListener('click', function() {
+            addToCart(card);
+            modal.classList.remove('active');
+        });
+
+        modal.classList.add('active');
+    }
+
+    /**
+     * Add product to cart
+     */
+    function addToCart(card) {
+        const id = card.dataset.id;
+        const name = card.dataset.name || card.querySelector('.product-title')?.textContent || 'Fruit';
+        const price = parseFloat(card.dataset.price) || 0;
+        const image = card.querySelector('.card-image img')?.src || '';
+
+        let cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
+
+        const existingItem = cart.find(item => item.id === id);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: id,
+                name: name,
+                price: price,
+                image: image,
+                quantity: 1
+            });
+        }
+
+        localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCartItems();
+        showNotification(`${name} added to cart!`, 'success');
+    }
+
+    /**
+     * Load cart from localStorage and update UI
+     */
+    function loadCart() {
+        updateCartCount();
         renderCartItems();
     }
 
-    function closeCartFunc() {
-        if (cartSidebar) cartSidebar.classList.remove('open');
-        if (cartOverlay) cartOverlay.classList.remove('active');
+    /**
+     * Update cart count badge
+     */
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cartCount = document.querySelector('.cart-count');
+        if (cartCount) cartCount.textContent = totalItems;
     }
 
-    if (cartBtn) {
-        cartBtn.addEventListener('click', openCart);
-    }
-
-    if (closeCart) {
-        closeCart.addEventListener('click', closeCartFunc);
-    }
-
-    if (cartOverlay) {
-        cartOverlay.addEventListener('click', closeCartFunc);
-    }
-
-    if (continueShopping) {
-        continueShopping.addEventListener('click', closeCartFunc);
-    }
-
-    // Render cart items function
+    /**
+     * Render cart items in sidebar
+     */
     function renderCartItems() {
-        const cartItemsContainer = document.querySelector('.cart-items');
-        if (!cartItemsContainer) return;
+        const cartContainer = document.getElementById('cart-items');
+        const cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
+
+        if (!cartContainer) return;
 
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = `
+            cartContainer.innerHTML = `
                 <div class="empty-cart">
-                    <img src="../assets/icons/empty-cart.svg" alt="Empty Cart">
+                    <i class="fas fa-shopping-basket"></i>
                     <p>Your cart is empty</p>
                     <button class="btn primary continue-shopping">Continue Shopping</button>
                 </div>
             `;
-            // Re-attach event listener to new continue button
-            const newContinue = cartItemsContainer.querySelector('.continue-shopping');
+            // Re-attach event to new continue button
+            const newContinue = cartContainer.querySelector('.continue-shopping');
             if (newContinue) newContinue.addEventListener('click', closeCartFunc);
         } else {
             let html = '';
@@ -281,194 +276,99 @@ function initCartSidebar() {
                             <h4>${item.name}</h4>
                             <div class="cart-item-price">$${item.price.toFixed(2)}</div>
                             <div class="cart-item-quantity">
-                                <button class="decrease-qty">-</button>
+                                <button class="decrease-qty" data-id="${item.id}">−</button>
                                 <span>${item.quantity}</span>
-                                <button class="increase-qty">+</button>
+                                <button class="increase-qty" data-id="${item.id}">+</button>
                             </div>
                         </div>
-                        <button class="cart-item-remove" aria-label="Remove item"><i class="fas fa-trash"></i></button>
+                        <button class="cart-item-remove" data-id="${item.id}" aria-label="Remove item"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
             });
-            cartItemsContainer.innerHTML = html;
+            cartContainer.innerHTML = html;
 
-            // Attach event listeners for quantity changes and remove
-            cartItemsContainer.querySelectorAll('.decrease-qty').forEach(btn => {
+            // Add event listeners for quantity buttons
+            cartContainer.querySelectorAll('.decrease-qty').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const cartItem = this.closest('.cart-item');
-                    const id = cartItem.dataset.id;
-                    const item = cart.find(i => i.id === id);
-                    if (item) {
-                        if (item.quantity > 1) {
-                            item.quantity -= 1;
-                        } else {
-                            cart = cart.filter(i => i.id !== id);
-                        }
-                        saveCart();
-                        updateCartCount();
-                        renderCartItems(); // re-render
-                    }
+                    const id = this.dataset.id;
+                    updateCartItemQuantity(id, -1);
                 });
             });
 
-            cartItemsContainer.querySelectorAll('.increase-qty').forEach(btn => {
+            cartContainer.querySelectorAll('.increase-qty').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const cartItem = this.closest('.cart-item');
-                    const id = cartItem.dataset.id;
-                    const item = cart.find(i => i.id === id);
-                    if (item) {
-                        item.quantity += 1;
-                        saveCart();
-                        updateCartCount();
-                        renderCartItems();
-                    }
+                    const id = this.dataset.id;
+                    updateCartItemQuantity(id, 1);
                 });
             });
 
-            cartItemsContainer.querySelectorAll('.cart-item-remove').forEach(btn => {
+            cartContainer.querySelectorAll('.cart-item-remove').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const cartItem = this.closest('.cart-item');
-                    const id = cartItem.dataset.id;
-                    cart = cart.filter(i => i.id !== id);
-                    saveCart();
-                    updateCartCount();
-                    renderCartItems();
+                    const id = this.dataset.id;
+                    removeCartItem(id);
                 });
             });
         }
 
-        // Update summary
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const subtotalEl = document.querySelector('.subtotal');
-        const totalEl = document.querySelector('.total-price');
-        if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-        if (totalEl) totalEl.textContent = `$${subtotal.toFixed(2)}`; // Assuming free shipping for demo
+        // Update total
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const totalEl = document.getElementById('cart-total');
+        if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
     }
 
-    // Initial render if cart opens
-    // Also expose renderCartItems to be called from other functions
-    window.renderCartItems = renderCartItems; // For quick view add
-}
-
-/**
- * Quick View Modal
- */
-function initQuickView() {
-    const quickViewBtns = document.querySelectorAll('.quick-view-btn');
-    const modal = document.getElementById('quick-view-modal');
-    const closeModal = document.querySelector('.close-modal');
-
-    if (!modal) return;
-
-    quickViewBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const fruitCard = this.closest('.fruit-card');
-            if (!fruitCard) return;
-
-            // Extract data
-            const name = fruitCard.querySelector('h3')?.textContent || 'Fruit';
-            const price = fruitCard.dataset.price || '0';
-            const rating = fruitCard.dataset.rating || '0';
-            const origin = fruitCard.dataset.origin || 'Unknown';
-            const organic = fruitCard.dataset.organic === 'yes' ? 'Organic' : 'Conventional';
-            const image = fruitCard.querySelector('.card-image img')?.src || '';
-            const description = `Fresh ${name} sourced directly from ${origin}. Perfect for healthy snacking and recipes.`; // Placeholder
-
-            const modalBody = modal.querySelector('.modal-body');
-            if (modalBody) {
-                modalBody.innerHTML = `
-                    <div class="quick-view-product">
-                        <img src="${image}" alt="${name}" loading="lazy">
-                        <div class="quick-view-details">
-                            <h3>${name}</h3>
-                            <div class="price">$${parseFloat(price).toFixed(2)}</div>
-                            <div class="rating">
-                                ${generateStarRating(rating)}
-                                <span>${rating}</span>
-                            </div>
-                            <div class="meta">
-                                <p><i class="fas fa-globe-americas"></i> Origin: ${origin}</p>
-                                <p><i class="fas fa-leaf"></i> ${organic}</p>
-                            </div>
-                            <p class="description">${description}</p>
-                            <button class="btn primary add-to-cart" data-id="${fruitCard.querySelector('.add-to-cart')?.dataset?.id || ''}">Add to Cart</button>
-                        </div>
-                    </div>
-                `;
-
-                // Re-attach add to cart event for the modal button
-                const modalAddBtn = modalBody.querySelector('.add-to-cart');
-                if (modalAddBtn) {
-                    modalAddBtn.addEventListener('click', function() {
-                        // Trigger same add to cart logic
-                        const originalBtn = fruitCard.querySelector('.add-to-cart');
-                        if (originalBtn) {
-                            originalBtn.click();
-                        }
-                        // Optionally close modal
-                        modal.classList.remove('active');
-                    });
-                }
+    /**
+     * Update quantity of a cart item
+     */
+    function updateCartItemQuantity(id, delta) {
+        let cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
+        const itemIndex = cart.findIndex(item => item.id === id);
+        if (itemIndex !== -1) {
+            const newQty = cart[itemIndex].quantity + delta;
+            if (newQty <= 0) {
+                cart.splice(itemIndex, 1);
+            } else {
+                cart[itemIndex].quantity = newQty;
             }
-
-            modal.classList.add('active');
-        });
-    });
-
-    if (closeModal) {
-        closeModal.addEventListener('click', () => {
-            modal.classList.remove('active');
-        });
-    }
-
-    // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.classList.remove('active');
+            localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCartItems();
         }
-    });
-}
-
-// Helper to generate star rating HTML
-function generateStarRating(rating) {
-    const num = parseFloat(rating);
-    const fullStars = Math.floor(num);
-    const halfStar = num % 1 >= 0.5;
-    let html = '';
-    for (let i = 0; i < fullStars; i++) {
-        html += '<i class="fas fa-star"></i>';
     }
-    if (halfStar) {
-        html += '<i class="fas fa-star-half-alt"></i>';
-    }
-    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-    for (let i = 0; i < emptyStars; i++) {
-        html += '<i class="far fa-star"></i>';
-    }
-    return html;
-}
 
-/**
- * Pagination (demo: just console log)
- */
-function initPagination() {
-    const pageBtns = document.querySelectorAll('.page-btn:not(.next)');
-    const nextBtn = document.querySelector('.page-btn.next');
-
-    pageBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            pageBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            // In a real site, you'd load new page content
-            showNotification(`Page ${this.textContent} clicked (demo)`, 'info');
-        });
-    });
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            showNotification('Next page (demo)', 'info');
-        });
+    /**
+     * Remove item from cart
+     */
+    function removeCartItem(id) {
+        let cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
+        cart = cart.filter(item => item.id !== id);
+        localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCartItems();
     }
+
+    /**
+     * Open cart sidebar
+     */
+    function openCart() {
+        const sidebar = document.getElementById('cart-sidebar');
+        const overlay = document.getElementById('cart-overlay');
+        if (sidebar) sidebar.classList.add('open');
+        if (overlay) overlay.classList.add('active');
+        renderCartItems(); // Ensure latest items
+    }
+
+    /**
+     * Close cart sidebar
+     */
+    function closeCartFunc() {
+        const sidebar = document.getElementById('cart-sidebar');
+        const overlay = document.getElementById('cart-overlay');
+        if (sidebar) sidebar.classList.remove('open');
+        if (overlay) overlay.classList.remove('active');
+    }
+
+    // Expose renderCartItems for external calls if needed
+    window.renderCartItems = renderCartItems;
 }
 
 /**
@@ -476,12 +376,52 @@ function initPagination() {
  */
 function debounce(func, wait) {
     let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
+    return function(...args) {
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
+}
+
+/**
+ * Show notification (reuse from homepage)
+ */
+function showNotification(message, type = 'info') {
+    // Create a simple toast
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        background: ${type === 'error' ? '#f44336' : '#4caf50'};
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+
+    // Add animation style if not exists
+    if (!document.querySelector('#notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
 }
