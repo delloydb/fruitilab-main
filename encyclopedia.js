@@ -1,232 +1,11 @@
 /**
- * Frutilabs - Main JavaScript
- * Handles global interactivity and encyclopedia-specific functionality
+ * ========== ENCYCLOPEDIA PAGE FUNCTIONALITY ==========
+ * Run only on encyclopedia page
  */
-
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initMobileMenu();
-    initThemeToggle();
-    initBackToTop();
-    initSmoothScroll();
-    updateCopyrightYear();
-    initScrollAnimations();
-    loadCart(); // Load cart from localStorage
-
-    // Initialize encyclopedia features if on encyclopedia page
-    if (document.querySelector('.encyclopedia-hero')) {
-        initEncyclopedia();
-    }
-});
-
-/**
- * Mobile Menu Toggle
- */
-function initMobileMenu() {
-    const toggleButton = document.querySelector('.mobile-nav-toggle');
-    const primaryNav = document.querySelector('.primary-nav');
-
-    if (!toggleButton || !primaryNav) return;
-
-    toggleButton.addEventListener('click', function() {
-        const expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
-        this.setAttribute('aria-expanded', expanded);
-        primaryNav.classList.toggle('active');
-        document.body.style.overflow = expanded ? 'hidden' : '';
-    });
-
-    primaryNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            toggleButton.setAttribute('aria-expanded', 'false');
-            primaryNav.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            toggleButton.setAttribute('aria-expanded', 'false');
-            primaryNav.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
+if (document.querySelector('.encyclopedia-hero')) {
+    initEncyclopedia();
 }
 
-/**
- * Theme Toggle (Light/Dark Mode)
- */
-function initThemeToggle() {
-    const themeToggle = document.querySelector('.theme-toggle');
-    const htmlElement = document.documentElement;
-
-    if (!themeToggle) return;
-
-    const savedTheme = localStorage.getItem('frutilabs-theme');
-    if (savedTheme) {
-        htmlElement.setAttribute('data-theme', savedTheme);
-    }
-
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        htmlElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('frutilabs-theme', newTheme);
-    });
-}
-
-/**
- * Back to Top Button
- */
-function initBackToTop() {
-    const backToTopBtn = document.querySelector('.back-to-top');
-    if (!backToTopBtn) return;
-
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
-    });
-
-    backToTopBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-}
-
-/**
- * Smooth Scroll for Anchor Links
- */
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href === '#') return;
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-}
-
-/**
- * Update Copyright Year
- */
-function updateCopyrightYear() {
-    const yearSpan = document.getElementById('current-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
-}
-
-/**
- * Scroll Animations (Fade-in)
- */
-function initScrollAnimations() {
-    const animatedElements = document.querySelectorAll(
-        '.fruit-card, .category-card, .section-title, .fact-card'
-    );
-
-    if (animatedElements.length === 0) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    animatedElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(element);
-    });
-}
-
-/**
- * Show Notification Toast
- */
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        padding: 1rem 1.5rem;
-        background: ${type === 'error' ? '#f44336' : '#4caf50'};
-        color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
-        animation: slideIn 0.3s ease;
-    `;
-
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.animation = 'slideIn 0.3s ease reverse';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
-
-/* ========== CART FUNCTIONALITY (for modal add-to-cart) ========== */
-let cart = [];
-
-function loadCart() {
-    const savedCart = localStorage.getItem('frutilabs-cart');
-    if (savedCart) {
-        try {
-            cart = JSON.parse(savedCart);
-        } catch (e) {
-            cart = [];
-        }
-    }
-    updateCartCount();
-}
-
-function updateCartCount() {
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-        cartCount.textContent = totalItems;
-    }
-}
-
-function addToCart(product) {
-    // product should have id, name, price, image
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-        existing.quantity = (existing.quantity || 1) + 1;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-    localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
-    updateCartCount();
-    showNotification(`${product.name} added to cart!`, 'success');
-}
-
-/* ========== ENCYCLOPEDIA PAGE FUNCTIONALITY ========== */
 function initEncyclopedia() {
     initSearch();
     initCarousel();
@@ -237,7 +16,7 @@ function initEncyclopedia() {
 }
 
 /**
- * Search functionality (demo)
+ * Search functionality (filter fruits)
  */
 function initSearch() {
     const searchInput = document.getElementById('encyclopedia-search');
@@ -245,9 +24,8 @@ function initSearch() {
 
     searchInput.addEventListener('input', debounce(function() {
         const query = this.value.toLowerCase().trim();
-        if (query) {
-            showNotification(`Searching for: "${query}" (demo)`, 'info');
-        }
+        // In a real implementation, you might filter the fruit list or redirect
+        showNotification(`Searching for: "${query}" (demo)`, 'info');
     }, 300));
 }
 
@@ -318,6 +96,7 @@ function initCarousel() {
     window.addEventListener('resize', debounce(() => {
         const newVisibleCount = getVisibleCardCount();
         if (newVisibleCount !== visibleCount) {
+            // Recalculate
             currentIndex = 0;
             updateCarousel();
         }
@@ -597,22 +376,28 @@ function initFruitModal() {
                         <p class="scientific-name"><i>${data.scientific}</i></p>
                         <p class="origin"><i class="fas fa-map-marker-alt"></i> ${data.origin}</p>
                         <p class="description">${data.description}</p>
-                        <button class="btn primary add-to-cart-modal" data-fruit='${JSON.stringify({
-                            id: fruitKey,
-                            name: data.name,
-                            price: 5.99, // placeholder price
-                            image: data.image
-                        })}'>Add to Cart</button>
+                        <button class="btn primary add-to-cart" data-id="${fruitKey}">Add to Cart</button>
                     </div>
                 </div>
             `;
 
-            // Attach add to cart
-            const addBtn = modalBody.querySelector('.add-to-cart-modal');
-            if (addBtn) {
+            // Attach add to cart (reuse shop function if available)
+            const addBtn = modalBody.querySelector('.add-to-cart');
+            if (addBtn && typeof addToCart === 'function') {
                 addBtn.addEventListener('click', function() {
-                    const product = JSON.parse(this.dataset.fruit);
-                    addToCart(product);
+                    // Create a dummy card object for addToCart
+                    const dummyCard = {
+                        dataset: {
+                            id: fruitKey,
+                            name: data.name,
+                            price: 9.99, // placeholder
+                        },
+                        querySelector: (sel) => {
+                            if (sel === '.card-image img') return { src: data.image };
+                            return null;
+                        }
+                    };
+                    addToCart(dummyCard);
                     modal.classList.remove('active');
                 });
             }
@@ -628,15 +413,4 @@ function initFruitModal() {
     modal.addEventListener('click', function(e) {
         if (e.target === modal) modal.classList.remove('active');
     });
-}
-
-/**
- * Debounce helper
- */
-function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
 }
