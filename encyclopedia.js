@@ -1,338 +1,642 @@
-// Encyclopedia Page JavaScript
+/**
+ * Frutilabs - Main JavaScript
+ * Handles global interactivity and encyclopedia-specific functionality
+ */
+
+// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Fun Facts Carousel
-    const factCards = document.querySelectorAll('.fact-card');
-    const factIndicators = document.querySelectorAll('.fact-indicators .indicator');
-    let currentFact = 0;
-    const factInterval = 5000; // 5 seconds
-    
-    function showFact(index) {
-        factCards.forEach(card => card.classList.remove('active'));
-        factIndicators.forEach(indicator => indicator.classList.remove('active'));
-        
-        factCards[index].classList.add('active');
-        factIndicators[index].classList.add('active');
-        currentFact = index;
+    initMobileMenu();
+    initThemeToggle();
+    initBackToTop();
+    initSmoothScroll();
+    updateCopyrightYear();
+    initScrollAnimations();
+    loadCart(); // Load cart from localStorage
+
+    // Initialize encyclopedia features if on encyclopedia page
+    if (document.querySelector('.encyclopedia-hero')) {
+        initEncyclopedia();
     }
-    
-    function nextFact() {
-        let nextIndex = (currentFact + 1) % factCards.length;
-        showFact(nextIndex);
-    }
-    
-    // Set up automatic sliding
-    let factTimer = setInterval(nextFact, factInterval);
-    
-    // Pause on hover
-    const factsContainer = document.querySelector('.facts-carousel');
-    factsContainer.addEventListener('mouseenter', () => {
-        clearInterval(factTimer);
+});
+
+/**
+ * Mobile Menu Toggle
+ */
+function initMobileMenu() {
+    const toggleButton = document.querySelector('.mobile-nav-toggle');
+    const primaryNav = document.querySelector('.primary-nav');
+
+    if (!toggleButton || !primaryNav) return;
+
+    toggleButton.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
+        this.setAttribute('aria-expanded', expanded);
+        primaryNav.classList.toggle('active');
+        document.body.style.overflow = expanded ? 'hidden' : '';
     });
-    
-    factsContainer.addEventListener('mouseleave', () => {
-        factTimer = setInterval(nextFact, factInterval);
-    });
-    
-    // Manual navigation with indicators
-    factIndicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            clearInterval(factTimer);
-            showFact(index);
-            factTimer = setInterval(nextFact, factInterval);
+
+    primaryNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggleButton.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
-    
-    // Seasonal Calendar
-    const calendarYear = document.querySelector('.calendar-year');
-    const monthsGrid = document.querySelector('.months-grid');
-    const prevYearBtn = document.querySelector('.prev-year');
-    const nextYearBtn = document.querySelector('.next-year');
-    const regionSelect = document.getElementById('calendar-region');
-    
-    let currentYear = new Date().getFullYear();
-    calendarYear.textContent = currentYear;
-    
-    // Sample seasonal data (in a real app, this would come from an API)
-    const seasonalData = {
-        'north-america': {
-            fruits: [
-                { name: 'Apples', color: '#E53935', months: [8, 9, 10] },
-                { name: 'Blueberries', color: '#3949AB', months: [5, 6, 7, 8] },
-                { name: 'Cherries', color: '#D81B60', months: [5, 6, 7] },
-                { name: 'Peaches', color: '#FB8C00', months: [5, 6, 7, 8] },
-                { name: 'Strawberries', color: '#C2185B', months: [3, 4, 5, 6, 7] },
-                { name: 'Watermelons', color: '#43A047', months: [6, 7, 8, 9] }
-            ]
-        },
-        'south-america': {
-            fruits: [
-                { name: 'Avocados', color: '#689F38', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
-                { name: 'Bananas', color: '#FDD835', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
-                { name: 'Mangoes', color: '#FF9800', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
-                { name: 'Pineapples', color: '#4CAF50', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
-            ]
-        },
-        // Other regions would be added similarly
-    };
-    
-    // Initialize calendar
-    function initCalendar() {
-        const region = regionSelect.value;
-        const data = seasonalData[region] || seasonalData['north-america'];
-        
-        // Clear existing months
-        monthsGrid.innerHTML = '';
-        
-        // Create month cards
-        for (let month = 0; month < 12; month++) {
-            const monthCard = document.createElement('div');
-            monthCard.className = 'month-card';
-            
-            const monthName = document.createElement('h4');
-            monthName.className = 'month-name';
-            monthName.textContent = new Date(currentYear, month, 1).toLocaleString('default', { month: 'long' });
-            
-            const fruitList = document.createElement('ul');
-            fruitList.className = 'fruit-list';
-            
-            // Add fruits available in this month
-            data.fruits.forEach(fruit => {
-                if (fruit.months.includes(month)) {
-                    const fruitItem = document.createElement('li');
-                    
-                    const fruitColor = document.createElement('span');
-                    fruitColor.className = 'fruit-color';
-                    fruitColor.style.backgroundColor = fruit.color;
-                    
-                    const fruitName = document.createTextNode(fruit.name);
-                    
-                    fruitItem.appendChild(fruitColor);
-                    fruitItem.appendChild(fruitName);
-                    fruitList.appendChild(fruitItem);
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            toggleButton.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+/**
+ * Theme Toggle (Light/Dark Mode)
+ */
+function initThemeToggle() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const htmlElement = document.documentElement;
+
+    if (!themeToggle) return;
+
+    const savedTheme = localStorage.getItem('frutilabs-theme');
+    if (savedTheme) {
+        htmlElement.setAttribute('data-theme', savedTheme);
+    }
+
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('frutilabs-theme', newTheme);
+    });
+}
+
+/**
+ * Back to Top Button
+ */
+function initBackToTop() {
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if (!backToTopBtn) return;
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+/**
+ * Smooth Scroll for Anchor Links
+ */
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
+
+/**
+ * Update Copyright Year
+ */
+function updateCopyrightYear() {
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+}
+
+/**
+ * Scroll Animations (Fade-in)
+ */
+function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll(
+        '.fruit-card, .category-card, .section-title, .fact-card'
+    );
+
+    if (animatedElements.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    animatedElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(element);
+    });
+}
+
+/**
+ * Show Notification Toast
+ */
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        background: ${type === 'error' ? '#f44336' : '#4caf50'};
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+
+    if (!document.querySelector('#notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+/* ========== CART FUNCTIONALITY (for modal add-to-cart) ========== */
+let cart = [];
+
+function loadCart() {
+    const savedCart = localStorage.getItem('frutilabs-cart');
+    if (savedCart) {
+        try {
+            cart = JSON.parse(savedCart);
+        } catch (e) {
+            cart = [];
+        }
+    }
+    updateCartCount();
+}
+
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        cartCount.textContent = totalItems;
+    }
+}
+
+function addToCart(product) {
+    // product should have id, name, price, image
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+    localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
+    updateCartCount();
+    showNotification(`${product.name} added to cart!`, 'success');
+}
+
+/* ========== ENCYCLOPEDIA PAGE FUNCTIONALITY ========== */
+function initEncyclopedia() {
+    initSearch();
+    initCarousel();
+    initMap();
+    initCalendar();
+    initFactsCarousel();
+    initFruitModal();
+}
+
+/**
+ * Search functionality (demo)
+ */
+function initSearch() {
+    const searchInput = document.getElementById('encyclopedia-search');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', debounce(function() {
+        const query = this.value.toLowerCase().trim();
+        if (query) {
+            showNotification(`Searching for: "${query}" (demo)`, 'info');
+        }
+    }, 300));
+}
+
+/**
+ * Featured fruits carousel
+ */
+function initCarousel() {
+    const track = document.getElementById('fruit-carousel-track');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const indicatorsContainer = document.getElementById('carousel-indicators');
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const cards = Array.from(track.children);
+    const cardWidth = cards[0]?.offsetWidth || 280;
+    const gap = 16; // matches --spacing-md
+    const visibleCount = getVisibleCardCount();
+    let currentIndex = 0;
+
+    function getVisibleCardCount() {
+        if (window.innerWidth >= 1024) return 4;
+        if (window.innerWidth >= 768) return 3;
+        if (window.innerWidth >= 480) return 2;
+        return 1;
+    }
+
+    function updateCarousel() {
+        const maxIndex = cards.length - visibleCount;
+        currentIndex = Math.min(currentIndex, maxIndex);
+        const translateX = -(currentIndex * (cardWidth + gap));
+        track.style.transform = `translateX(${translateX}px)`;
+        updateIndicators();
+    }
+
+    function updateIndicators() {
+        if (!indicatorsContainer) return;
+        const totalIndicators = Math.ceil(cards.length / visibleCount);
+        indicatorsContainer.innerHTML = '';
+        for (let i = 0; i < totalIndicators; i++) {
+            const indicator = document.createElement('span');
+            indicator.classList.add('indicator');
+            if (i === Math.floor(currentIndex / visibleCount)) {
+                indicator.classList.add('active');
+            }
+            indicator.addEventListener('click', () => {
+                currentIndex = i * visibleCount;
+                updateCarousel();
+            });
+            indicatorsContainer.appendChild(indicator);
+        }
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex -= 1;
+            updateCarousel();
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < cards.length - visibleCount) {
+            currentIndex += 1;
+            updateCarousel();
+        }
+    });
+
+    window.addEventListener('resize', debounce(() => {
+        const newVisibleCount = getVisibleCardCount();
+        if (newVisibleCount !== visibleCount) {
+            currentIndex = 0;
+            updateCarousel();
+        }
+    }, 200));
+
+    updateCarousel();
+}
+
+/**
+ * Initialize Leaflet map for fruit origins
+ */
+function initMap() {
+    const mapElement = document.getElementById('fruit-map');
+    if (!mapElement) return;
+
+    // Sample fruit origin data (lat, lon, name, type)
+    const fruitOrigins = [
+        { name: 'Mango', lat: 20.5937, lng: 78.9629, type: 'tropical' },
+        { name: 'Orange', lat: 28.6139, lng: 77.2090, type: 'citrus' },
+        { name: 'Blueberry', lat: 44.0682, lng: -114.7420, type: 'berries' },
+        { name: 'Strawberry', lat: 36.7783, lng: -119.4179, type: 'berries' },
+        { name: 'Dragon Fruit', lat: 23.6345, lng: -102.5528, type: 'tropical' },
+        { name: 'Passion Fruit', lat: -14.2350, lng: -51.9253, type: 'exotic' },
+        { name: 'Peach', lat: 32.1656, lng: -82.9001, type: 'stone' },
+        { name: 'Watermelon', lat: 27.9944, lng: -81.7603, type: 'melons' },
+    ];
+
+    const map = L.map(mapElement).setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add markers
+    const markers = [];
+    fruitOrigins.forEach(fruit => {
+        const marker = L.marker([fruit.lat, fruit.lng]).addTo(map)
+            .bindPopup(`<b>${fruit.name}</b><br>Origin`);
+        markers.push({ marker, type: fruit.type });
+    });
+
+    // Filter by fruit type
+    const filterSelect = document.getElementById('map-fruit-type');
+    if (filterSelect) {
+        filterSelect.addEventListener('change', function() {
+            const selected = this.value;
+            markers.forEach(item => {
+                if (selected === 'all' || item.type === selected) {
+                    map.addLayer(item.marker);
+                } else {
+                    map.removeLayer(item.marker);
                 }
             });
-            
-            monthCard.appendChild(monthName);
-            monthCard.appendChild(fruitList);
-            monthsGrid.appendChild(monthCard);
+        });
+    }
+}
+
+/**
+ * Seasonal calendar
+ */
+function initCalendar() {
+    const regionSelect = document.getElementById('calendar-region');
+    const prevYearBtn = document.querySelector('.prev-year');
+    const nextYearBtn = document.querySelector('.next-year');
+    const yearDisplay = document.getElementById('calendar-year');
+    const monthsGrid = document.getElementById('months-grid');
+    const legendContainer = document.getElementById('fruit-legend');
+
+    let currentYear = new Date().getFullYear();
+    let currentRegion = 'north-america';
+
+    // Sample data: fruit availability by region and month (1-12)
+    const availabilityData = {
+        'north-america': {
+            'Mango': [5, 6, 7, 8],
+            'Blueberry': [6, 7, 8],
+            'Strawberry': [4, 5, 6],
+            'Orange': [1, 2, 3, 12],
+            'Watermelon': [7, 8, 9],
+            'Peach': [7, 8, 9],
+        },
+        'south-america': {
+            'Mango': [11, 12, 1, 2],
+            'Passion Fruit': [3, 4, 5, 6],
+            'Orange': [6, 7, 8],
+        },
+        // Add more regions as needed
+    };
+
+    const fruitColors = {
+        'Mango': '#FFA500',
+        'Blueberry': '#4B0082',
+        'Strawberry': '#FF1493',
+        'Orange': '#FF8C00',
+        'Watermelon': '#2E8B57',
+        'Peach': '#FFDAB9',
+        'Passion Fruit': '#8A2BE2',
+    };
+
+    function renderCalendar() {
+        const regionData = availabilityData[currentRegion] || {};
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        let html = '';
+        for (let m = 0; m < 12; m++) {
+            const monthNum = m + 1;
+            const fruitsInMonth = Object.keys(regionData).filter(fruit => 
+                regionData[fruit].includes(monthNum)
+            );
+
+            html += `
+                <div class="month-card">
+                    <div class="month-name">${months[m]}</div>
+                    <ul class="fruit-list">
+                        ${fruitsInMonth.map(fruit => 
+                            `<li style="border-left: 3px solid ${fruitColors[fruit] || '#4CAF50'}; padding-left: 0.5rem;">${fruit}</li>`
+                        ).join('')}
+                        ${fruitsInMonth.length === 0 ? '<li style="color: #999;">—</li>' : ''}
+                    </ul>
+                </div>
+            `;
         }
-        
-        // Update legend
-        const legendContainer = document.querySelector('.fruit-legend');
-        legendContainer.innerHTML = '';
-        
-        data.fruits.forEach(fruit => {
-            const legendItem = document.createElement('div');
-            legendItem.className = 'legend-item';
-            
-            const fruitColor = document.createElement('span');
-            fruitColor.className = 'fruit-color';
-            fruitColor.style.backgroundColor = fruit.color;
-            
-            const fruitName = document.createTextNode(fruit.name);
-            
-            legendItem.appendChild(fruitColor);
-            legendItem.appendChild(fruitName);
-            legendContainer.appendChild(legendItem);
+        monthsGrid.innerHTML = html;
+
+        // Legend
+        const fruits = Object.keys(regionData);
+        let legendHtml = '';
+        fruits.forEach(fruit => {
+            legendHtml += `
+                <div class="legend-item">
+                    <span class="legend-color" style="background: ${fruitColors[fruit] || '#4CAF50'};"></span>
+                    <span>${fruit}</span>
+                </div>
+            `;
+        });
+        legendContainer.innerHTML = legendHtml || '<p>No data for this region</p>';
+    }
+
+    if (regionSelect) {
+        regionSelect.addEventListener('change', function() {
+            currentRegion = this.value;
+            renderCalendar();
         });
     }
-    
-    // Year navigation
-    prevYearBtn.addEventListener('click', function() {
-        currentYear--;
-        calendarYear.textContent = currentYear;
-        initCalendar();
-    });
-    
-    nextYearBtn.addEventListener('click', function() {
-        currentYear++;
-        calendarYear.textContent = currentYear;
-        initCalendar();
-    });
-    
-    // Region change
-    regionSelect.addEventListener('change', initCalendar);
-    
-    // Initialize the calendar
-    initCalendar();
-    
-    // Fruit Modal (for quick view)
-    const fruitModal = document.querySelector('.fruit-modal');
-    const fruitCards = document.querySelectorAll('.fruit-card');
-    
-    fruitCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            // Don't open modal if clicking on the "Learn More" button
-            if (e.target.closest('.btn')) return;
-            
-            const fruitName = this.querySelector('h3').textContent;
-            loadFruitModal(fruitName);
+
+    if (prevYearBtn) {
+        prevYearBtn.addEventListener('click', () => {
+            currentYear--;
+            yearDisplay.textContent = currentYear;
+            renderCalendar();
         });
+    }
+
+    if (nextYearBtn) {
+        nextYearBtn.addEventListener('click', () => {
+            currentYear++;
+            yearDisplay.textContent = currentYear;
+            renderCalendar();
+        });
+    }
+
+    renderCalendar();
+}
+
+/**
+ * Fun facts carousel (auto-rotate)
+ */
+function initFactsCarousel() {
+    const factsCarousel = document.getElementById('facts-carousel');
+    const indicators = document.getElementById('fact-indicators');
+    if (!factsCarousel || !indicators) return;
+
+    const facts = Array.from(factsCarousel.children);
+    let currentIndex = 0;
+    let interval;
+
+    function showFact(index) {
+        facts.forEach((fact, i) => {
+            fact.classList.toggle('active', i === index);
+        });
+        Array.from(indicators.children).forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        currentIndex = index;
+    }
+
+    function nextFact() {
+        let next = (currentIndex + 1) % facts.length;
+        showFact(next);
+    }
+
+    // Create indicators
+    facts.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('indicator');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            clearInterval(interval);
+            showFact(i);
+            startAutoRotate();
+        });
+        indicators.appendChild(dot);
     });
-    
-    function loadFruitModal(fruitName) {
-        // In a real app, this would fetch data from an API
-        // For now, we'll use sample data
-        const fruitData = {
-            'Mango': {
-                scientificName: 'Mangifera indica',
-                origin: 'South Asia',
-                images: ['../assets/images/mango.jpg', '../assets/images/mango-2.jpg', '../assets/images/mango-3.jpg'],
-                description: 'The mango is a tropical stone fruit known for its sweet, juicy flesh and distinctive flavor. It is native to South Asia and has been cultivated for over 4,000 years.',
-                growingConditions: {
-                    climate: 'Tropical and subtropical',
-                    temperature: '24-27°C (75-81°F)',
-                    rainfall: '750-2,500 mm annually',
-                    soil: 'Well-drained, fertile soil with pH 5.5-7.5'
-                },
-                nutrition: {
-                    calories: 60,
-                    carbs: 15,
-                    fiber: 1.6,
-                    vitaminC: 67,
-                    vitaminA: 25,
-                    folate: 7
-                },
-                funFact: 'Mangoes are related to cashews and pistachios, all members of the Anacardiaceae family.'
-            },
-            'Dragon Fruit': {
-                scientificName: 'Hylocereus undatus',
-                origin: 'Central America',
-                images: ['../assets/images/dragonfruit.jpg', '../assets/images/dragonfruit-2.jpg', '../assets/images/dragonfruit-3.jpg'],
-                description: 'Dragon fruit, also known as pitaya, is a vibrant tropical fruit with a unique appearance and mild, sweet flavor. It grows on cactus species native to Central America.',
-                growingConditions: {
-                    climate: 'Tropical and subtropical',
-                    temperature: '21-29°C (70-85°F)',
-                    rainfall: '600-1,300 mm annually',
-                    soil: 'Well-drained, sandy soil with pH 6-7'
-                },
-                nutrition: {
-                    calories: 60,
-                    carbs: 13,
-                    fiber: 3,
-                    vitaminC: 3,
-                    iron: 4,
-                    magnesium: 10
-                },
-                funFact: 'Dragon fruit flowers only bloom at night and usually last just one night, pollinated by bats or moths.'
+
+    function startAutoRotate() {
+        interval = setInterval(nextFact, 5000);
+    }
+
+    startAutoRotate();
+
+    // Pause on hover
+    factsCarousel.addEventListener('mouseenter', () => clearInterval(interval));
+    factsCarousel.addEventListener('mouseleave', startAutoRotate);
+}
+
+/**
+ * Fruit detail modal
+ */
+function initFruitModal() {
+    const modal = document.getElementById('fruit-modal');
+    const modalBody = document.getElementById('modal-body');
+    const closeBtn = document.querySelector('.close-modal');
+
+    if (!modal || !modalBody) return;
+
+    // Sample fruit data
+    const fruitData = {
+        mango: {
+            name: 'Mango',
+            scientific: 'Mangifera indica',
+            origin: 'South Asia',
+            description: 'Mangoes are juicy stone fruits from tropical regions. They are rich in vitamins A and C, and are known as the "king of fruits".',
+            image: 'assets/images/mango.jpg',
+        },
+        dragonfruit: {
+            name: 'Dragon Fruit',
+            scientific: 'Hylocereus undatus',
+            origin: 'Central America',
+            description: 'Dragon fruit, also known as pitaya, is a tropical cactus fruit with vibrant pink skin and sweet white flesh dotted with tiny black seeds.',
+            image: 'assets/images/dragonfruit.jpg',
+        },
+        blueberries: {
+            name: 'Blueberries',
+            scientific: 'Vaccinium sect. Cyanococcus',
+            origin: 'North America',
+            description: 'Blueberries are small, nutrient-packed berries rich in antioxidants. They are great for heart health and brain function.',
+            image: 'assets/images/blueberries.jpg',
+        },
+        pomegranate: {
+            name: 'Pomegranate',
+            scientific: 'Punica granatum',
+            origin: 'Iran',
+            description: 'Pomegranates are ancient fruits with juicy arils. They are loaded with antioxidants and have been symbols of life and fertility.',
+            image: 'assets/images/pomegranate.jpg',
+        },
+        passionfruit: {
+            name: 'Passion Fruit',
+            scientific: 'Passiflora edulis',
+            origin: 'South America',
+            description: 'Passion fruit is a tropical vine fruit with a tough outer rind and juicy, seed-filled pulp. It is aromatic and tangy.',
+            image: 'assets/images/passionfruit.jpg',
+        },
+    };
+
+    document.querySelectorAll('.fruit-detail-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const fruitKey = this.dataset.fruit;
+            const data = fruitData[fruitKey];
+            if (!data) return;
+
+            modalBody.innerHTML = `
+                <div class="quickview-product">
+                    <img src="${data.image}" alt="${data.name}" loading="lazy">
+                    <div class="quickview-details">
+                        <h3>${data.name}</h3>
+                        <p class="scientific-name"><i>${data.scientific}</i></p>
+                        <p class="origin"><i class="fas fa-map-marker-alt"></i> ${data.origin}</p>
+                        <p class="description">${data.description}</p>
+                        <button class="btn primary add-to-cart-modal" data-fruit='${JSON.stringify({
+                            id: fruitKey,
+                            name: data.name,
+                            price: 5.99, // placeholder price
+                            image: data.image
+                        })}'>Add to Cart</button>
+                    </div>
+                </div>
+            `;
+
+            // Attach add to cart
+            const addBtn = modalBody.querySelector('.add-to-cart-modal');
+            if (addBtn) {
+                addBtn.addEventListener('click', function() {
+                    const product = JSON.parse(this.dataset.fruit);
+                    addToCart(product);
+                    modal.classList.remove('active');
+                });
             }
-            // Other fruits would be added similarly
-        };
-        
-        const data = fruitData[fruitName] || fruitData['Mango'];
-        
-        // Populate modal with data
-        const modalBody = document.querySelector('.fruit-modal .modal-body');
-        modalBody.innerHTML = `
-            <div class="fruit-gallery">
-                <div class="main-image">
-                    <img src="${data.images[0]}" alt="${fruitName}">
-                </div>
-                <div class="thumbnail-container">
-                    ${data.images.map(img => `
-                        <div class="thumbnail">
-                            <img src="${img}" alt="${fruitName}">
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            <div class="fruit-info">
-                <h2>${fruitName}</h2>
-                <p class="scientific-name">${data.scientificName}</p>
-                <p class="origin"><i class="fas fa-globe-americas"></i> Native to ${data.origin}</p>
-                
-                <p>${data.description}</p>
-                
-                <h3 class="section-title">Growing Conditions</h3>
-                <div class="growing-conditions">
-                    <div class="condition-card">
-                        <div class="condition-icon">
-                            <i class="fas fa-cloud-sun"></i>
-                        </div>
-                        <div>
-                            <h4>Climate</h4>
-                            <p>${data.growingConditions.climate}</p>
-                        </div>
-                    </div>
-                    <div class="condition-card">
-                        <div class="condition-icon">
-                            <i class="fas fa-temperature-high"></i>
-                        </div>
-                        <div>
-                            <h4>Temperature</h4>
-                            <p>${data.growingConditions.temperature}</p>
-                        </div>
-                    </div>
-                    <div class="condition-card">
-                        <div class="condition-icon">
-                            <i class="fas fa-cloud-rain"></i>
-                        </div>
-                        <div>
-                            <h4>Rainfall</h4>
-                            <p>${data.growingConditions.rainfall}</p>
-                        </div>
-                    </div>
-                    <div class="condition-card">
-                        <div class="condition-icon">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <div>
-                            <h4>Soil</h4>
-                            <p>${data.growingConditions.soil}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <h3 class="section-title">Nutritional Facts (per 100g)</h3>
-                <div class="nutrition-chart" id="nutrition-chart"></div>
-                
-                <h3 class="section-title">Fun Fact</h3>
-                <div class="fun-fact">
-                    <i class="fas fa-lightbulb"></i>
-                    <p>${data.funFact}</p>
-                </div>
-                
-                <a href="../shop/" class="btn primary buy-btn">Where to Buy</a>
-            </div>
-        `;
-        
-        // Initialize thumbnail click events
-        const thumbnails = document.querySelectorAll('.thumbnail');
-        const mainImage = document.querySelector('.main-image img');
-        
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', function() {
-                const imgSrc = this.querySelector('img').src;
-                mainImage.src = imgSrc;
-                
-                thumbnails.forEach(t => t.style.borderColor = 'transparent');
-                this.style.borderColor = 'var(--primary-color)';
-            });
+
+            modal.classList.add('active');
         });
-        
-        // Initialize chart (using Chart.js in a real implementation)
-        // This is a placeholder - in a real app you would use a charting library
-        const chartContainer = document.getElementById('nutrition-chart');
-        chartContainer.innerHTML = `
-            <div class="nutrition-bar" style="width: ${data.nutrition.carbs * 2}px; background-color: #FF7D33;">
-                <span>Carbs: ${data.nutrition.carbs}g</span>
-            </div>
-            <div class="nutrition-bar" style="width: ${data.nutrition.fiber * 10}px; background-color: #4CAF50;">
-                <span>Fiber: ${data.nutrition.fiber}g</span>
-            </div>
-            <div class="nutrition-bar" style="width: ${data.nutrition.vitaminC}px; background-color: #2196F3;">
-                <span>Vitamin C: ${data.nutrition.vitaminC}% DV</span>
-            </div>
-        `;
-        
-        // Show modal
-        fruitModal.classList.add('open');
-        document.body.classList.add('no-scroll');
-    }
-    
-    // Close modal
-    document.querySelector('.fruit-modal .close-modal').addEventListener('click', function() {
-        fruitModal.classList.remove('open');
-        document.body.classList.remove('no-scroll');
     });
-});
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    }
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+}
+
+/**
+ * Debounce helper
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
