@@ -1,13 +1,196 @@
 /**
- * ========== SHOP PAGE FUNCTIONALITY ==========
- * Run only on shop page
+ * Frutilabs - Main JavaScript
+ * Handles global interactivity and shop-specific functionality
  */
-if (document.querySelector('.product-grid')) {
-    initShop();
+
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initMobileMenu();
+    initThemeToggle();
+    initBackToTop();
+    initSmoothScroll();
+    updateCopyrightYear();
+    initScrollAnimations();
+
+    // Initialize shop features if on shop page
+    if (document.querySelector('.product-grid')) {
+        initShop();
+    }
+});
+
+/**
+ * Mobile Menu Toggle
+ */
+function initMobileMenu() {
+    const toggleButton = document.querySelector('.mobile-nav-toggle');
+    const primaryNav = document.querySelector('.primary-nav');
+
+    if (!toggleButton || !primaryNav) return;
+
+    toggleButton.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
+        this.setAttribute('aria-expanded', expanded);
+        primaryNav.classList.toggle('active');
+        document.body.style.overflow = expanded ? 'hidden' : '';
+    });
+
+    primaryNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggleButton.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            toggleButton.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
 }
 
 /**
- * Main shop initialization
+ * Theme Toggle (Light/Dark Mode)
+ */
+function initThemeToggle() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const htmlElement = document.documentElement;
+
+    if (!themeToggle) return;
+
+    const savedTheme = localStorage.getItem('frutilabs-theme');
+    if (savedTheme) {
+        htmlElement.setAttribute('data-theme', savedTheme);
+    }
+
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('frutilabs-theme', newTheme);
+    });
+}
+
+/**
+ * Back to Top Button
+ */
+function initBackToTop() {
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if (!backToTopBtn) return;
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+/**
+ * Smooth Scroll for Anchor Links
+ */
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
+
+/**
+ * Update Copyright Year
+ */
+function updateCopyrightYear() {
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+}
+
+/**
+ * Scroll Animations (Fade-in)
+ */
+function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll(
+        '.fruit-card, .benefit-card, .link-card, .testimonial-card, .section-header, .product-card'
+    );
+
+    if (animatedElements.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    animatedElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(element);
+    });
+}
+
+/**
+ * Show Notification Toast
+ */
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        background: ${type === 'error' ? '#f44336' : '#4caf50'};
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+
+    if (!document.querySelector('#notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+/**
+ * ========== SHOP PAGE FUNCTIONALITY ==========
  */
 function initShop() {
     const products = document.querySelectorAll('.product-card');
@@ -18,8 +201,6 @@ function initShop() {
     const resetBtn = document.getElementById('reset-filters');
     const sortSelect = document.getElementById('sort-select');
     const resultsCount = document.getElementById('results-count');
-
-    let currentProducts = Array.from(products);
 
     // Event listeners
     if (searchInput) searchInput.addEventListener('input', debounce(filterProducts, 300));
@@ -46,7 +227,7 @@ function initShop() {
         });
     });
 
-    // Cart sidebar toggle
+    // Cart sidebar
     const cartBtn = document.querySelector('.cart-btn');
     const cartSidebar = document.getElementById('cart-sidebar');
     const cartOverlay = document.getElementById('cart-overlay');
@@ -66,9 +247,6 @@ function initShop() {
     // Initial filter (to set count)
     filterProducts();
 
-    /**
-     * Filter products based on search, category, price, organic
-     */
     function filterProducts() {
         const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
         const category = categoryFilter ? categoryFilter.value : 'all';
@@ -80,18 +258,11 @@ function initShop() {
         products.forEach(product => {
             let visible = true;
 
-            // Search by name (or data-name)
             const name = product.dataset.name ? product.dataset.name.toLowerCase() : '';
-            if (searchTerm && !name.includes(searchTerm)) {
-                visible = false;
-            }
+            if (searchTerm && !name.includes(searchTerm)) visible = false;
 
-            // Category filter
-            if (visible && category !== 'all' && product.dataset.category !== category) {
-                visible = false;
-            }
+            if (visible && category !== 'all' && product.dataset.category !== category) visible = false;
 
-            // Price filter
             if (visible && priceRange !== 'all') {
                 const price = parseFloat(product.dataset.price);
                 if (priceRange === '0-5' && (price < 0 || price > 5)) visible = false;
@@ -101,7 +272,6 @@ function initShop() {
                 else if (priceRange === '20+' && price <= 20) visible = false;
             }
 
-            // Organic filter
             if (visible && organicOnly) {
                 const isOrganic = product.dataset.organic === 'true';
                 if (!isOrganic) visible = false;
@@ -115,15 +285,11 @@ function initShop() {
             resultsCount.textContent = `${visibleCount} product${visibleCount !== 1 ? 's' : ''}`;
         }
 
-        // After filtering, re-sort if needed
         if (sortSelect && sortSelect.value !== 'default') {
             sortProducts();
         }
     }
 
-    /**
-     * Reset all filters to default
-     */
     function resetFilters() {
         if (searchInput) searchInput.value = '';
         if (categoryFilter) categoryFilter.value = 'all';
@@ -132,16 +298,12 @@ function initShop() {
         filterProducts();
     }
 
-    /**
-     * Sort visible products
-     */
     function sortProducts() {
         const sortBy = sortSelect.value;
         const grid = document.getElementById('product-grid');
         const visibleProducts = Array.from(products).filter(p => p.style.display !== 'none');
 
         if (sortBy === 'default') {
-            // Restore original order? For now, just reorder by data-id or keep as is
             visibleProducts.sort((a, b) => parseInt(a.dataset.id) - parseInt(b.dataset.id));
         } else if (sortBy === 'price-asc') {
             visibleProducts.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
@@ -151,18 +313,13 @@ function initShop() {
             visibleProducts.sort((a, b) => parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating));
         }
 
-        // Reorder DOM
         visibleProducts.forEach(product => grid.appendChild(product));
     }
 
-    /**
-     * Open quick view modal
-     */
     function openQuickView(card) {
         const modal = document.getElementById('quickview-modal');
         const modalBody = document.getElementById('quickview-body');
 
-        // Extract data
         const id = card.dataset.id;
         const name = card.dataset.name || card.querySelector('.product-title')?.textContent || 'Fruit';
         const price = parseFloat(card.dataset.price) || 0;
@@ -170,7 +327,7 @@ function initShop() {
         const origin = card.dataset.origin || 'Unknown';
         const organic = card.dataset.organic === 'true' ? 'Organic' : 'Conventional';
         const image = card.querySelector('.card-image img')?.src || '';
-        const description = `Fresh ${name} sourced directly from ${origin}. Perfect for healthy snacking, smoothies, and desserts.`; // Placeholder
+        const description = `Fresh ${name} sourced directly from ${origin}. Perfect for healthy snacking, smoothies, and desserts.`;
 
         modalBody.innerHTML = `
             <div class="quickview-product">
@@ -189,7 +346,6 @@ function initShop() {
             </div>
         `;
 
-        // Attach add to cart event to the new button
         modalBody.querySelector('.quickview-add').addEventListener('click', function() {
             addToCart(card);
             modal.classList.remove('active');
@@ -198,9 +354,16 @@ function initShop() {
         modal.classList.add('active');
     }
 
-    /**
-     * Add product to cart
-     */
+    // Close modal when clicking outside or on close button
+    const modal = document.getElementById('quickview-modal');
+    const closeModal = document.querySelector('.close-modal');
+    if (closeModal) {
+        closeModal.addEventListener('click', () => modal.classList.remove('active'));
+    }
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
     function addToCart(card) {
         const id = card.dataset.id;
         const name = card.dataset.name || card.querySelector('.product-title')?.textContent || 'Fruit';
@@ -213,13 +376,7 @@ function initShop() {
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
-            cart.push({
-                id: id,
-                name: name,
-                price: price,
-                image: image,
-                quantity: 1
-            });
+            cart.push({ id, name, price, image, quantity: 1 });
         }
 
         localStorage.setItem('frutilabs-cart', JSON.stringify(cart));
@@ -228,17 +385,11 @@ function initShop() {
         showNotification(`${name} added to cart!`, 'success');
     }
 
-    /**
-     * Load cart from localStorage and update UI
-     */
     function loadCart() {
         updateCartCount();
         renderCartItems();
     }
 
-    /**
-     * Update cart count badge
-     */
     function updateCartCount() {
         const cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -246,9 +397,6 @@ function initShop() {
         if (cartCount) cartCount.textContent = totalItems;
     }
 
-    /**
-     * Render cart items in sidebar
-     */
     function renderCartItems() {
         const cartContainer = document.getElementById('cart-items');
         const cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
@@ -263,7 +411,6 @@ function initShop() {
                     <button class="btn primary continue-shopping">Continue Shopping</button>
                 </div>
             `;
-            // Re-attach event to new continue button
             const newContinue = cartContainer.querySelector('.continue-shopping');
             if (newContinue) newContinue.addEventListener('click', closeCartFunc);
         } else {
@@ -287,7 +434,6 @@ function initShop() {
             });
             cartContainer.innerHTML = html;
 
-            // Add event listeners for quantity buttons
             cartContainer.querySelectorAll('.decrease-qty').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = this.dataset.id;
@@ -310,15 +456,11 @@ function initShop() {
             });
         }
 
-        // Update total
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const totalEl = document.getElementById('cart-total');
         if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
     }
 
-    /**
-     * Update quantity of a cart item
-     */
     function updateCartItemQuantity(id, delta) {
         let cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
         const itemIndex = cart.findIndex(item => item.id === id);
@@ -335,9 +477,6 @@ function initShop() {
         }
     }
 
-    /**
-     * Remove item from cart
-     */
     function removeCartItem(id) {
         let cart = JSON.parse(localStorage.getItem('frutilabs-cart')) || [];
         cart = cart.filter(item => item.id !== id);
@@ -346,29 +485,20 @@ function initShop() {
         renderCartItems();
     }
 
-    /**
-     * Open cart sidebar
-     */
     function openCart() {
         const sidebar = document.getElementById('cart-sidebar');
         const overlay = document.getElementById('cart-overlay');
         if (sidebar) sidebar.classList.add('open');
         if (overlay) overlay.classList.add('active');
-        renderCartItems(); // Ensure latest items
+        renderCartItems();
     }
 
-    /**
-     * Close cart sidebar
-     */
     function closeCartFunc() {
         const sidebar = document.getElementById('cart-sidebar');
         const overlay = document.getElementById('cart-overlay');
         if (sidebar) sidebar.classList.remove('open');
         if (overlay) overlay.classList.remove('active');
     }
-
-    // Expose renderCartItems for external calls if needed
-    window.renderCartItems = renderCartItems;
 }
 
 /**
@@ -380,48 +510,4 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, args), wait);
     };
-}
-
-/**
- * Show notification (reuse from homepage)
- */
-function showNotification(message, type = 'info') {
-    // Create a simple toast
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        padding: 1rem 1.5rem;
-        background: ${type === 'error' ? '#f44336' : '#4caf50'};
-        color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
-        animation: slideIn 0.3s ease;
-    `;
-
-    // Add animation style if not exists
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.animation = 'slideIn 0.3s ease reverse';
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
 }

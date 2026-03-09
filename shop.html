@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shop the freshest organic and exotic fruits at Frutilabs. Handpicked, farm-direct, and delivered to your door.">
-    <title>Frutilabs - Fresh Fruit Shop</title>
+    <meta name="description" content="Shop fresh fruits at Frutilabs - organic, exotic, and seasonal fruits delivered to your door">
+    <title>Frutilabs - Fruit Shop</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Font Awesome (for star icons, etc.) -->
+    <!-- Font Awesome (for star icons, cart icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -19,7 +19,7 @@
     <!-- Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Header (identical to homepage) -->
+    <!-- Header (consistent with homepage) -->
     <header class="header">
         <div class="container">
             <div class="logo">
@@ -115,7 +115,7 @@
                         </select>
                     </div>
 
-                    <!-- Organic Only Toggle (styled as checkbox) -->
+                    <!-- Organic Only Toggle -->
                     <div class="filter-group organic-group">
                         <input type="checkbox" id="organic-filter" class="filter-checkbox">
                         <label for="organic-filter" class="filter-label-checkbox">
@@ -128,7 +128,7 @@
                     <button class="filter-reset btn outline" id="reset-filters">Reset</button>
                 </div>
 
-                <!-- Sort Bar (below filters) -->
+                <!-- Sort Bar -->
                 <div class="sort-row">
                     <p class="results-count" id="results-count">8 products</p>
                     <div class="sort-group">
@@ -149,10 +149,7 @@
             <div class="container">
                 <h2 id="product-heading" class="visually-hidden">Fruit Products</h2>
                 <div class="product-grid" id="product-grid">
-                    <!-- Fruit cards will be generated dynamically via JS -->
-                    <!-- For demo, we include static cards with data attributes -->
-                    
-                    <!-- Card 1 -->
+                    <!-- Product cards with data attributes -->
                     <article class="product-card" data-id="1" data-category="tropical" data-price="8.99" data-organic="true" data-rating="4.5" data-name="Mango" data-origin="Mexico">
                         <div class="card-badges">
                             <span class="badge organic">Organic</span>
@@ -183,7 +180,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 2 -->
                     <article class="product-card" data-id="2" data-category="berries" data-price="4.99" data-organic="false" data-rating="4.2" data-name="Blueberries" data-origin="USA">
                         <div class="card-image">
                             <img src="assets/images/blueberries.jpg" alt="Fresh Blueberries" loading="lazy">
@@ -211,7 +207,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 3 -->
                     <article class="product-card" data-id="3" data-category="tropical" data-price="12.99" data-organic="true" data-rating="4.8" data-name="Dragon Fruit" data-origin="Vietnam">
                         <div class="card-badges">
                             <span class="badge organic">Organic</span>
@@ -242,7 +237,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 4 -->
                     <article class="product-card" data-id="4" data-category="citrus" data-price="3.99" data-organic="false" data-rating="4.0" data-name="Oranges" data-origin="Spain">
                         <div class="card-image">
                             <img src="assets/images/oranges.jpg" alt="Oranges" loading="lazy">
@@ -270,7 +264,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 5 -->
                     <article class="product-card" data-id="5" data-category="berries" data-price="7.49" data-organic="true" data-rating="4.7" data-name="Strawberries" data-origin="California">
                         <div class="card-badges">
                             <span class="badge organic">Organic</span>
@@ -301,7 +294,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 6 -->
                     <article class="product-card" data-id="6" data-category="exotic" data-price="15.99" data-organic="true" data-rating="4.9" data-name="Passion Fruit" data-origin="Brazil">
                         <div class="card-badges">
                             <span class="badge organic">Organic</span>
@@ -333,7 +325,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 7 -->
                     <article class="product-card" data-id="7" data-category="stone" data-price="6.99" data-organic="false" data-rating="4.3" data-name="Peaches" data-origin="Georgia">
                         <div class="card-image">
                             <img src="assets/images/peaches.jpg" alt="Peaches" loading="lazy">
@@ -361,7 +352,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 8 -->
                     <article class="product-card" data-id="8" data-category="melons" data-price="9.99" data-organic="true" data-rating="4.6" data-name="Watermelon" data-origin="Florida">
                         <div class="card-badges">
                             <span class="badge organic">Organic</span>
@@ -393,7 +383,7 @@
                     </article>
                 </div>
 
-                <!-- Pagination (simple) -->
+                <!-- Pagination -->
                 <div class="pagination">
                     <button class="page-btn active">1</button>
                     <button class="page-btn">2</button>
@@ -411,7 +401,6 @@
             <button class="close-cart" aria-label="Close cart"><i class="fas fa-times"></i></button>
         </div>
         <div class="cart-items" id="cart-items">
-            <!-- Cart items will be inserted by JS -->
             <div class="empty-cart">
                 <i class="fas fa-shopping-basket"></i>
                 <p>Your cart is empty</p>
@@ -438,7 +427,7 @@
         </div>
     </div>
 
-    <!-- Footer (identical to homepage) -->
+    <!-- Footer (consistent with homepage) -->
     <footer class="footer" aria-labelledby="footer-heading">
         <div class="container">
             <h2 id="footer-heading" class="visually-hidden">Frutilabs Footer</h2>
