@@ -1,707 +1,658 @@
-/* Health Page Specific Styles */
-.health-main {
-    padding-top: 80px;
-}
+/* ========== HEALTH PAGE STYLES ========== */
 
 /* Hero Section */
 .health-hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                url('../assets/images/health-hero.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 120px 0;
-    text-align: center;
+  background: linear-gradient(135deg, var(--color-green-light) 0%, var(--color-orange-light) 100%);
+  padding: var(--spacing-xxl) 0;
+  text-align: center;
 }
 
 .health-hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
+  font-size: 3.5rem;
+  margin-bottom: var(--spacing-sm);
 }
 
 .health-hero p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto 40px;
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-lg);
 }
 
 .health-stats {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 40px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
 }
 
-.stat {
-    text-align: center;
+.health-stats .stat {
+  text-align: center;
 }
 
-.stat-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: var(--primary-color);
+.health-stats .stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-green-fresh);
+  line-height: 1.2;
 }
 
-.stat-label {
-    font-size: 0.9rem;
-    max-width: 120px;
-    margin: 0 auto;
+.health-stats .stat-label {
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  max-width: 150px;
 }
 
 /* Nutrition Section */
 .nutrition-section {
-    padding: 80px 0;
-    background-color: var(--light-color);
+  padding: var(--spacing-xxl) 0;
+  background: var(--color-white);
 }
 
 .nutrition-intro {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--text-color);
+  max-width: 800px;
+  margin: var(--spacing-md) auto var(--spacing-xl);
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--color-text-light);
 }
 
 .nutrition-tabs {
-    margin-bottom: 40px;
-}
-
-.tab-header {
-    display: flex;
-    border-bottom: 2px solid var(--light-color);
-    margin-bottom: 30px;
-}
-
-.tab-button {
-    padding: 15px 25px;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-light);
-    cursor: pointer;
-    position: relative;
-    transition: var(--transition);
-}
-
-.tab-button::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--primary-color);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.tab-button.active {
-    color: var(--primary-color);
-}
-
-.tab-button.active::after {
-    transform: scaleX(1);
-}
-
-.tab-button:hover:not(.active) {
-    color: var(--dark-color);
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
+  margin-bottom: var(--spacing-xl);
 }
 
 .comparison-table {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .comparison-table table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-offwhite);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .comparison-table th {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 12px;
-    text-align: left;
+  background: var(--color-green-fresh);
+  color: white;
+  padding: var(--spacing-sm);
+  font-weight: 600;
+  text-align: left;
 }
 
 .comparison-table td {
-    padding: 12px;
-    border-bottom: 1px solid var(--light-color);
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-gray);
+  color: var(--color-text);
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
 }
 
 .comparison-table tr:nth-child(even) {
-    background-color: rgba(255, 125, 51, 0.05);
-}
-
-.comparison-table tr:hover {
-    background-color: rgba(255, 125, 51, 0.1);
+  background: var(--color-white);
 }
 
 .table-note {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    text-align: right;
-    margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--color-gray-dark);
+  margin-top: var(--spacing-xs);
+  text-align: right;
 }
 
 .nutrition-tip {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: rgba(255, 193, 7, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background: var(--color-green-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-xl);
 }
 
 .tip-icon {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 193, 7, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--tertiary-color);
-    font-size: 1.5rem;
-    flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: var(--color-green-fresh);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  flex-shrink: 0;
 }
 
 .nutrition-tip p {
-    margin: 0;
-    color: var(--text-color);
+  margin-bottom: 0;
+  color: var(--color-text);
+  font-weight: 500;
 }
 
 /* Diet Plans Section */
 .diet-section {
-    padding: 80px 0;
-    background-color: white;
+  padding: var(--spacing-xxl) 0;
+  background: var(--color-offwhite);
 }
 
 .diet-intro {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--text-color);
+  max-width: 800px;
+  margin: var(--spacing-md) auto var(--spacing-xl);
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--color-text-light);
 }
 
 .diet-plans {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
 }
 
 .diet-card {
-    background-color: var(--light-color);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
 }
 
 .diet-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
 }
 
 .diet-image {
-    position: relative;
-    height: 200px;
+  position: relative;
+  height: 200px;
+  overflow: hidden;
 }
 
 .diet-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.diet-card:hover .diet-image img {
+  transform: scale(1.05);
 }
 
 .diet-label {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 5px 15px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: var(--color-green-fresh);
+  color: white;
+  padding: 0.25rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .diet-info {
-    padding: 20px;
+  padding: var(--spacing-md);
 }
 
 .diet-info h3 {
-    margin-bottom: 15px;
-    color: var(--dark-color);
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.3rem;
 }
 
 .diet-info p {
-    color: var(--text-color);
-    margin-bottom: 15px;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-light);
 }
 
 .diet-features {
-    list-style: none;
-    margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--spacing-md);
 }
 
 .diet-features li {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-color);
-    font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
 }
 
 .diet-features i {
-    color: var(--primary-color);
-    font-size: 0.8rem;
+  color: var(--color-green-fresh);
 }
 
 /* Research Section */
 .research-section {
-    padding: 80px 0;
-    background-color: var(--light-color);
+  padding: var(--spacing-xxl) 0;
+  background: var(--color-white);
 }
 
 .research-intro {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--text-color);
+  max-width: 800px;
+  margin: var(--spacing-md) auto var(--spacing-xl);
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--color-text-light);
 }
 
 .research-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
 }
 
 .research-card {
-    background-color: white;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
+  background: var(--color-offwhite);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  border-top: 4px solid transparent;
 }
 
 .research-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.research-card.heart {
+  border-top-color: var(--color-red-fresh);
+}
+.research-card.brain {
+  border-top-color: var(--color-orange-fresh);
+}
+.research-card.diabetes {
+  border-top-color: var(--color-green-fresh);
+}
+.research-card.cancer {
+  border-top-color: var(--color-purple, #9c27b0); /* fallback */
 }
 
 .research-category {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.research-category.heart {
-    background-color: rgba(233, 30, 99, 0.1);
-    color: #E91E63;
-}
-
-.research-category.brain {
-    background-color: rgba(63, 81, 181, 0.1);
-    color: #3F51B5;
-}
-
-.research-category.diabetes {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-.research-category.cancer {
-    background-color: rgba(255, 193, 7, 0.1);
-    color: #FFC107;
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-sm);
+  background: var(--color-gray-light);
+  color: var(--color-text-light);
 }
 
 .research-card h3 {
-    margin-bottom: 10px;
-    color: var(--dark-color);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .research-meta {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    margin-bottom: 15px;
+  font-size: 0.85rem;
+  color: var(--color-gray-dark);
+  margin-bottom: var(--spacing-sm);
 }
 
 .research-summary {
-    color: var(--text-color);
-    margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
 }
 
 .research-link {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--primary-color);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: var(--transition);
+  display: inline-block;
+  color: var(--color-green-fresh);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.research-link i {
+  transition: transform var(--transition-fast);
 }
 
 .research-link:hover {
-    color: var(--secondary-color);
-    gap: 8px;
+  color: var(--color-green-dark);
+}
+
+.research-link:hover i {
+  transform: translateX(4px);
 }
 
 .research-cta {
-    text-align: center;
-    margin-top: 40px;
+  text-align: center;
+  margin-top: var(--spacing-lg);
 }
 
 .research-cta p {
-    margin-bottom: 15px;
-    color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-light);
 }
 
 /* Recipes Section */
 .recipes-section {
-    padding: 80px 0;
-    background-color: white;
+  padding: var(--spacing-xxl) 0;
+  background: var(--color-offwhite);
 }
 
 .recipes-intro {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--text-color);
+  max-width: 800px;
+  margin: var(--spacing-md) auto var(--spacing-xl);
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--color-text-light);
 }
 
 .recipe-filters {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xl);
 }
 
 .filter-button {
-    padding: 8px 20px;
-    background-color: var(--light-color);
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: var(--transition);
+  background: none;
+  border: 1px solid var(--color-gray);
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-button:hover {
+  border-color: var(--color-green-fresh);
+  color: var(--color-green-fresh);
 }
 
 .filter-button.active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.filter-button:hover:not(.active) {
-    background-color: #e0e0e0;
+  background: var(--color-green-fresh);
+  border-color: var(--color-green-fresh);
+  color: white;
 }
 
 .recipes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
 }
 
 .recipe-card {
-    background-color: var(--light-color);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
 }
 
 .recipe-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
 }
 
 .recipe-image {
-    position: relative;
-    height: 200px;
+  position: relative;
+  height: 200px;
+  overflow: hidden;
 }
 
 .recipe-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
 }
 
-.play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    border: none;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.recipe-card:hover .recipe-image img {
+  transform: scale(1.05);
+}
+
+.recipe-image .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--color-green-fresh);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.recipe-card:hover .play-button {
+  opacity: 1;
 }
 
 .play-button:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: translate(-50%, -50%) scale(1.1);
+  background: var(--color-green-fresh);
+  color: white;
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .recipe-info {
-    padding: 20px;
+  padding: var(--spacing-md);
 }
 
 .recipe-category {
-    display: inline-block;
-    padding: 3px 10px;
-    background-color: rgba(76, 175, 80, 0.1);
-    color: var(--secondary-color);
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-green-fresh);
+  margin-bottom: var(--spacing-xs);
 }
 
 .recipe-info h3 {
-    margin-bottom: 10px;
-    color: var(--dark-color);
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .recipe-meta {
-    display: flex;
-    gap: 15px;
-    color: var(--text-light);
-    font-size: 0.9rem;
-    margin-bottom: 15px;
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.9rem;
+  color: var(--color-gray-dark);
 }
 
 .recipe-meta i {
-    margin-right: 5px;
+  margin-right: 0.25rem;
+  color: var(--color-green-fresh);
+}
+
+.recipe-ingredients {
+  margin-bottom: var(--spacing-md);
 }
 
 .recipe-ingredients h4 {
-    font-size: 0.9rem;
-    color: var(--dark-color);
-    margin-bottom: 5px;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .recipe-ingredients ul {
-    list-style: none;
-    margin-bottom: 15px;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
 }
 
 .recipe-ingredients li {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    margin-bottom: 3px;
+  font-size: 0.9rem;
+  background: var(--color-green-light);
+  padding: 0.2rem 0.75rem;
+  border-radius: var(--radius-full);
+  color: var(--color-green-dark);
 }
 
 .recipes-cta {
-    text-align: center;
+  text-align: center;
+  margin-top: var(--spacing-lg);
 }
 
 .recipes-cta p {
-    margin-bottom: 15px;
-    color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-light);
 }
 
-/* Newsletter Section */
+/* Health Newsletter */
 .health-newsletter {
-    padding: 60px 0;
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
+  padding: var(--spacing-xxl) 0;
+  background: linear-gradient(135deg, var(--color-green-light) 0%, var(--color-orange-light) 100%);
+}
+
+.health-newsletter .newsletter-content {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .health-newsletter h2 {
-    margin-bottom: 15px;
-    font-size: 2rem;
+  color: var(--color-text);
 }
 
 .health-newsletter p {
-    margin-bottom: 25px;
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
 }
 
-.newsletter-form {
-    display: flex;
-    max-width: 500px;
-    margin: 0 auto;
+.health-newsletter .newsletter-form {
+  display: flex;
+  gap: var(--spacing-xs);
 }
 
-.newsletter-form input {
-    flex: 1;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 30px 0 0 30px;
-    font-size: 1rem;
+.health-newsletter .newsletter-form input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-gray);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  outline: none;
+  background: var(--color-white);
+  color: var(--color-text);
 }
 
-.newsletter-form button {
-    padding: 0 25px;
-    background-color: var(--dark-color);
-    color: white;
-    border: none;
-    border-radius: 0 30px 30px 0;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: var(--transition);
+.health-newsletter .newsletter-form input:focus {
+  border-color: var(--color-green-fresh);
 }
 
-.newsletter-form button:hover {
-    background-color: var(--secondary-color);
-}
-
-/* Recipe Modal */
+/* Recipe Modal (reuse fruit-modal styles) */
 .recipe-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
 }
 
-.recipe-modal.open {
-    opacity: 1;
-    visibility: visible;
+.recipe-modal.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .recipe-modal .modal-content {
-    background-color: white;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalFadeIn 0.3s ease;
+  background: var(--color-white);
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg);
+  position: relative;
+  transform: scale(0.9);
+  transition: transform var(--transition-fast);
 }
 
-@keyframes modalFadeIn {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.recipe-modal.active .modal-content {
+  transform: scale(1);
 }
 
 .recipe-modal .close-modal {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-light);
-    cursor: pointer;
-    transition: var(--transition);
-    z-index: 1;
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: var(--color-white);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: color var(--transition-fast);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
 }
 
 .recipe-modal .close-modal:hover {
-    color: var(--primary-color);
-    transform: rotate(90deg);
+  color: var(--color-red-fresh);
 }
 
-.recipe-modal .modal-body {
-    padding: 40px;
-}
-
-/* Responsive Styles */
-@media (max-width: 992px) {
-    .health-hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .health-stats {
-        gap: 30px;
-    }
-    
-    .stat-value {
-        font-size: 2rem;
-    }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-    .health-hero {
-        padding: 80px 0;
-    }
-    
-    .tab-header {
-        flex-wrap: wrap;
-    }
-    
-    .diet-plans {
-        grid-template-columns: 1fr;
-    }
-    
-    .recipe-filters {
-        justify-content: flex-start;
-    }
+  .health-hero h1 {
+    font-size: 2.5rem;
+  }
+  .health-stats {
+    gap: var(--spacing-md);
+  }
+  .health-stats .stat-value {
+    font-size: 2rem;
+  }
+  .nutrition-tip {
+    flex-direction: column;
+    text-align: center;
+  }
+  .recipe-filters {
+    gap: 0.25rem;
+  }
+  .filter-button {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+  .health-newsletter .newsletter-form {
+    flex-direction: column;
+  }
 }
 
-@media (max-width: 576px) {
-    .health-hero h1 {
-        font-size: 2rem;
-    }
-    
-    .health-stats {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .newsletter-form {
-        flex-direction: column;
-    }
-    
-    .newsletter-form input,
-    .newsletter-form button {
-        border-radius: 30px;
-        width: 100%;
-    }
-    
-    .newsletter-form button {
-        margin-top: 10px;
-    }
+@media (max-width: 480px) {
+  .diet-plans {
+    grid-template-columns: 1fr;
+  }
+  .research-cards {
+    grid-template-columns: 1fr;
+  }
 }
