@@ -1,293 +1,360 @@
-// ===== GLOBAL VARIABLES =====
-let totalPoints = 0;
+/**
+ * ========== GAMES PAGE FUNCTIONALITY ==========
+ * Run only on games page
+ */
+if (document.querySelector('.games-hero')) {
+    initGames();
+}
 
-// ===== QUIZ GAME =====
-function initQuizGame() {
+function initGames() {
+    initQuiz();
+    initMemoryMatch();
+    initVirtualFarm();
+    initColoringPages();
+    loadRewards();
+}
+
+// ==================== REWARDS SYSTEM ====================
+let userPoints = 0;
+let userRank = 'Beginner';
+
+function loadRewards() {
+    const saved = localStorage.getItem('frutilabs-points');
+    if (saved) {
+        userPoints = parseInt(saved) || 0;
+    }
+    updateRewards();
+}
+
+function updateRewards() {
+    const pointsSpan = document.getElementById('user-points');
+    const rankSpan = document.getElementById('user-rank');
+    if (pointsSpan) pointsSpan.textContent = userPoints;
+    if (rankSpan) {
+        if (userPoints < 10) userRank = 'Beginner';
+        else if (userPoints < 30) userRank = 'Fruit Explorer';
+        else if (userPoints < 60) userRank = 'Fruit Master';
+        else userRank = 'Fruit Legend';
+        rankSpan.textContent = userRank;
+    }
+    localStorage.setItem('frutilabs-points', userPoints);
+}
+
+function addPoints(amount) {
+    userPoints += amount;
+    updateRewards();
+    showNotification(`You earned ${amount} points!`, 'success');
+}
+
+// ==================== FRUIT QUIZ ====================
+function initQuiz() {
     const quizData = [
-        {
-            question: "I'm yellow and curved, monkeys love me. What am I?",
-            options: ["Apple", "Banana", "Orange", "Grape"],
-            answer: "Banana"
-        },
-        {
-            question: "I'm red, crunchy, and keep doctors away. What am I?",
-            options: ["Strawberry", "Cherry", "Apple", "Tomato"],
-            answer: "Apple"
-        },
-        // Add more questions...
+        { question: "Which fruit is known as the 'king of fruits'?", options: ["Mango", "Durian", "Pineapple", "Banana"], correct: 0 },
+        { question: "Which fruit is technically a berry?", options: ["Strawberry", "Raspberry", "Banana", "Apple"], correct: 2 },
+        { question: "Which fruit has its seeds on the outside?", options: ["Strawberry", "Kiwi", "Dragon Fruit", "Passion Fruit"], correct: 0 },
+        { question: "Which fruit is the main ingredient in guacamole?", options: ["Tomato", "Avocado", "Cucumber", "Lime"], correct: 1 },
+        { question: "Which fruit is 92% water?", options: ["Watermelon", "Orange", "Grapefruit", "Cantaloupe"], correct: 0 }
     ];
 
     let currentQuestion = 0;
     let score = 0;
-    const questionElement = document.getElementById('quiz-question');
-    const optionsContainer = document.querySelector('.quiz-options');
-    const scoreElement = document.getElementById('quiz-score');
-    const progressBar = document.getElementById('quiz-progress');
+    const totalQuestions = quizData.length;
+
+    const questionEl = document.getElementById('quiz-question');
+    const optionsEl = document.getElementById('quiz-options');
+    const scoreEl = document.getElementById('quiz-score');
+    const progressEl = document.getElementById('quiz-progress');
 
     function loadQuestion() {
-        if (currentQuestion >= quizData.length) {
-            endQuiz();
-            return;
-        }
+        const q = quizData[currentQuestion];
+        questionEl.textContent = q.question;
+        optionsEl.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option';
+            btn.textContent = opt;
+            btn.dataset.idx = idx;
+            btn.addEventListener('click', () => handleAnswer(idx));
+            optionsEl.appendChild(btn);
+        });
+    }
 
-        const question = quizData[currentQuestion];
-        questionElement.textContent = question.question;
-        optionsContainer.innerHTML = '';
+    function handleAnswer(selectedIdx) {
+        const q = quizData[currentQuestion];
+        const isCorrect = selectedIdx === q.correct;
 
-        question.options.forEach(option => {
-            const button = document.createElement('button');
-            button.className = 'quiz-option';
-            button.textContent = option;
-            button.addEventListener('click', () => checkAnswer(option));
-            optionsContainer.appendChild(button);
+        // Disable all options
+        document.querySelectorAll('.quiz-option').forEach(btn => {
+            btn.disabled = true;
+            if (parseInt(btn.dataset.idx) === q.correct) {
+                btn.classList.add('correct');
+            } else if (parseInt(btn.dataset.idx) === selectedIdx && !isCorrect) {
+                btn.classList.add('incorrect');
+            }
         });
 
-        progressBar.value = currentQuestion;
-    }
-
-    function checkAnswer(selectedOption) {
-        const correctAnswer = quizData[currentQuestion].answer;
-        if (selectedOption === correctAnswer) {
+        if (isCorrect) {
             score++;
-            totalPoints += 10;
-            updatePoints();
+            addPoints(5);
         }
 
-        currentQuestion++;
-        loadQuestion();
+        setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < totalQuestions) {
+                loadQuestion();
+            } else {
+                showNotification(`Quiz completed! Your score: ${score}/${totalQuestions}`, 'info');
+                questionEl.textContent = `Game Over! Your score: ${score}/${totalQuestions}`;
+                optionsEl.innerHTML = '';
+                // Reset quiz (could add restart button)
+            }
+            scoreEl.textContent = `Score: ${score}`;
+            progressEl.value = currentQuestion;
+        }, 1000);
     }
 
-    function endQuiz() {
-        questionElement.textContent = `Quiz Complete! Your score: ${score}/${quizData.length}`;
-        optionsContainer.innerHTML = '';
-        scoreElement.textContent = `Score: ${score}`;
-    }
-
+    // Initialize
     loadQuestion();
+    scoreEl.textContent = `Score: 0`;
+    progressEl.max = totalQuestions;
+    progressEl.value = 0;
 }
 
-// ===== MEMORY GAME =====
-function initMemoryGame() {
-    const fruits = ['🍎', '🍌', '🍊', '🍇', '🍓', '🍉', '🍍', '🥭'];
-    const cards = [...fruits, ...fruits];
+// ==================== MEMORY MATCH ====================
+function initMemoryMatch() {
+    const fruits = ['🍎', '🍌', '🍊', '🍇', '🍓', '🍒', '🍑', '🥝'];
+    let cards = [...fruits, ...fruits]; // pairs
     let flippedCards = [];
     let matchedPairs = 0;
-    let timeLeft = 60;
     let timer;
+    let timeLeft = 60;
+    let canFlip = true;
 
     const board = document.getElementById('memory-board');
-    const timeElement = document.getElementById('time');
-    const matchesElement = document.getElementById('matches');
+    const timeSpan = document.getElementById('time');
+    const matchesSpan = document.getElementById('matches');
     const restartBtn = document.getElementById('memory-restart');
 
-    function startGame() {
-        // Shuffle cards
-        cards.sort(() => Math.random() - 0.5);
-        
-        // Create board
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function renderBoard() {
         board.innerHTML = '';
-        cards.forEach((fruit, index) => {
+        shuffle(cards).forEach((fruit, index) => {
             const card = document.createElement('div');
             card.className = 'memory-card';
             card.dataset.index = index;
             card.dataset.fruit = fruit;
-            card.addEventListener('click', flipCard);
+            card.addEventListener('click', () => flipCard(card));
             board.appendChild(card);
         });
-
-        // Reset game state
-        flippedCards = [];
-        matchedPairs = 0;
-        timeLeft = 60;
-        matchesElement.textContent = '0';
-        
-        // Start timer
-        clearInterval(timer);
-        timer = setInterval(updateTimer, 1000);
     }
 
-    function flipCard() {
-        if (flippedCards.length >= 2 || this.classList.contains('flipped')) return;
+    function flipCard(card) {
+        if (!canFlip || card.classList.contains('flipped') || card.classList.contains('matched')) return;
 
-        this.classList.add('flipped');
-        this.textContent = this.dataset.fruit;
-        flippedCards.push(this);
+        card.classList.add('flipped');
+        card.textContent = card.dataset.fruit;
+        flippedCards.push(card);
 
         if (flippedCards.length === 2) {
-            checkMatch();
-        }
-    }
+            canFlip = false;
+            const card1 = flippedCards[0];
+            const card2 = flippedCards[1];
+            if (card1.dataset.fruit === card2.dataset.fruit) {
+                // Match
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                matchesSpan.textContent = matchedPairs;
+                addPoints(10);
+                flippedCards = [];
+                canFlip = true;
 
-    function checkMatch() {
-        const [card1, card2] = flippedCards;
-        
-        if (card1.dataset.fruit === card2.dataset.fruit) {
-            // Match found
-            card1.classList.add('matched');
-            card2.classList.add('matched');
-            matchedPairs++;
-            matchesElement.textContent = matchedPairs;
-            totalPoints += 5;
-            updatePoints();
-
-            if (matchedPairs === fruits.length) {
-                clearInterval(timer);
-                totalPoints += 20; // Bonus for completing
-                updatePoints();
+                if (matchedPairs === fruits.length) {
+                    clearInterval(timer);
+                    showNotification('Congratulations! You matched all pairs!', 'success');
+                }
+            } else {
+                // No match
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '';
+                    card2.textContent = '';
+                    flippedCards = [];
+                    canFlip = true;
+                }, 800);
             }
-        } else {
-            // No match
-            setTimeout(() => {
-                card1.classList.remove('flipped');
-                card2.classList.remove('flipped');
-                card1.textContent = '';
-                card2.textContent = '';
-            }, 1000);
         }
+    }
 
+    function startTimer() {
+        timer = setInterval(() => {
+            timeLeft--;
+            timeSpan.textContent = timeLeft;
+            if (timeLeft <= 10) timeSpan.classList.add('warning');
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                canFlip = false;
+                showNotification('Time\'s up! Game over.', 'error');
+            }
+        }, 1000);
+    }
+
+    function restartGame() {
+        clearInterval(timer);
+        timeLeft = 60;
+        matchedPairs = 0;
         flippedCards = [];
+        canFlip = true;
+        timeSpan.textContent = timeLeft;
+        timeSpan.classList.remove('warning');
+        matchesSpan.textContent = matchedPairs;
+        renderBoard();
+        startTimer();
     }
 
-    function updateTimer() {
-        timeLeft--;
-        timeElement.textContent = timeLeft;
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            board.querySelectorAll('.memory-card:not(.matched)').forEach(card => {
-                card.classList.add('flipped');
-                card.textContent = card.dataset.fruit;
-            });
-        }
-    }
-
-    restartBtn.addEventListener('click', startGame);
-    startGame();
+    restartBtn.addEventListener('click', restartGame);
+    restartGame();
 }
 
-// ===== VIRTUAL FARM =====
+// ==================== VIRTUAL FARM ====================
 function initVirtualFarm() {
-    const PLANT_GROW_TIME = 5000; // 5 seconds
-    let seeds = 5;
-    let coins = 0;
-    
-    const seedsElement = document.getElementById('seeds');
-    const coinsElement = document.getElementById('coins');
     const farmLand = document.getElementById('farm-land');
+    const seedsSpan = document.getElementById('seeds');
+    const coinsSpan = document.getElementById('coins');
     const plantBtn = document.getElementById('plant-seed');
     const harvestBtn = document.getElementById('harvest-all');
 
-    // Create farm plots
-    for (let i = 0; i < 10; i++) {
-        const plot = document.createElement('div');
-        plot.className = 'farm-plot empty';
-        plot.dataset.index = i;
-        plot.dataset.state = 'empty';
-        farmLand.appendChild(plot);
+    let seeds = 5;
+    let coins = 0;
+    let plots = [
+        { state: 'empty' }, // 0: empty, 1: growing, 2: ready
+        { state: 'empty' },
+        { state: 'empty' },
+        { state: 'empty' },
+        { state: 'empty' },
+        { state: 'empty' },
+        { state: 'empty' },
+        { state: 'empty' },
+        { state: 'empty' }
+    ];
+    let growthTimers = [];
+
+    function renderFarm() {
+        farmLand.innerHTML = '';
+        plots.forEach((plot, index) => {
+            const plotDiv = document.createElement('div');
+            plotDiv.className = 'farm-plot';
+            if (plot.state === 'growing') {
+                plotDiv.classList.add('growing');
+                plotDiv.textContent = '🌱';
+            } else if (plot.state === 'ready') {
+                plotDiv.classList.add('ready');
+                plotDiv.textContent = '🍎'; // or specific fruit
+            }
+            plotDiv.dataset.index = index;
+            plotDiv.addEventListener('click', () => {
+                if (plot.state === 'ready') {
+                    // Harvest single
+                    harvestPlot(index);
+                } else if (plot.state === 'empty' && seeds > 0) {
+                    plantPlot(index);
+                }
+            });
+            farmLand.appendChild(plotDiv);
+        });
+        seedsSpan.textContent = seeds;
+        coinsSpan.textContent = coins;
     }
 
-    plantBtn.addEventListener('click', plantSeed);
-    harvestBtn.addEventListener('click', harvestAll);
-
-    function plantSeed() {
+    function plantPlot(index) {
         if (seeds <= 0) return;
-
-        const emptyPlots = Array.from(farmLand.children)
-            .filter(plot => plot.dataset.state === 'empty');
-
-        if (emptyPlots.length === 0) return;
-
         seeds--;
-        seedsElement.textContent = seeds;
+        plots[index].state = 'growing';
+        renderFarm();
 
-        const randomPlot = emptyPlots[Math.floor(Math.random() * emptyPlots.length)];
-        randomPlot.dataset.state = 'growing';
-        randomPlot.style.setProperty('--growth', '0%');
-        randomPlot.classList.remove('empty');
-        randomPlot.classList.add('growing');
+        // Simulate growth after 5 seconds
+        const timer = setTimeout(() => {
+            if (plots[index].state === 'growing') {
+                plots[index].state = 'ready';
+                renderFarm();
+            }
+        }, 5000);
+        growthTimers.push({ index, timer });
+    }
 
-        setTimeout(() => {
-            randomPlot.dataset.state = 'ready';
-            randomPlot.classList.remove('growing');
-            randomPlot.classList.add('ready');
-            randomPlot.innerHTML = '🪴';
-        }, PLANT_GROW_TIME);
+    function harvestPlot(index) {
+        if (plots[index].state === 'ready') {
+            plots[index].state = 'empty';
+            coins += 5; // earn coins
+            addPoints(2); // also points
+            renderFarm();
+        }
     }
 
     function harvestAll() {
-        const readyPlots = Array.from(farmLand.children)
-            .filter(plot => plot.dataset.state === 'ready');
-
-        if (readyPlots.length === 0) return;
-
-        coins += readyPlots.length;
-        coinsElement.textContent = coins;
-        totalPoints += readyPlots.length * 2;
-        updatePoints();
-
-        readyPlots.forEach(plot => {
-            plot.dataset.state = 'empty';
-            plot.classList.remove('ready');
-            plot.classList.add('empty');
-            plot.innerHTML = '';
-            plot.style.removeProperty('--growth');
+        let harvested = 0;
+        plots.forEach((plot, index) => {
+            if (plot.state === 'ready') {
+                plot.state = 'empty';
+                harvested++;
+            }
         });
+        coins += harvested * 5;
+        addPoints(harvested * 2);
+        renderFarm();
     }
+
+    plantBtn.addEventListener('click', () => {
+        // Find first empty plot
+        const emptyIndex = plots.findIndex(p => p.state === 'empty');
+        if (emptyIndex !== -1 && seeds > 0) {
+            plantPlot(emptyIndex);
+        } else if (seeds <= 0) {
+            showNotification('No seeds left!', 'error');
+        } else {
+            showNotification('No empty plots!', 'error');
+        }
+    });
+
+    harvestBtn.addEventListener('click', harvestAll);
+
+    renderFarm();
 }
 
-// ===== COLORING PAGES =====
-function loadColoringPages() {
+// ==================== COLORING PAGES ====================
+function initColoringPages() {
+    const gallery = document.getElementById('coloring-gallery');
     const coloringPages = [
-        { name: "Juicy Apple", image: "apple-coloring.jpg" },
-        { name: "Sweet Banana", image: "banana-coloring.jpg" },
-        { name: "Orange Citrus", image: "orange-coloring.jpg" },
-        { name: "Bunch of Grapes", image: "grapes-coloring.jpg" },
-        { name: "Strawberry", image: "strawberry-coloring.jpg" },
-        { name: "Watermelon Slice", image: "watermelon-coloring.jpg" },
+        { name: 'Apple', image: 'assets/images/coloring-apple.jpg' },
+        { name: 'Banana', image: 'assets/images/coloring-banana.jpg' },
+        { name: 'Orange', image: 'assets/images/coloring-orange.jpg' },
+        { name: 'Strawberry', image: 'assets/images/coloring-strawberry.jpg' },
+        { name: 'Grapes', image: 'assets/images/coloring-grapes.jpg' },
+        { name: 'Watermelon', image: 'assets/images/coloring-watermelon.jpg' }
     ];
 
-    const gallery = document.querySelector('.coloring-gallery');
-    gallery.innerHTML = '';
-
-    coloringPages.forEach(page => {
-        const item = document.createElement('div');
-        item.className = 'coloring-item';
-        item.innerHTML = `
-            <img src="../images/coloring/${page.image}" alt="${page.name} Coloring Page">
+    gallery.innerHTML = coloringPages.map(page => `
+        <div class="coloring-card">
+            <img src="${page.image}" alt="${page.name} Coloring Page" loading="lazy">
             <div class="coloring-info">
-                <h3>${page.name}</h3>
-                <a href="../images/coloring/${page.image}" download class="download-btn">
-                    Download <i class="fas fa-download"></i>
-                </a>
+                <h4>${page.name}</h4>
+                <a href="${page.image}" download="${page.name.toLowerCase()}-coloring.jpg" class="download-btn">Download</a>
             </div>
-        `;
-        gallery.appendChild(item);
+        </div>
+    `).join('');
+
+    // Add points when downloading (demo)
+    gallery.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            addPoints(1);
+        });
     });
 }
-
-// ===== POINTS SYSTEM =====
-function updatePoints() {
-    const pointsElement = document.getElementById('user-points');
-    const rankElement = document.getElementById('user-rank');
-    
-    pointsElement.textContent = totalPoints;
-    
-    // Update rank based on points
-    if (totalPoints >= 100) {
-        rankElement.textContent = "Fruit Master";
-    } else if (totalPoints >= 50) {
-        rankElement.textContent = "Fruit Expert";
-    } else if (totalPoints >= 20) {
-        rankElement.textContent = "Fruit Lover";
-    } else {
-        rankElement.textContent = "Beginner";
-    }
-}
-
-// ===== INITIALIZE ALL GAMES =====
-document.addEventListener('DOMContentLoaded', function() {
-    initQuizGame();
-    initMemoryGame();
-    initVirtualFarm();
-    loadColoringPages();
-});
